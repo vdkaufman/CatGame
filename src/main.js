@@ -1,7 +1,19 @@
+// ***** Set Game Config *****
 let config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height:500,
+    type: Phaser.CANVAS,
+    width: 1100,
+    height: 800,
+    physics: {
+        default: 'arcade',
+        arcade:{
+            //gravity: { y: 300 },
+            debug: false
+        }
+    },
+    fps: {
+        target: 60,
+        forceSetTimeOut: true 
+},
     scene: [ Menu, Play ]
 }
 let game = new Phaser.Game(config);
