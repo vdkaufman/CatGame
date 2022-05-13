@@ -8,7 +8,7 @@ class Cat extends Phaser.GameObjects.Sprite {
         this.VELOCITY = 500;
         this.DRAG = 5000;
     
-
+        scene.add.existing(this); // add object to existing scene, displayList, updateList
     }
 
     update() {
