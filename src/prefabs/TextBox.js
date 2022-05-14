@@ -1,3 +1,4 @@
+const GetValue = Phaser.Utils.Objects.GetValue;
 class TextBox extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, texture, frame, text) {
         super(scene, x, y, texture, frame);
@@ -5,17 +6,16 @@ class TextBox extends Phaser.GameObjects.Sprite{
         // the textbox definition
         this.text = text;
         this.wrapWidth =  game.config.width-120;
-        this.fixedWidth = game.config.width-138;
+        this.fixedWidth = game.config.width-145;
         this.fixedHeight = game.config.height/6;
-        const GetValue = Phaser.Utils.Objects.GetValue;
 
         //create the rexUI text box object
         this.myTextBox = this.scene.rexUI.add.textBox({
-            x:1, 
-            y:game.config.height - 1,
+            x:5, 
+            y:game.config.height - 3,
         
             background: this.scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
-            .setStrokeStyle(2, COLOR_LIGHT),
+            .setStrokeStyle(6, COLOR_LIGHT),
 
             icon: this.scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
 
@@ -48,56 +48,6 @@ class TextBox extends Phaser.GameObjects.Sprite{
         this.createInteractiveTextBox(this.scene, game.config.width-120, game.config.width-138,
             game.config.height/6, this.myTextBox).start(this.text, 30);
         
-    }
-
-    preload(){
-        this.load.scenePlugin({
-            key: 'rexuiplugin',
-            url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
-            sceneKey: 'rexUI'
-        });
-        this.load.image('nextPage', 
-            'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
-    }
-    create(){
-        // //create the rexUI text box object
-        // this.myTextBox = this.scene.rexUI.add.textBox({
-        //     x:1, 
-        //     y:game.config.height - 1,
-        
-        //     background: this.scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
-        //     .setStrokeStyle(2, COLOR_LIGHT),
-
-        //     icon: this.scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
-
-        // // text: getBuiltInText(scene, wrapWidth, fixedWidth, fixedHeight),
-        //     text: this.scene.rexUI.add.BBCodeText(0, 0, '', {
-        //         fixedWidth: this.fixedWidth,
-        //         fixedHeight: this.fixedHeight,
-    
-        //         fontSize: '22px',
-        //         wrap: {
-        //             mode: 'word',
-        //             width: this.wrapWidth
-        //         },
-        //         maxLines: 3
-        //     }),
-
-        //     action: this.scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
-
-        //     space: {
-        //         left: 20,
-        //         right: 20,
-        //         top: 40,
-        //         bottom: 40,
-        //         icon: 10,
-        //         text: 10,
-        //     }
-        // }).setOrigin(0,1).layout(); 
-
-        // // make it interactive
-        // this.createInteractiveTextBox(this.scene, game.config.width-120, game.config.width-138,
-        //     game.config.height/6, this.myTextBox).start(this.text, 30);
     }
 
     update(){

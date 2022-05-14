@@ -1,90 +1,9 @@
-// //defineTextBox(){
-    const GetValue = Phaser.Utils.Objects.GetValue;
-    // var createTextBox = function (scene, x, y, config) {
-    // var wrapWidth = GetValue(config, 'wrapWidth', 0);
-    // var fixedWidth = GetValue(config, 'fixedWidth', 0);
-    // var fixedHeight = GetValue(config, 'fixedHeight', 0);
-    // var textBox = scene.rexUI.add.textBox({
-    //     x: x,
-    //     y: y,
-
-    //     background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
-    //         .setStrokeStyle(2, COLOR_LIGHT),
-
-    //     icon: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
-
-    //     // text: getBuiltInText(scene, wrapWidth, fixedWidth, fixedHeight),
-    //     text: getBBcodeText(scene, wrapWidth, fixedWidth, fixedHeight),
-
-    //     action: scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
-
-    //     space: {
-    //         left: 20,
-    //         right: 20,
-    //         top: 40,
-    //         bottom: 40,
-    //         icon: 10,
-    //         text: 10,
-    //     }
-    // }).setOrigin(0,1).layout();
-
-    // textBox.setInteractive().on('pointerdown', function () {
-    //         var icon = this.getElement('action').setVisible(false);
-    //         this.resetChildVisibleState(icon);
-    //         if (this.isTyping) {
-    //             this.stop(true);
-    //         } else if (!this.isLastPage){
-    //             this.typeNextPage();
-    //             // if (this.isLastPage)
-    //             //     this.setActive(false).setVisible(false);
-    //         } else {
-    //             //deactivate the textbox
-    //             this.setActive(false).setVisible(false);
-    //         }
-    //     }, textBox).on('pageend', function () {
-    //         if (this.isLastPage) {
-    //             //return;
-    //         }
-            
-    //         // turned arrow icon (the clickable 'next' button)
-    //         var icon = this.getElement('action').setVisible(true);
-    //         this.resetChildVisibleState(icon);
-    //         icon.y -= 30;
-    //         var tween = scene.tweens.add({
-    //             targets: icon,
-    //             y: '+=30', // '+=100'
-    //             ease: 'Bounce', // 'Cubic', 'Elastic', 'Bounce', 'Back'
-    //             duration: 500,
-    //             repeat: 0, // -1: infinity
-    //             yoyo: false
-    //         });
-    //     }, textBox)
-    //     //.on('type', function () {
-    //     //})
-
-    //     return textBox;
-    // }
-
-    // var getBBcodeText = function (scene, wrapWidth, fixedWidth, fixedHeight) {
-    //     return scene.rexUI.add.BBCodeText(0, 0, '', {
-    //         fixedWidth: fixedWidth,
-    //         fixedHeight: fixedHeight,
-
-    //         fontSize: '22px',
-    //         wrap: {
-    //             mode: 'word',
-    //             width: wrapWidth
-    //         },
-    //         maxLines: 3
-    //     })
-    // }
-// //}
-
 class Play extends Phaser.Scene {
     constructor(){
         super("playScene");
     }
     preload(){
+        //this must be preloaded for each scene that requires text boxes
         this.load.scenePlugin({
             key: 'rexuiplugin',
             url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
@@ -114,16 +33,9 @@ class Play extends Phaser.Scene {
         this.playerCat = new Cat(this, game.config.width/2, game.config.height/2, 'cat').setOrigin(0, 0);
 
 
-        //this.defineTextBox();
-        this.content = 'test text... asfkljhasflkjhafajklfh kljahsdfkjh jkhsdfkjh jkhsdf sdf sdf kjsdf khjsdf kjhhufndfxkcv iuse kjshef xvkejfs kjshdf kjsdfn kaejh xzdvj jhzdfkmnzsef uixdf zjxkn kjdk sdg jklzxchv jzsnezsd kjzhxv kmzxnfskjfzxjklhv lxzkjhdf jzser';
-        // createTextBox(this, 1, game.config.height - 1, {
-        this.wrapWidth =  game.config.width-120;
-        this.fixedWidth = game.config.width-138;
-        this.fixedHeight = game.config.height/6;
-        // }).start(this.content, 30);
 
-        this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.content);
-        this.myTestTextBox.create();
+        this.text = 'test text... once the text is finished, press the spacebar to reactivate it. ______________________________________________________________________________________________________kljahsdfkjh jkhsdfkjh jkhsdf sdf sdf kjsdf khjsdf kjhhufndfxkcv iuse kjshef xvkejfs kjshdf kjsdfn kaejh xzdvj jhzdfkmnzsef uixdf zjxkn kjdk sdg jklzxchv jzsnezsd kjzhxv kmzxnfskjfzxjklhv lxzkjhdf jzser';
+        this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.text);
         
         // define meow sfx
         this.meow = this.sound.add('meow', {
@@ -155,47 +67,5 @@ class Play extends Phaser.Scene {
         this.playerCat.update();
     }  
 
-    createInteractiveTextBox(scene, x, y, config, textBox){
-        var wrapWidth = GetValue(config, 'wrapWidth', 0);
-        var fixedWidth = GetValue(config, 'fixedWidth', 0);
-        var fixedHeight = GetValue(config, 'fixedHeight', 0);
-
-        textBox.setInteractive().on('pointerdown', function () {
-            var icon = this.getElement('action').setVisible(false);
-            this.resetChildVisibleState(icon);
-            if (this.isTyping) {
-                this.stop(true);
-            } else if (!this.isLastPage){
-                this.typeNextPage();
-                // if (this.isLastPage)
-                //     this.setActive(false).setVisible(false);
-            } else {
-                //deactivate the textbox
-                this.setActive(false).setVisible(false);
-                
-            }
-        }, textBox).on('pageend', function () {
-            if (this.isLastPage) {
-                //return;
-            }
-            
-            // turned arrow icon (the clickable 'next' button)
-            var icon = this.getElement('action').setVisible(true);
-            this.resetChildVisibleState(icon);
-            icon.y = textBox.y - 60;
-            var tween = scene.tweens.add({
-                targets: icon,
-                y: '+=30', // '+=100'
-                ease: 'Bounce', // 'Cubic', 'Elastic', 'Bounce', 'Back'
-                duration: 500,
-                repeat: 0, // -1: infinity
-                yoyo: false
-            });
-        }, textBox)
-        //.on('type', function () {
-        //})
-
-        return textBox;
-    }
 }
 

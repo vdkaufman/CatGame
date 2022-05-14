@@ -1,9 +1,9 @@
 // ***** Set Game Config *****
 
 //  colors of textbox ui
-const COLOR_PRIMARY = 0x4e342e;
-const COLOR_LIGHT = 0x7b5e57;
-const COLOR_DARK = 0x260e04;
+const COLOR_PRIMARY = 0x3b243e;
+const COLOR_LIGHT = 0xf18255;
+const COLOR_DARK = 0x716d7b;
 
 // import UIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 let config = {
