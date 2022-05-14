@@ -1,3 +1,85 @@
+// //defineTextBox(){
+    const GetValue = Phaser.Utils.Objects.GetValue;
+    // var createTextBox = function (scene, x, y, config) {
+    // var wrapWidth = GetValue(config, 'wrapWidth', 0);
+    // var fixedWidth = GetValue(config, 'fixedWidth', 0);
+    // var fixedHeight = GetValue(config, 'fixedHeight', 0);
+    // var textBox = scene.rexUI.add.textBox({
+    //     x: x,
+    //     y: y,
+
+    //     background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
+    //         .setStrokeStyle(2, COLOR_LIGHT),
+
+    //     icon: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
+
+    //     // text: getBuiltInText(scene, wrapWidth, fixedWidth, fixedHeight),
+    //     text: getBBcodeText(scene, wrapWidth, fixedWidth, fixedHeight),
+
+    //     action: scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
+
+    //     space: {
+    //         left: 20,
+    //         right: 20,
+    //         top: 40,
+    //         bottom: 40,
+    //         icon: 10,
+    //         text: 10,
+    //     }
+    // }).setOrigin(0,1).layout();
+
+    // textBox.setInteractive().on('pointerdown', function () {
+    //         var icon = this.getElement('action').setVisible(false);
+    //         this.resetChildVisibleState(icon);
+    //         if (this.isTyping) {
+    //             this.stop(true);
+    //         } else if (!this.isLastPage){
+    //             this.typeNextPage();
+    //             // if (this.isLastPage)
+    //             //     this.setActive(false).setVisible(false);
+    //         } else {
+    //             //deactivate the textbox
+    //             this.setActive(false).setVisible(false);
+    //         }
+    //     }, textBox).on('pageend', function () {
+    //         if (this.isLastPage) {
+    //             //return;
+    //         }
+            
+    //         // turned arrow icon (the clickable 'next' button)
+    //         var icon = this.getElement('action').setVisible(true);
+    //         this.resetChildVisibleState(icon);
+    //         icon.y -= 30;
+    //         var tween = scene.tweens.add({
+    //             targets: icon,
+    //             y: '+=30', // '+=100'
+    //             ease: 'Bounce', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+    //             duration: 500,
+    //             repeat: 0, // -1: infinity
+    //             yoyo: false
+    //         });
+    //     }, textBox)
+    //     //.on('type', function () {
+    //     //})
+
+    //     return textBox;
+    // }
+
+    // var getBBcodeText = function (scene, wrapWidth, fixedWidth, fixedHeight) {
+    //     return scene.rexUI.add.BBCodeText(0, 0, '', {
+    //         fixedWidth: fixedWidth,
+    //         fixedHeight: fixedHeight,
+
+    //         fontSize: '22px',
+    //         wrap: {
+    //             mode: 'word',
+    //             width: wrapWidth
+    //         },
+    //         maxLines: 3
+    //     })
+    // }
+// //}
+
 class Play extends Phaser.Scene {
     constructor(){
         super("playScene");
@@ -33,12 +115,49 @@ class Play extends Phaser.Scene {
 
         //this.defineTextBox();
         this.content = 'test text... asfkljhasflkjhafajklfh kljahsdfkjh jkhsdfkjh jkhsdf sdf sdf kjsdf khjsdf kjhhufndfxkcv iuse kjshef xvkejfs kjshdf kjsdfn kaejh xzdvj jhzdfkmnzsef uixdf zjxkn kjdk sdg jklzxchv jzsnezsd kjzhxv kmzxnfskjfzxjklhv lxzkjhdf jzser';
-        createTextBox(this, 1, game.config.height - 1, {
-            wrapWidth: game.config.width-120,
-            fixedWidth: game.config.width-138,
-            fixedHeight: game.config.height/6,
-        }).start(this.content, 30);
+        // createTextBox(this, 1, game.config.height - 1, {
+        this.wrapWidth =  game.config.width-120;
+        this.fixedWidth = game.config.width-138;
+        this.fixedHeight = game.config.height/6;
+        // }).start(this.content, 30);
 
+        this.myTextBox = this.rexUI.add.textBox({
+            x:1, 
+            y:game.config.height - 1,
+        
+            background: this.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
+            .setStrokeStyle(2, COLOR_LIGHT),
+
+            icon: this.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
+
+        // text: getBuiltInText(scene, wrapWidth, fixedWidth, fixedHeight),
+            text: this.rexUI.add.BBCodeText(0, 0, '', {
+                fixedWidth: this.fixedWidth,
+                fixedHeight: this.fixedHeight,
+    
+                fontSize: '22px',
+                wrap: {
+                    mode: 'word',
+                    width: this.wrapWidth
+                },
+                maxLines: 3
+            }),
+
+            action: this.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
+
+            space: {
+                left: 20,
+                right: 20,
+                top: 40,
+                bottom: 40,
+                icon: 10,
+                text: 10,
+            }
+        }).setOrigin(0,1).layout(); 
+
+        this.createInteractiveTextBox(this, game.config.width-120, game.config.width-138,
+            game.config.height/6, this.myTextBox).start(this.content, 30);
+        
         //this.textTest = new TextBox(this, 1, game.config.height - 1, 'cat', 0, 'this is the test text...');
         //this.textTest.create();
         // define meow sfx
@@ -65,43 +184,22 @@ class Play extends Phaser.Scene {
         // play meow sfx
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.meow.play();
+            if (!this.myTextBox.active){
+                console.log('reset textBox..');
+                this.myTextBox.setActive(true).setVisible(true);
+                this.myTextBox.start(this.content, 30);
+            }
         }
 
         this.playerCat.update();
     }  
-}
 
-// //defineTextBox(){
-    const GetValue = Phaser.Utils.Objects.GetValue;
-    var createTextBox = function (scene, x, y, config) {
-    var wrapWidth = GetValue(config, 'wrapWidth', 0);
-    var fixedWidth = GetValue(config, 'fixedWidth', 0);
-    var fixedHeight = GetValue(config, 'fixedHeight', 0);
-    var textBox = scene.rexUI.add.textBox({
-        x: x,
-        y: y,
+    createInteractiveTextBox(scene, x, y, config, textBox){
+        var wrapWidth = GetValue(config, 'wrapWidth', 0);
+        var fixedWidth = GetValue(config, 'fixedWidth', 0);
+        var fixedHeight = GetValue(config, 'fixedHeight', 0);
 
-        background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
-            .setStrokeStyle(2, COLOR_LIGHT),
-
-        icon: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
-
-        // text: getBuiltInText(scene, wrapWidth, fixedWidth, fixedHeight),
-        text: getBBcodeText(scene, wrapWidth, fixedWidth, fixedHeight),
-
-        action: scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
-
-        space: {
-            left: 20,
-            right: 20,
-            top: 40,
-            bottom: 40,
-            icon: 10,
-            text: 10,
-        }
-    }).setOrigin(0,1).layout();
-
-    textBox.setInteractive().on('pointerdown', function () {
+        textBox.setInteractive().on('pointerdown', function () {
             var icon = this.getElement('action').setVisible(false);
             this.resetChildVisibleState(icon);
             if (this.isTyping) {
@@ -113,6 +211,7 @@ class Play extends Phaser.Scene {
             } else {
                 //deactivate the textbox
                 this.setActive(false).setVisible(false);
+                
             }
         }, textBox).on('pageend', function () {
             if (this.isLastPage) {
@@ -122,7 +221,7 @@ class Play extends Phaser.Scene {
             // turned arrow icon (the clickable 'next' button)
             var icon = this.getElement('action').setVisible(true);
             this.resetChildVisibleState(icon);
-            icon.y -= 30;
+            icon.y = textBox.y - 60;
             var tween = scene.tweens.add({
                 targets: icon,
                 y: '+=30', // '+=100'
@@ -137,18 +236,5 @@ class Play extends Phaser.Scene {
 
         return textBox;
     }
+}
 
-    var getBBcodeText = function (scene, wrapWidth, fixedWidth, fixedHeight) {
-        return scene.rexUI.add.BBCodeText(0, 0, '', {
-            fixedWidth: fixedWidth,
-            fixedHeight: fixedHeight,
-
-            fontSize: '22px',
-            wrap: {
-                mode: 'word',
-                width: wrapWidth
-            },
-            maxLines: 3
-        })
-    }
-// //}
