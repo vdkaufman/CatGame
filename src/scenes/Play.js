@@ -113,6 +113,7 @@ class Play extends Phaser.Scene {
 
         this.playerCat = new Cat(this, game.config.width/2, game.config.height/2, 'cat').setOrigin(0, 0);
 
+
         //this.defineTextBox();
         this.content = 'test text... asfkljhasflkjhafajklfh kljahsdfkjh jkhsdfkjh jkhsdf sdf sdf kjsdf khjsdf kjhhufndfxkcv iuse kjshef xvkejfs kjshdf kjsdfn kaejh xzdvj jhzdfkmnzsef uixdf zjxkn kjdk sdg jklzxchv jzsnezsd kjzhxv kmzxnfskjfzxjklhv lxzkjhdf jzser';
         // createTextBox(this, 1, game.config.height - 1, {
@@ -121,45 +122,9 @@ class Play extends Phaser.Scene {
         this.fixedHeight = game.config.height/6;
         // }).start(this.content, 30);
 
-        this.myTextBox = this.rexUI.add.textBox({
-            x:1, 
-            y:game.config.height - 1,
+        this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.content);
+        this.myTestTextBox.create();
         
-            background: this.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
-            .setStrokeStyle(2, COLOR_LIGHT),
-
-            icon: this.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
-
-        // text: getBuiltInText(scene, wrapWidth, fixedWidth, fixedHeight),
-            text: this.rexUI.add.BBCodeText(0, 0, '', {
-                fixedWidth: this.fixedWidth,
-                fixedHeight: this.fixedHeight,
-    
-                fontSize: '22px',
-                wrap: {
-                    mode: 'word',
-                    width: this.wrapWidth
-                },
-                maxLines: 3
-            }),
-
-            action: this.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
-
-            space: {
-                left: 20,
-                right: 20,
-                top: 40,
-                bottom: 40,
-                icon: 10,
-                text: 10,
-            }
-        }).setOrigin(0,1).layout(); 
-
-        this.createInteractiveTextBox(this, game.config.width-120, game.config.width-138,
-            game.config.height/6, this.myTextBox).start(this.content, 30);
-        
-        //this.textTest = new TextBox(this, 1, game.config.height - 1, 'cat', 0, 'this is the test text...');
-        //this.textTest.create();
         // define meow sfx
         this.meow = this.sound.add('meow', {
             mute: false,
@@ -172,6 +137,7 @@ class Play extends Phaser.Scene {
     }
 
     update(){
+        this.myTestTextBox.update();
         // check key input for restart
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.restart();
@@ -184,11 +150,6 @@ class Play extends Phaser.Scene {
         // play meow sfx
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.meow.play();
-            if (!this.myTextBox.active){
-                console.log('reset textBox..');
-                this.myTextBox.setActive(true).setVisible(true);
-                this.myTextBox.start(this.content, 30);
-            }
         }
 
         this.playerCat.update();
