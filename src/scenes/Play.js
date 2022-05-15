@@ -47,8 +47,8 @@ class Play extends Phaser.Scene {
 
         // define keys
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -61,6 +61,12 @@ class Play extends Phaser.Scene {
         this.text = 'test text... once the text is finished, press the spacebar to reactivate it. ______________________________________________________________________________________________________kljahsdfkjh jkhsdfkjh jkhsdf sdf sdf kjsdf khjsdf kjhhufndfxkcv iuse kjshef xvkejfs kjshdf kjsdfn kaejh xzdvj jhzdfkmnzsef uixdf zjxkn kjdk sdg jklzxchv jzsnezsd kjzhxv kmzxnfskjfzxjklhv lxzkjhdf jzser';
         this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.text);
         
+        this.controls = 'Reset: R / Meow: M / Text Test: Space / Clue Test: C ';
+        this.controlUI = this.add.text(game.config.width/4, 20, this.controls);
+
+        this.clue = 'clue test';
+       // this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
+
         // add collider
         this.physics.add.collider(this.playerCat, this.box);
 
@@ -95,9 +101,17 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
         }
 
+        if (Phaser.Input.Keyboard.JustDown(keyC)) {
+       // this.clue = 'clue test';
+        this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
+        }
+
         // play meow sfx
         if (Phaser.Input.Keyboard.JustDown(keyM)) {
             this.meow.play();
+            if(this.playerCat.body.touching.box) {
+            }
+
         }
 
         this.playerCat.update();
