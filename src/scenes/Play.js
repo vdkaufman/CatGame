@@ -25,8 +25,9 @@ class Play extends Phaser.Scene {
         this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
   
         // Add box object
-        //this.box = new Box(this, game.config.width/4, game.config.height/2, 'box').setOrigin(.5, .5);
-        //this.box.body.allowGravity = false; 
+        this.photoBox = new Box(this, game.config.width/2, game.config.height/2 - 50, 'box').setOrigin(.5, .5);
+        this.mirrorBox = new Box(this, game.config.width/5 - 150, game.config.height/1.5, 'box').setOrigin(.5, .5);
+
 
         // Add collision sprites
         this.wallColliderUp = this.physics.add.sprite(game.config.width/2, 300, 'wallCollisionHorizontal');
@@ -61,14 +62,18 @@ class Play extends Phaser.Scene {
         this.text = 'test text... once the text is finished, press the spacebar to reactivate it. ______________________________________________________________________________________________________kljahsdfkjh jkhsdfkjh jkhsdf sdf sdf kjsdf khjsdf kjhhufndfxkcv iuse kjshef xvkejfs kjshdf kjsdfn kaejh xzdvj jhzdfkmnzsef uixdf zjxkn kjdk sdg jklzxchv jzsnezsd kjzhxv kmzxnfskjfzxjklhv lxzkjhdf jzser';
         this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.text);
         
-        this.controls = 'Reset: R / Meow: M / Text Test: Space / Clue Test: C ';
+        this.controls = 'Reset: R / Meow: M / Move: WASD / Text Test: Space / Clue Test: C ';
         this.controlUI = this.add.text(game.config.width/4, 20, this.controls);
 
-        this.clue = 'clue test';
+        this.clueText = 'clue test';
+        this.familyPhotoText = 'family photo';
+        this.mirrorText = 'interaction with mirror';
        // this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
 
-        // add collider
-        this.physics.add.collider(this.playerCat, this.box);
+       // Cat box overlap
+       this.physics.add.overlap(this.playerCat, this.photoBox, this.touchingBox, null, this);
+       this.physics.add.overlap(this.playerCat, this.mirrorBox, this.touchingMirror, null, this);
+
 
         // Add colliders for collision sprites
         this.physics.add.collider(this.playerCat, this.wallColliderUp);
@@ -112,6 +117,17 @@ class Play extends Phaser.Scene {
         //     this.meow.play();
         // }
 
+
         this.playerCat.update();
     }  
+    touchingBox(){
+        if(Phaser.Input.Keyboard.JustDown(keyC)) {
+        this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.familyPhotoText);
+    }
+    }
+    touchingMirror(){
+        if(Phaser.Input.Keyboard.JustDown(keyC)) {
+        this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.mirrorText);
+    }
+    }
 }
