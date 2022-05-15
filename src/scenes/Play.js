@@ -49,10 +49,10 @@ class Play extends Phaser.Scene {
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         this.playerCat = new Cat(this, game.config.width/3, game.config.height/2, 'cat').setOrigin(0, 0);
@@ -102,8 +102,8 @@ class Play extends Phaser.Scene {
         }
 
         if (Phaser.Input.Keyboard.JustDown(keyC)) {
-       // this.clue = 'clue test';
-        this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
+            // this.clue = 'clue test';
+            this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
         }
 
         // play meow sfx

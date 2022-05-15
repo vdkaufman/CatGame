@@ -45,8 +45,7 @@ class TextBox extends Phaser.GameObjects.Sprite{
         }).setOrigin(0,1).layout(); 
 
         // make it interactive
-        this.createInteractiveTextBox(this.scene, game.config.width-120, game.config.width-138,
-            game.config.height/6, this.myTextBox).start(this.text, 30);
+        this.createInteractiveTextBox(this.scene, this.myTextBox).start(this.text, 30);
         
     }
 
@@ -61,12 +60,10 @@ class TextBox extends Phaser.GameObjects.Sprite{
         }
     }
 
-    createInteractiveTextBox(scene, x, y, config, textBox){
-        var wrapWidth = GetValue(config, 'wrapWidth', 0);
-        var fixedWidth = GetValue(config, 'fixedWidth', 0);
-        var fixedHeight = GetValue(config, 'fixedHeight', 0);
-
-        textBox.setInteractive().on('pointerdown', function () {
+    createInteractiveTextBox(scene, textBox){
+       
+        // Start of pointer input mechanisms 
+        scene.input.keyboard.on('keydown-M', function () {
             var icon = this.getElement('action').setVisible(false);
             this.resetChildVisibleState(icon);
             if (this.isTyping) {
