@@ -5,6 +5,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this); // add object to existing scene, displayList, updateList
         scene.physics.add.existing(this);
         //this.isGrounded = true; // Check if Cat and Floor are touching
+
         this.VELOCITY = 300;
         this.DRAG = 5000;
         this.setDrag(this.DRAG,this.DRAG)

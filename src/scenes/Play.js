@@ -25,8 +25,8 @@ class Play extends Phaser.Scene {
         this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
   
         // Add box object
-        this.box = new Box(this, game.config.width/4, game.config.height/2, 'box').setOrigin(.5, .5);
-        this.box.body.allowGravity = false; 
+        //this.box = new Box(this, game.config.width/4, game.config.height/2, 'box').setOrigin(.5, .5);
+        //this.box.body.allowGravity = false; 
 
         // Add collision sprites
         this.wallColliderUp = this.physics.add.sprite(game.config.width/2, 300, 'wallCollisionHorizontal');
@@ -77,11 +77,11 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.playerCat, this.wallColliderRight);
         
         // Add colliders for collision wall sprites
-        this.physics.add.collider(this.box, this.wallColliderUp);
+       /* this.physics.add.collider(this.box, this.wallColliderUp);
         this.physics.add.collider(this.box, this.wallColliderDown);
         this.physics.add.collider(this.box, this.wallColliderLeft);
         this.physics.add.collider(this.box, this.wallColliderRight);
-
+        */
         // define meow sfx
         this.meow = this.sound.add('meow', {
             mute: false,
