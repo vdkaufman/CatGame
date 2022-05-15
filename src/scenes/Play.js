@@ -109,9 +109,6 @@ class Play extends Phaser.Scene {
         // play meow sfx
         if (Phaser.Input.Keyboard.JustDown(keyM)) {
             this.meow.play();
-            if(this.playerCat.body.touching.box) {
-            }
-
         }
 
         this.playerCat.update();
