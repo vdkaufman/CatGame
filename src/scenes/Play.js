@@ -106,10 +106,11 @@ class Play extends Phaser.Scene {
             this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
         }
 
-        // play meow sfx
-        if (Phaser.Input.Keyboard.JustDown(keyM)) {
-            this.meow.play();
-        }
+        // moved to cat.js
+        // // play meow sfx
+        // if (Phaser.Input.Keyboard.JustDown(keyM)) {
+        //     this.meow.play();
+        // }
 
         this.playerCat.update();
     }  
