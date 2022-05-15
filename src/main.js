@@ -1,3 +1,6 @@
+// Vincent Kaufman, Jeff Row, Keli Lindsey
+// CMPM/AGPM 120 Final Game
+
 // ***** Set Game Config *****
 
 //  colors of textbox ui
