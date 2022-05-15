@@ -5,10 +5,7 @@ class Box extends Phaser.Physics.Arcade.Sprite {
 
         scene.add.existing(this); // add object to existing scene, displayList, updateList
         scene.physics.add.existing(this);
-        this.VELOCITY = 4000;
-        this.DRAG = 2000;
-
-        this.setDrag(this.DRAG,this.DRAG)
+        this.body.allowGravity = false; 
     }
     update() {
      

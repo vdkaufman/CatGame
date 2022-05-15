@@ -25,8 +25,7 @@ class Play extends Phaser.Scene {
         this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
   
         // Add box object
-        //this.box = new Box(this, game.config.width/4, game.config.height/2, 'box').setOrigin(.5, .5);
-        //this.box.body.allowGravity = false; 
+        this.box = new Box(this, game.config.width/2, game.config.height/2 - 50, 'box').setOrigin(.5, .5);
 
         // Add collision sprites
         this.wallColliderUp = this.physics.add.sprite(game.config.width/2, 300, 'wallCollisionHorizontal');
@@ -67,8 +66,9 @@ class Play extends Phaser.Scene {
         this.clue = 'clue test';
        // this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
 
-        // add collider
-        this.physics.add.collider(this.playerCat, this.box);
+       // Cat box overlap
+       this.physics.add.overlap(this.playerCat, this.box, this.touchingBox, null, this);
+
 
         // Add colliders for collision sprites
         this.physics.add.collider(this.playerCat, this.wallColliderUp);
@@ -113,4 +113,9 @@ class Play extends Phaser.Scene {
 
         this.playerCat.update();
     }  
+    touchingBox(){
+        if(Phaser.Input.Keyboard.JustDown(keyC)) {
+        this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
+    }
+    }
 }
