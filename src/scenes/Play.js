@@ -62,7 +62,7 @@ class Play extends Phaser.Scene {
         this.text = 'test text... once the text is finished, press the spacebar to reactivate it. ______________________________________________________________________________________________________kljahsdfkjh jkhsdfkjh jkhsdf sdf sdf kjsdf khjsdf kjhhufndfxkcv iuse kjshef xvkejfs kjshdf kjsdfn kaejh xzdvj jhzdfkmnzsef uixdf zjxkn kjdk sdg jklzxchv jzsnezsd kjzhxv kmzxnfskjfzxjklhv lxzkjhdf jzser';
         this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.text);
         
-        this.controls = 'Reset: R / Meow: M / Text Test: Space / Clue Test: C ';
+        this.controls = 'Reset: R / Meow: M / Move: WASD / Text Test: Space / Clue Test: C ';
         this.controlUI = this.add.text(game.config.width/4, 20, this.controls);
 
         this.clueText = 'clue test';
