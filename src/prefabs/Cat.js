@@ -5,25 +5,24 @@ class Cat extends Phaser.GameObjects.Sprite {
         scene.add.existing(this); // add object to existing scene, displayList, updateList
         scene.physics.add.existing(this);
         //this.isGrounded = true; // Check if Cat and Floor are touching
-        this.VELOCITY = 500;
+        this.VELOCITY = 400;
         this.DRAG = 5000;
-    
-        
+            
     }
 
     update() {
         // left/right movement
         //if(this.isGrounded) {
-            if(keyLEFT.isDown && this.x >= borderUISize){ 
+            if(keyLEFT.isDown){ 
                 this.body.setVelocityX(-this.VELOCITY);
             }
-            else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) {
+            else if (keyRIGHT.isDown) {
                 this.body.setVelocityX(this.VELOCITY);
             } 
-            else if (keyUP.isDown && this.y >= borderUISize) {
+            else if (keyUP.isDown) {
                 this.body.setVelocityY(-this.VELOCITY);
             } 
-            else if (keyDOWN.isDown && this.y <= game.config.height - borderUISize - this.height) {
+            else if (keyDOWN.isDown) {
                 this.body.setVelocityY(this.VELOCITY);
             }
         
