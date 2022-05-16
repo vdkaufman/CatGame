@@ -13,22 +13,23 @@ class Play extends Phaser.Scene {
             'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
         this.load.image('cat', './assets/cat.png');
         this.load.image('simplebg', './assets/Simplebg.png');
-        // load white box
-        this.load.image('box', './assets/whiteBox100.png');
+        // load box pngs
+        this.load.image('box', './assets/brownSquare100.png');
+        this.load.image('boxWhite', './assets/whiteBox100.png');
+
         // load collision walls
         this.load.image('wallCollisionHorizontal', './assets/blackHorizontal1100.png');
         this.load.image('wallCollisionVertical', './assets/blackVertical800.png');
+        this.load.image('greyCircle', './assets/greyCircle25.png');
+        this.load.image('redCircle', './assets/redCircle25.png');
+        this.load.image('blueCircle', './assets/blueCircle25.png');
+        this.load.image('greenCircle', './assets/greenCircle25.png');
+        this.load.image('floorWire', './assets/floorWire.png');
+
 
     }
     create() {
-        // simple background for playable prototype
-        this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
-  
-        // Add box object
-        this.photoBox = new Box(this, game.config.width/2, game.config.height/2 - 50, 'box').setOrigin(.5, .5);
-        this.mirrorBox = new Box(this, game.config.width/5 - 150, game.config.height/1.5, 'box').setOrigin(.5, .5);
-
-
+   
         // Add collision sprites
         this.wallColliderUp = this.physics.add.sprite(game.config.width/2, 300, 'wallCollisionHorizontal');
         this.wallColliderUp.setImmovable(true);
@@ -46,6 +47,36 @@ class Play extends Phaser.Scene {
         this.wallColliderRight.setImmovable(true);
         this.wallColliderRight.body.allowGravity = false; 
 
+        // simple background for playable prototype
+        this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
+
+        this.floorWire = this.add.sprite(0, 0, 'floorWire').setOrigin(0, 0);
+
+        // Add box object
+        this.photoBox = new Box(this, game.config.width/2, game.config.height/2 - 50, 'box').setOrigin(.5, .5);
+        this.mirrorBox = new Box(this, game.config.width/5 - 200, game.config.height/1.5, 'boxWhite').setOrigin(.5, .5);
+        this.lightBoxA = new Box(this, game.config.width - 300, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
+        this.lightBoxB = new Box(this, game.config.width - 200, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
+        this.lightBoxC = new Box(this, game.config.width - 100, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
+        this.doorBoxA = new Box(this, game.config.width -25, game.config.height/2 + 170, 'boxWhite').setOrigin(.5, .5);
+        this.doorBoxB = new Box(this, game.config.width -25, game.config.height/2 + 80, 'boxWhite').setOrigin(.5, .5);
+
+        this.add.rectangle(game.config.width/2 - 10, game.config.height/2 - 60, 20, 10, 0x00000).setOrigin(0, 0);
+
+        // add lights
+        this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'greyCircle');
+        this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'greyCircle');
+        this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'greyCircle');
+
+        // add light counter
+        this.countA = 0;
+        this.countB = 0;
+        this.countC = 0;
+
+        this.puzzleComplete = false;
+
+
+
         // define keys
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
@@ -59,20 +90,28 @@ class Play extends Phaser.Scene {
         this.playerCat = new Cat(this, game.config.width/3, game.config.height/2, 'cat').setOrigin(0, 0);
 
         // add text
-        this.text = 'test text... once the text is finished, press the spacebar to reactivate it. ______________________________________________________________________________________________________kljahsdfkjh jkhsdfkjh jkhsdf sdf sdf kjsdf khjsdf kjhhufndfxkcv iuse kjshef xvkejfs kjshdf kjsdfn kaejh xzdvj jhzdfkmnzsef uixdf zjxkn kjdk sdg jklzxchv jzsnezsd kjzhxv kmzxnfskjfzxjklhv lxzkjhdf jzser';
+        this.text = 'I wonder where my owner went?                                            - interact with the different objects to make it to the next room - ';
         this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.text);
         
-        this.controls = 'Reset: R / Meow: M / Move: WASD / Text Test: Space / Clue Test: C ';
-        this.controlUI = this.add.text(game.config.width/4, 20, this.controls);
+        this.controls = 'Interact-Meow: M  /  Move: WASD  /  Start Text: Space  /  Reset: R ';
+        this.controlUI = this.add.text(game.config.width/4, 50, this.controls);
 
         this.clueText = 'clue test';
-        this.familyPhotoText = 'family photo';
-        this.mirrorText = 'interaction with mirror';
+        this.familyPhotoText = '- family photo - The humans really like blue...';
+        this.mirrorText = 'Mirror: pretty cat';
+        this.puzzleText = 'Hooray! You completed the puzzle! Press R to Reset';
+        this.doorText = 'The door is locked';
        // this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
 
        // Cat box overlap
        this.physics.add.overlap(this.playerCat, this.photoBox, this.touchingBox, null, this);
        this.physics.add.overlap(this.playerCat, this.mirrorBox, this.touchingMirror, null, this);
+       this.physics.add.overlap(this.playerCat, this.lightA, this.touchingLightsA, null, this);
+       this.physics.add.overlap(this.playerCat, this.lightB, this.touchingLightsB, null, this);
+       this.physics.add.overlap(this.playerCat, this.lightC, this.touchingLightsC, null, this);
+       this.physics.add.overlap(this.playerCat, this.doorBoxA, this.touchingDoorBox, null, this);
+       this.physics.add.overlap(this.playerCat, this.doorBoxB, this.touchingDoorBox, null, this);
+
 
 
         // Add colliders for collision sprites
@@ -108,7 +147,7 @@ class Play extends Phaser.Scene {
 
         if (Phaser.Input.Keyboard.JustDown(keyC)) {
             // this.clue = 'clue test';
-            this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
+            //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
         }
 
         // moved to cat.js
@@ -117,17 +156,98 @@ class Play extends Phaser.Scene {
         //     this.meow.play();
         // }
 
+        if(this.countA == 1 && this.countB == 2 && this.countC == 3 && !this.puzzleComplete){
+            this.puzzleDone = this.add.text(game.config.width/4, game.config.height/2 + 100, this.puzzleText);
+            this.puzzleComplete = true;
+            this.doorBoxA.destroy();
+            this.doorBoxB.destroy();
+        }
+
 
         this.playerCat.update();
     }  
     touchingBox(){
-        if(Phaser.Input.Keyboard.JustDown(keyC)) {
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
         this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.familyPhotoText);
     }
     }
+
     touchingMirror(){
-        if(Phaser.Input.Keyboard.JustDown(keyC)) {
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
         this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.mirrorText);
     }
+    }
+
+    touchingLightsA(){
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+
+            if(this.countA == 0){
+                this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'blueCircle');
+                this.countA = 1;
+            }
+            else if(this.countA == 1){
+                this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'redCircle');
+                this.countA = 2;
+
+            }
+            else if(this.countA == 2){
+                    this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'greenCircle');
+                    this.countA = 3;
+            }
+            else if(this.countA == 3){
+                this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'greyCircle');
+                this.countA = 0;
+            }
+        }
+    }
+
+    touchingLightsB(){
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            
+            if(this.countB == 0){
+                this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'greenCircle');
+                this.countB = 1;
+            }
+            else if(this.countB == 1){
+                this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'blueCircle');
+                this.countB = 2;
+
+            }
+            else if(this.countB == 2){
+                    this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'redCircle');
+                    this.countB = 3;
+            }
+            else if(this.countB == 3){
+                this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'greyCircle');
+                this.countB = 0;
+            }
+
+        }
+    }
+    touchingLightsC(){
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+
+            if(this.countC == 0){
+                this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'redCircle');
+                this.countC = 1;
+            }
+            else if(this.countC == 1){
+                this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'greenCircle');
+                this.countC = 2;
+            }
+            else if(this.countC == 2){
+                    this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'blueCircle');
+                    this.countC = 3;
+            }
+            else if(this.countC == 3){
+                this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'greyCircle');
+                this.countC = 0;
+            }
+        }
+    }
+    touchingDoorBox(){
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.doorText);
+        }
     }
 }
