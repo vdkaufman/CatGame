@@ -56,7 +56,7 @@ class Menu extends Phaser.Scene {
     update() {
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
         // pass to the next scene
-        this.meow.play();
+        //this.meow.play();
         this.scene.start('playScene');
         }
     }
