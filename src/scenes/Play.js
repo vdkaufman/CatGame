@@ -87,7 +87,7 @@ class Play extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        this.playerCat = new Cat(this, game.config.width/3, game.config.height/2, 'cat').setOrigin(0, 0);
+        this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(0, 0);
 
         // add text
         this.text = 'I wonder where my owner went?                                            - interact with the different objects to make it to the next room - ';
