@@ -9,6 +9,7 @@ class TextBox extends Phaser.GameObjects.Sprite{
         this.fixedWidth = game.config.width-145;
         this.fixedHeight = game.config.height/6;
 
+        this.setScale(.001,.001);
         //create the rexUI text box object
         this.myTextBox = this.scene.rexUI.add.textBox({
             x:5, 

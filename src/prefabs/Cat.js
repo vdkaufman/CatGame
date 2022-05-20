@@ -8,7 +8,10 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
 
         this.VELOCITY = 400;
         this.DRAG = 5000;
-        this.setDrag(this.DRAG,this.DRAG)
+        this.setDrag(this.DRAG,this.DRAG);
+        this.setScale(.7,.7)
+        this.body.setOffset(0, this.height/2)
+        this.body.setSize(345/1.5, this.height/2, false);
             
         // define sounds
         this.meow = scene.sound.add('meow', {
@@ -57,14 +60,18 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         //if(this.isGrounded) {
             if(keyLEFT.isDown){ 
                 this.body.setVelocityX(-this.VELOCITY);
+                //this.setScale(.7,.7);
             }
             else if (keyRIGHT.isDown) {
                 this.body.setVelocityX(this.VELOCITY);
+                //this.setScale(-.7,.7);
             } 
             else if (keyUP.isDown) {
+                this.play('cat-up');
                 this.body.setVelocityY(-this.VELOCITY);
             } 
             else if (keyDOWN.isDown) {
+                this.play('cat-down');
                 this.body.setVelocityY(this.VELOCITY);
             }
 

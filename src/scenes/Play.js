@@ -11,7 +11,8 @@ class Play extends Phaser.Scene {
         });
         this.load.image('nextPage', 
             'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
-        this.load.image('cat', './assets/cat.png');
+        this.load.spritesheet('cat', './assets/sprites/furlockSpriteSheet.png',
+            {frameWidth: 115, frameHeight: 183});
         this.load.image('simplebg', './assets/Simplebg.png');
         // load box pngs
         this.load.image('box', './assets/brownSquare100.png');
@@ -46,11 +47,11 @@ class Play extends Phaser.Scene {
         this.wallColliderRight = this.physics.add.sprite(game.config.width - 20, game.config.height/2, 'wallCollisionVertical');
         this.wallColliderRight.setImmovable(true);
         this.wallColliderRight.body.allowGravity = false; 
-
+        
         // simple background for playable prototype
         this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
-
         this.floorWire = this.add.sprite(0, 0, 'floorWire').setOrigin(0, 0);
+
 
         // Add box object
         this.photoBox = new Box(this, game.config.width/2, game.config.height/2 - 50, 'box').setOrigin(.5, .5);
@@ -87,7 +88,20 @@ class Play extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(0, 0);
+        this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
+    
+        this.anims.create({
+            key: 'cat-up',
+            frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'cat-down',
+            frames: this.anims.generateFrameNumbers('cat', {frames: [1]}),
+            repeat: -1
+        });
+        this.playerCat.play('cat-down');
+        
 
         // add text
         this.text = 'I wonder where my owner went?                                            - interact with the different objects to make it to the next room - ';
