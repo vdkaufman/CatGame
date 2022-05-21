@@ -1,6 +1,6 @@
-class Play extends Phaser.Scene {
+class Bedroom extends Phaser.Scene {
     constructor(){
-        super("playScene");
+        super("bedroom");
     }
     preload(){
         //this must be preloaded for each scene that requires text boxes
@@ -29,7 +29,7 @@ class Play extends Phaser.Scene {
         this.load.image('blueCircle', './assets/blueCircle25.png');
         this.load.image('greenCircle', './assets/greenCircle25.png');
         this.load.image('floorWire', './assets/floorWire.png');
-
+        this.load.image('key', './assets/blueKey.png');
 
     }
     create() {
@@ -55,7 +55,6 @@ class Play extends Phaser.Scene {
         this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
         this.floorWire = this.add.sprite(0, 0, 'floorWire').setOrigin(0, 0);
         
-        
         // Add box object
         this.familyPhotoText = '- family photo - The humans really like blue...';
         this.photoBox = new ClueItem(this, game.config.width/2, game.config.height/2 - 50, 'box', 0, 
@@ -76,7 +75,6 @@ class Play extends Phaser.Scene {
         this.lightBoxB = new Box(this, game.config.width - 200, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
         this.lightBoxC = new Box(this, game.config.width - 100, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
         
-        
         this.add.rectangle(game.config.width/2 - 10, game.config.height/2 - 60, 20, 10, 0x00000).setOrigin(0, 0);
         
         // add lights
@@ -90,6 +88,7 @@ class Play extends Phaser.Scene {
         this.countC = 0;
         
         this.puzzleComplete = false;
+        this.haveKey = false;
         
         // add interact button indicator
         this.indicator = this.add.sprite(0, 0, 'mKey').setOrigin(.5,.5);
@@ -97,8 +96,7 @@ class Play extends Phaser.Scene {
         this.indicator.setDepth(500);
         this.indicator.setAlpha(.85);
         this.indicator.setVisible(false);
-        
-        
+               
         // define keys
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
@@ -109,8 +107,10 @@ class Play extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
+
+
         this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
-        
+
         this.anims.create({
             key: 'cat-up',
             frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
@@ -123,9 +123,8 @@ class Play extends Phaser.Scene {
         });
         this.playerCat.play('cat-down');
         
-        
         // add text
-        this.puzzleText = 'Hooray! You completed the puzzle! Press R to Reset';
+        this.puzzleText = 'Hooray! You completed the puzzle! The door is unlocked!';
         this.introText = 'I wonder where my owner went?\n\n\n- interact with the different objects to make it to the next room - ';
         //this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.introText);
         
@@ -142,8 +141,6 @@ class Play extends Phaser.Scene {
        this.physics.add.overlap(this.playerCat, this.lightC, this.touchingLightsC, null, this);
        this.physics.add.overlap(this.playerCat, this.doorBoxA, this.touchingDoorBox, null, this);
        this.physics.add.overlap(this.playerCat, this.doorBoxB, this.touchingDoorBox, null, this);
-
-
 
         // Add colliders for collision sprites
         this.physics.add.collider(this.playerCat, this.wallColliderUp);
@@ -185,10 +182,24 @@ class Play extends Phaser.Scene {
         if(this.countA == 1 && this.countB == 2 && this.countC == 3 && !this.puzzleComplete){
             this.puzzleDone = this.add.text(game.config.width/4, game.config.height/2 + 100, this.puzzleText);
             this.puzzleComplete = true;
-            this.doorBoxA.destroy();
-            this.doorBoxB.destroy();
-        }
 
+
+        }
+        if (this.haveKey == true) {
+            if (this.playerCat.dir == 1) {
+                this.grabTest.x = this.playerCat.x + 30;
+                this.grabTest.y = this.playerCat.y + 125;
+            }
+            if (this.playerCat.dir == 0) {
+                this.grabTest.x = this.playerCat.x - 30;
+                this.grabTest.y = this.playerCat.y + 125;
+            }
+        }
+        else {
+            if(this.puzzleComplete){
+       
+             }
+        }
 
         this.playerCat.update();
     }  
@@ -282,8 +293,13 @@ class Play extends Phaser.Scene {
     touchingDoorBox(cat, obj){
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            if(this.puzzleComplete){
+                this.scene.start('livingroom');
+            }
+            else{
             obj.openTextBox();
             //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.doorText);
+            }
         }
     }
 
