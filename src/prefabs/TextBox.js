@@ -8,10 +8,11 @@ class TextBox extends Phaser.GameObjects.Sprite{
         this.wrapWidth =  game.config.width-120;
         this.fixedWidth = game.config.width-145;
         this.fixedHeight = game.config.height/6;
-
+    
         this.setScale(.001,.001);
+
         //create the rexUI text box object
-        this.myTextBox = this.scene.rexUI.add.textBox({
+        this.textBox = this.scene.rexUI.add.textBox({
             x:5, 
             y:game.config.height - 3,
         
@@ -46,23 +47,21 @@ class TextBox extends Phaser.GameObjects.Sprite{
         }).setOrigin(0,1).layout(); 
 
         // make it interactive
-        this.createInteractiveTextBox(this.scene, this.myTextBox).start(this.text, 30);
-        
+        this.createInteractiveTextBox(this.scene);//.start(this.text, 30);
+        this.textBox.setActive(false).setVisible(false);
+        this.textBox.setDepth(1001);
+        //this.textBox.start(this.text, 30);
+        this.delayClock;
     }
 
     update(){
         // reset text box when the correct conditions are met
-        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            if (!this.myTextBox.active){
-                console.log('reset textBox..');
-                this.myTextBox.setActive(true).setVisible(true);
-                this.myTextBox.start(this.text, 30);
-            }
+        if (Phaser.Input.Keyboard.JustDown(keyM)) {
         }
     }
 
-    createInteractiveTextBox(scene, textBox){
-       
+    createInteractiveTextBox(scene){
+        this.delayClock;
         // Start of pointer input mechanisms 
         scene.input.keyboard.on('keydown-M', function () {
             var icon = this.getElement('action').setVisible(false);
@@ -73,33 +72,50 @@ class TextBox extends Phaser.GameObjects.Sprite{
                 this.typeNextPage();
                 // if (this.isLastPage)
                 //     this.setActive(false).setVisible(false);
-            } else {
+            } else if(this.active){
                 //deactivate the textbox
-                this.setActive(false).setVisible(false);
-                
-            }
-        }, textBox).on('pageend', function () {
-            if (this.isLastPage) {
-                //return;
-            }
-            
-            // turned arrow icon (the clickable 'next' button)
-            var icon = this.getElement('action').setVisible(true);
-            this.resetChildVisibleState(icon);
-            icon.y = textBox.y - 60;
-            var tween = scene.tweens.add({
-                targets: icon,
-                y: '+=30', // '+=100'
-                ease: 'Bounce', // 'Cubic', 'Elastic', 'Bounce', 'Back'
-                duration: 500,
-                repeat: 0, // -1: infinity
-                yoyo: false
-            });
-        }, textBox)
-        //.on('type', function () {
-        //})
+                //this.setVisible(false);
+                this.delayClock = scene.time.addEvent({delay: 50, callback: () =>{
+                    console.log('textbox delayClock finished...')
+                    this.setActive(false).setVisible(false);;
+                    //this.delayClock.remove();
+                    scene.time.removeEvent(this.delayClock);
 
-        return textBox;
+                }, callbackScope: scene, repeat: 0});
+    
+            }
+        }, this.textBox)
+
+        return this.textBox;
+    }
+
+    startText(start){
+        if (start){
+            this.textBox.setActive(true).setVisible(true);
+            this.textBox.start(this.text, 30);
+            
+        }
+        else{
+            this.textBox.setActive(false).setVisible(false);
+            this.textBox.stop();
+        }
+    }
+
+    getActive(){
+        //console.log('in textBox: textBox active state is: ', this.textBox.active);
+        return this.textBox.active;
+    }
+    setIsGoing(bool){
+        this.isGoing = bool;
+    }
+
+    resetTextBox(){
+        //console.log('isGoing:', this.isGoing);
+        if (!this.textBox.active){
+            console.log('reset textBox..');
+            this.textBox.setActive(true).setVisible(true);
+            this.textBox.start(this.text, 30);
+        }
     }
     
 // handleVisibility(show){

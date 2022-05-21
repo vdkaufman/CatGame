@@ -14,6 +14,9 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('cat', './assets/sprites/furlockSpriteSheet.png',
             {frameWidth: 115, frameHeight: 183});
         this.load.image('simplebg', './assets/Simplebg.png');
+        this.load.image('fam-portrait', './assets/sprites/Portrait03.png');
+        this.load.image('mKey', './assets/sprites/mKey.png');
+
         // load box pngs
         this.load.image('box', './assets/brownSquare100.png');
         this.load.image('boxWhite', './assets/whiteBox100.png');
@@ -51,33 +54,51 @@ class Play extends Phaser.Scene {
         // simple background for playable prototype
         this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
         this.floorWire = this.add.sprite(0, 0, 'floorWire').setOrigin(0, 0);
-
-
+        
+        
         // Add box object
-        this.photoBox = new Box(this, game.config.width/2, game.config.height/2 - 50, 'box').setOrigin(.5, .5);
-        this.mirrorBox = new Box(this, game.config.width/5 - 200, game.config.height/1.5, 'boxWhite').setOrigin(.5, .5);
+        this.familyPhotoText = '- family photo - The humans really like blue...';
+        this.photoBox = new ClueItem(this, game.config.width/2, game.config.height/2 - 50, 'box', 0, 
+        this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
+        
+        this.mirrorText = 'Mirror: pretty cat';
+        this.mirrorBox = new ClueItem(this, game.config.width/5 - 200, game.config.height/1.5, 'boxWhite', 0,
+        this.mirrorText, null).setOrigin(.5, .5);
+        
+        this.doorText = 'The door is locked';
+        this.doorBoxA = new ClueItem(this, game.config.width -25, game.config.height/2 + 170, 'boxWhite', 0,
+            this.doorText, null).setOrigin(.5, .5);
+        
+        this.doorBoxB = new ClueItem(this, game.config.width -25, game.config.height/2 + 80, 'boxWhite', 0,
+            this.doorText, null).setOrigin(.5, .5);
+        
         this.lightBoxA = new Box(this, game.config.width - 300, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
         this.lightBoxB = new Box(this, game.config.width - 200, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
         this.lightBoxC = new Box(this, game.config.width - 100, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
-        this.doorBoxA = new Box(this, game.config.width -25, game.config.height/2 + 170, 'boxWhite').setOrigin(.5, .5);
-        this.doorBoxB = new Box(this, game.config.width -25, game.config.height/2 + 80, 'boxWhite').setOrigin(.5, .5);
-
+        
+        
         this.add.rectangle(game.config.width/2 - 10, game.config.height/2 - 60, 20, 10, 0x00000).setOrigin(0, 0);
-
+        
         // add lights
         this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'greyCircle');
         this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'greyCircle');
         this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'greyCircle');
-
+        
         // add light counter
         this.countA = 0;
         this.countB = 0;
         this.countC = 0;
-
+        
         this.puzzleComplete = false;
-
-
-
+        
+        // add interact button indicator
+        this.indicator = this.add.sprite(0, 0, 'mKey').setOrigin(.5,.5);
+        this.indicator.setScale(.2,.2);
+        this.indicator.setDepth(500);
+        this.indicator.setAlpha(.85);
+        this.indicator.setVisible(false);
+        
+        
         // define keys
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
@@ -87,9 +108,9 @@ class Play extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
+        
         this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
-    
+        
         this.anims.create({
             key: 'cat-up',
             frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
@@ -102,19 +123,15 @@ class Play extends Phaser.Scene {
         });
         this.playerCat.play('cat-down');
         
-
+        
         // add text
-        this.text = 'I wonder where my owner went?                                            - interact with the different objects to make it to the next room - ';
-        this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.text);
+        this.puzzleText = 'Hooray! You completed the puzzle! Press R to Reset';
+        this.introText = 'I wonder where my owner went?\n\n\n- interact with the different objects to make it to the next room - ';
+        //this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.introText);
         
         this.controls = 'Interact-Meow: M  /  Move: WASD  /  Start Text: Space  /  Reset: R ';
         this.controlUI = this.add.text(game.config.width/4, 50, this.controls);
 
-        this.clueText = 'clue test';
-        this.familyPhotoText = '- family photo - The humans really like blue...';
-        this.mirrorText = 'Mirror: pretty cat';
-        this.puzzleText = 'Hooray! You completed the puzzle! Press R to Reset';
-        this.doorText = 'The door is locked';
        // this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
 
        // Cat box overlap
@@ -152,7 +169,8 @@ class Play extends Phaser.Scene {
     }
 
     update(){
-        this.myTestTextBox.update();
+        //this.myTestTextBox.update();
+        this.photoBox.update();
         // check key input for restart
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             //this.scene.restart();
@@ -164,12 +182,6 @@ class Play extends Phaser.Scene {
             //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
         }
 
-        // moved to cat.js
-        // // play meow sfx
-        // if (Phaser.Input.Keyboard.JustDown(keyM)) {
-        //     this.meow.play();
-        // }
-
         if(this.countA == 1 && this.countB == 2 && this.countC == 3 && !this.puzzleComplete){
             this.puzzleDone = this.add.text(game.config.width/4, game.config.height/2 + 100, this.puzzleText);
             this.puzzleComplete = true;
@@ -180,19 +192,25 @@ class Play extends Phaser.Scene {
 
         this.playerCat.update();
     }  
-    touchingBox(){
+    touchingBox(cat, obj){
+        this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
-        this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.familyPhotoText);
-    }
+            //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.familyPhotoText);
+            obj.openTextBox();
+            obj.openPopUpImage();
+        }
     }
 
-    touchingMirror(){
+    touchingMirror(cat, obj){
+        this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
-        this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.mirrorText);
-    }
+            //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.mirrorText);
+            obj.openTextBox();
+        }
     }
 
-    touchingLightsA(){
+    touchingLightsA(cat, obj){
+        this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
 
             if(this.countA == 0){
@@ -215,7 +233,8 @@ class Play extends Phaser.Scene {
         }
     }
 
-    touchingLightsB(){
+    touchingLightsB(cat, obj){
+        this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
             
             if(this.countB == 0){
@@ -238,7 +257,8 @@ class Play extends Phaser.Scene {
 
         }
     }
-    touchingLightsC(){
+    touchingLightsC(cat, obj){
+        this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
 
             if(this.countC == 0){
@@ -259,9 +279,25 @@ class Play extends Phaser.Scene {
             }
         }
     }
-    touchingDoorBox(){
+    touchingDoorBox(cat, obj){
+        this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
-            this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.doorText);
+            obj.openTextBox();
+            //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.doorText);
         }
+    }
+
+    setIndicator(scene, x, y, indicator){
+        this.delayClock;
+        indicator.x = x;
+        indicator.y = y - 80;
+        indicator.setVisible(true);
+
+        this.delayClock = scene.time.addEvent({delay: 50, callback: () =>{
+            indicator.setVisible(false);
+            //this.delayClock.remove();
+            scene.time.removeEvent(this.delayClock);
+
+        }, callbackScope: scene, repeat: 0});
     }
 }

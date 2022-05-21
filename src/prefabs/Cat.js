@@ -11,7 +11,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.setDrag(this.DRAG,this.DRAG);
         this.setScale(.7,.7)
         this.body.setOffset(0, this.height/2)
-        this.body.setSize(345/1.5, this.height/2, false);
+        this.body.setSize(this.width, this.height/2, false);
             
         // define sounds
         this.meow = scene.sound.add('meow', {
