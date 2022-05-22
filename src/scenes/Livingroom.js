@@ -46,6 +46,12 @@ class Livingroom extends Phaser.Scene {
         this.wallColliderRight.setImmovable(true);
         this.wallColliderRight.body.allowGravity = false; 
         
+        this.floorSwitch1 = this.physics.add.sprite(game.config.width/2 - 200, game.config.height/2 - 100, 'boxWhite');
+        this.floorSwitch2 = this.physics.add.sprite(game.config.width/2 + 350, game.config.height/2, 'boxWhite');
+        this.floorSwitch3 = this.physics.add.sprite(game.config.width/2 - 300, game.config.height/2 + 300, 'boxWhite');
+        this.floorSwitch4 = this.physics.add.sprite(game.config.width/2 + 250, game.config.height/2 + 400, 'boxWhite');
+
+
         // simple background for playable prototype
         this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
 
@@ -56,10 +62,6 @@ class Livingroom extends Phaser.Scene {
         this.doorBoxB = new ClueItem(this, game.config.width -25, game.config.height/2 + 80, 'boxWhite', 0,
             this.doorText, null).setOrigin(.5, .5);
 
-
-        this.floorSwitchA = this.physics.add.sprite(game.config.width - 300, game.config.height/2 + 200, 'boxWhite');
-
-        
         this.roomba = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'blueCircle');
 
         this.puzzleComplete = false;
@@ -72,7 +74,6 @@ class Livingroom extends Phaser.Scene {
         this.indicator.setDepth(500);
         this.indicator.setAlpha(.85);
         this.indicator.setVisible(false);
-
        
         // define keys
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
@@ -85,7 +86,6 @@ class Livingroom extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
         this.blueKey = new Grab(this, game.config.width/2 + 200, game.config.height/2 + 100, 'key').setOrigin(.5, 0);
-
 
         this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
 
@@ -110,10 +110,15 @@ class Livingroom extends Phaser.Scene {
        this.physics.add.overlap(this.playerCat, this.doorBoxA, this.touchingDoorBox, null, this);
        this.physics.add.overlap(this.playerCat, this.doorBoxB, this.touchingDoorBox, null, this);
        this.physics.add.overlap(this.playerCat, this.blueKey, this.touchingKey, null, this);
-       this.physics.add.overlap(this.roomba, this.floorSwitchA, this.touchingSwitch, null, this);
-       this.physics.add.overlap(this.blueKey, this.doorBoxA, this.puzzleCompleted, null, this);
-       this.physics.add.overlap(this.blueKey, this.doorBoxA, this.puzzleCompleted, null, this);
+       this.physics.add.overlap(this.roomba, this.floorSwitch3, this.touchingSwitch3, null, this);
+       this.physics.add.overlap(this.roomba, this.floorSwitch4, this.touchingSwitch4, null, this);
+       this.physics.add.overlap(this.roomba, this.floorSwitch1, this.touchingSwitch1, null, this);
+       this.physics.add.overlap(this.roomba, this.floorSwitch2, this.touchingSwitch2, null, this);
 
+       this.physics.add.overlap(this.roomba, this.playerCat, this.touchingRoomba, null, this);
+
+       this.physics.add.overlap(this.blueKey, this.doorBoxA, this.puzzleCompleted, null, this);
+       this.physics.add.overlap(this.blueKey, this.doorBoxA, this.puzzleCompleted, null, this);
 
         // Add colliders for collision sprites
         this.physics.add.collider(this.playerCat, this.wallColliderUp);
@@ -157,16 +162,16 @@ class Livingroom extends Phaser.Scene {
     this.playerCat.update();
 
     if(this.roombaMovement == 0){
-        this.roomba.y += 1;
+        this.roomba.y += 5;
     }
     if(this.roombaMovement == 1){
-        this.roomba.x -= 1;
+        this.roomba.y -= 5;
     }
     if(this.roombaMovement == 2){
-        this.roomba.y -= 1;
+        this.roomba.x -= 5;
     }
     if(this.roombaMovement == 3){
-        this.roomba.x += 1;
+        this.roomba.x += 5;
     }
 
 }  
@@ -175,7 +180,7 @@ touchingDoorBox(cat, obj){
     this.setIndicator(this, obj.x, obj.y, this.indicator);
     if(Phaser.Input.Keyboard.JustDown(keyM)) {
         if(this.puzzleComplete){
-            this.scene.start('menuScene');
+            this.scene.start('livingroom');
         }
         else{
         obj.openTextBox();
@@ -191,13 +196,29 @@ touchingKey(cat, obj){
         this.haveKey = true;
     }
 }
-touchingSwitch(floorSwitchA, obj){
-  
-    if(this.floorSwitchA){
-        this.roombaMovement = 1;
-    }
-  
+touchingSwitch3(floorSwitchA, obj){
+    this.roombaMovement = 1;
+    console.log('Switch 3');
 }
+touchingSwitch4(floorSwitchA, obj){
+    this.roombaMovement = 2;
+    console.log('Switch 4');
+
+}
+touchingSwitch1(floorSwitchA, obj){
+    this.roombaMovement = 3;
+    console.log('Switch 1');
+
+}
+touchingSwitch2(floorSwitchA, obj){
+    this.roombaMovement = 0;
+    console.log('Switch 2');
+
+}
+touchingRoomba(){
+this.scene.start("livingroom");
+}
+
 puzzleCompleted(cat, obj){
     this.puzzleComplete = true;
 }
