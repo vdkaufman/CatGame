@@ -25,6 +25,7 @@ class Livingroom extends Phaser.Scene {
         this.load.image('wallCollisionVertical', './assets/blackVertical800.png');
         this.load.image('greyCircle', './assets/greyCircle25.png');
         this.load.image('key', './assets/blueKey.png');
+        this.load.image('roomba', './assets/sprites/roomba.png');
 
     }
     create() {
@@ -62,7 +63,8 @@ class Livingroom extends Phaser.Scene {
         this.doorBoxB = new ClueItem(this, game.config.width -25, game.config.height/2 + 80, 'boxWhite', 0,
             this.doorText, null).setOrigin(.5, .5);
 
-        this.roomba = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'blueCircle');
+        this.roomba = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'roomba').setOrigin(.5,.5);
+        this.roomba.setScale(.5,.5);
 
         this.puzzleComplete = false;
         this.haveKey = false;
@@ -85,10 +87,9 @@ class Livingroom extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
-        this.blueKey = new Grab(this, game.config.width/2 + 200, game.config.height/2 + 100, 'key').setOrigin(.5, 0);
-
-        this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
-
+        
+        this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, .5);
+        
         this.anims.create({
             key: 'cat-up',
             frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
@@ -101,6 +102,9 @@ class Livingroom extends Phaser.Scene {
         });
         this.playerCat.play('cat-down');
 
+        // render key after player character
+        this.blueKey = new Grab(this, game.config.width/2 + 200, game.config.height/2 + 100, 'key').setOrigin(.5, .5);
+        
         this.puzzleText = 'Hooray! You completed the puzzle! Press R to Reset';
 
         this.controls = 'Interact-Meow: M  /  Move: WASD  /  Start Text: Space  /  Reset: R ';
@@ -146,11 +150,11 @@ class Livingroom extends Phaser.Scene {
     if (this.haveKey == true) {
         if (this.playerCat.dir == 1) {
             this.blueKey.x = this.playerCat.x + 30;
-            this.blueKey.y = this.playerCat.y + 90;
+            this.blueKey.y = this.playerCat.y+30;
         }
         if (this.playerCat.dir == 0) {
             this.blueKey.x = this.playerCat.x - 30;
-            this.blueKey.y = this.playerCat.y + 88;
+            this.blueKey.y = this.playerCat.y+30;
         }
     }
     else {
@@ -162,15 +166,19 @@ class Livingroom extends Phaser.Scene {
     this.playerCat.update();
 
     if(this.roombaMovement == 0){
+        // go down
         this.roomba.y += 5;
     }
     if(this.roombaMovement == 1){
+        // go up
         this.roomba.y -= 5;
     }
     if(this.roombaMovement == 2){
+        // go left
         this.roomba.x -= 5;
     }
     if(this.roombaMovement == 3){
+        // go right
         this.roomba.x += 5;
     }
 
@@ -197,26 +205,34 @@ touchingKey(cat, obj){
     }
 }
 touchingSwitch3(floorSwitchA, obj){
+    // go up
     this.roombaMovement = 1;
+    this.roomba.angle = 180;
     console.log('Switch 3');
 }
 touchingSwitch4(floorSwitchA, obj){
+    // go left
     this.roombaMovement = 2;
+    this.roomba.angle = 90;
     console.log('Switch 4');
 
 }
 touchingSwitch1(floorSwitchA, obj){
+    // go right
     this.roombaMovement = 3;
+    this.roomba.angle = 280;
     console.log('Switch 1');
 
 }
 touchingSwitch2(floorSwitchA, obj){
+    // go down
     this.roombaMovement = 0;
+    this.roomba.angle= 0;
     console.log('Switch 2');
 
 }
 touchingRoomba(){
-this.scene.start("livingroom");
+    this.scene.start("livingroom");
 }
 
 puzzleCompleted(cat, obj){
