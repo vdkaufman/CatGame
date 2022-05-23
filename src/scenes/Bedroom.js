@@ -129,8 +129,8 @@ class Bedroom extends Phaser.Scene {
         this.introTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.introText);
         this.introTextBox.startText(true);
         
-        this.controls = 'Interact-Meow: M  /  Move: WASD  /  Start Text: Space  /  Reset: R ';
-        this.controlUI = this.add.text(game.config.width/4, 50, this.controls);
+        this.controls = 'Interact-Meow: M  /  Move: WASD  /  Reset: R ';
+        this.controlUI = this.add.text(game.config.width/2, 50, this.controls).setOrigin(.5,.5);
 
        // this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
 
