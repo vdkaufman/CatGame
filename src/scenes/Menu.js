@@ -17,8 +17,8 @@ class Menu extends Phaser.Scene {
             fontFamily: 'Courier',
             fontSize: '24px',
             backgroundColor: '#3b243e',
-            color: '#716d7b',
-            align: 'right',
+            color: '#ffffff',
+            align: 'center',
             padding: {
                 top: 5,
                 bottom: 5,
@@ -45,7 +45,7 @@ class Menu extends Phaser.Scene {
         // Display Menu Text
         this.add.text(game.config.width/2, 550, ' Press [SPACE] to start ', 
         menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, 650, '[M] - interact/next text | [WASD] - walk ', 
+        this.add.text(game.config.width/2, 650, '[M] - interact/next text\n\n[WASD] - walk ', 
         menuConfig).setOrigin(0.5);
 
         // define keys
