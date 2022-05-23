@@ -45,6 +45,8 @@ class Menu extends Phaser.Scene {
         // Display Menu Text
         this.add.text(game.config.width/2, 550, ' Press [SPACE] to start ', 
         menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, 650, '[M] - interact/next text | [WASD] - walk ', 
+        menuConfig).setOrigin(0.5);
 
         // define keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
