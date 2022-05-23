@@ -39,8 +39,8 @@ class TextBox extends Phaser.GameObjects.Sprite{
             space: {
                 left: 20,
                 right: 20,
-                top: 40,
-                bottom: 40,
+                top: 20,
+                bottom: 20,
                 icon: 10,
                 text: 10,
             }

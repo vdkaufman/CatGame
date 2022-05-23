@@ -125,8 +125,9 @@ class Bedroom extends Phaser.Scene {
         
         // add text
         this.puzzleText = 'Hooray! You completed the puzzle! The door is unlocked!';
-        this.introText = 'I wonder where my owner went?\n\n\n- interact with the different objects to make it to the next room - ';
-        //this.myTestTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.introText);
+        this.introText = 'I wonder where my owner went?\n\n\n- interact with various objects to make it to the next room and find out what happend to your human - ';
+        this.introTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.introText);
+        this.introTextBox.startText(true);
         
         this.controls = 'Interact-Meow: M  /  Move: WASD  /  Start Text: Space  /  Reset: R ';
         this.controlUI = this.add.text(game.config.width/4, 50, this.controls);

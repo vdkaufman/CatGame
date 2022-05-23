@@ -35,7 +35,7 @@ class ClueItem extends Phaser.Physics.Arcade.Sprite{
     openPopUpImage(){
         if (this.popUp){
             this.popUp.setActive(true).setVisible(true);
-            this.delayClock = this.scene.time.addEvent({delay: 60, callback: () =>{
+            this.delayClock = this.scene.time.addEvent({delay: 70, callback: () =>{
                 if (this.myTextBox.getActive()){
                     this.popUp.setActive(true).setVisible(true);
                 }
