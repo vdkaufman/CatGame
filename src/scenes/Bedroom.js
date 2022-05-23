@@ -209,7 +209,6 @@ class Bedroom extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
             //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.familyPhotoText);
             obj.openTextBox();
-            obj.openPopUpImage();
         }
     }
 

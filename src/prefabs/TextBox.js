@@ -1,13 +1,15 @@
 const GetValue = Phaser.Utils.Objects.GetValue;
 class TextBox extends Phaser.GameObjects.Sprite{
-    constructor(scene, x, y, texture, frame, text) {
+    constructor(scene, x, y, texture, frame, text, popUp) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this); // add object to existing scene, displayList, updateList
         // the textbox definition
         this.text = text;
+        this.popUp = popUp;
         this.wrapWidth =  game.config.width-120;
         this.fixedWidth = game.config.width-145;
         this.fixedHeight = game.config.height/6;
+        this.textSpd = 30; // text speed in milliseconds
     
         this.setScale(.001,.001);
 
@@ -47,7 +49,7 @@ class TextBox extends Phaser.GameObjects.Sprite{
         }).setOrigin(0,1).layout(); 
 
         // make it interactive
-        this.createInteractiveTextBox(this.scene);//.start(this.text, 30);
+        this.createInteractiveTextBox(this.scene, this.popUp);//.start(this.text, 30);
         this.textBox.setActive(false).setVisible(false);
         this.textBox.setDepth(1001);
         //this.textBox.start(this.text, 30);
@@ -60,7 +62,7 @@ class TextBox extends Phaser.GameObjects.Sprite{
         }
     }
 
-    createInteractiveTextBox(scene){
+    createInteractiveTextBox(scene, popUp){
         this.delayClock;
         // Start of pointer input mechanisms 
         scene.input.keyboard.on('keydown-M', function () {
@@ -75,9 +77,12 @@ class TextBox extends Phaser.GameObjects.Sprite{
             } else if(this.active){
                 //deactivate the textbox
                 //this.setVisible(false);
-                this.delayClock = scene.time.addEvent({delay: 50, callback: () =>{
-                    console.log('textbox delayClock finished...')
-                    this.setActive(false).setVisible(false);;
+                this.delayClock = scene.time.addEvent({delay: 40, callback: () =>{
+                    console.log('textbox delayClock finished...');
+                    this.setActive(false).setVisible(false);
+                    if (popUp){
+                        popUp.setActive(false).setVisible(false);
+                    }
                     //this.delayClock.remove();
                     scene.time.removeEvent(this.delayClock);
 
@@ -105,9 +110,6 @@ class TextBox extends Phaser.GameObjects.Sprite{
         //console.log('in textBox: textBox active state is: ', this.textBox.active);
         return this.textBox.active;
     }
-    setIsGoing(bool){
-        this.isGoing = bool;
-    }
 
     resetTextBox(){
         //console.log('isGoing:', this.isGoing);
@@ -115,6 +117,9 @@ class TextBox extends Phaser.GameObjects.Sprite{
             console.log('reset textBox..');
             this.textBox.setActive(true).setVisible(true);
             this.textBox.start(this.text, 30);
+            if (this.popUp){
+                this.popUp.setActive(true).setVisible(true);
+            } 
         }
     }
     

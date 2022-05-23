@@ -13,7 +13,7 @@ class ClueItem extends Phaser.Physics.Arcade.Sprite{
 
         // text box object
         this.text = text;
-        this.myTextBox = new TextBox(scene, x, y, texture, frame, text);
+        this.myTextBox = new TextBox(scene, x, y, texture, frame, text, this.popUp);
         this.myTextBox.setActive(false).setVisible(false);
 
     }
@@ -29,23 +29,6 @@ class ClueItem extends Phaser.Physics.Arcade.Sprite{
 
     openTextBox(){
         this.myTextBox.resetTextBox();
-    }
-
-    // open and close pop-up with text box 
-    openPopUpImage(){
-        if (this.popUp){
-            this.popUp.setActive(true).setVisible(true);
-            this.delayClock = this.scene.time.addEvent({delay: 70, callback: () =>{
-                if (this.myTextBox.getActive()){
-                    this.popUp.setActive(true).setVisible(true);
-                }
-                else{
-                    this.popUp.setActive(false).setVisible(false);
-                }
-                //this.delayClock.remove();
-                this.scene.time.removeEvent(this.delayClock);
-            }, callbackScope: this.scene, repeat: 0});
-        }
     }
    
 }
