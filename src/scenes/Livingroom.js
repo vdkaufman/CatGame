@@ -81,6 +81,7 @@ class Livingroom extends Phaser.Scene {
 
         this.roomba = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'roomba').setOrigin(.5,.5);
         this.roomba.setScale(.5,.5);
+        this.roomba.body.setSize(.7,.7);
 
         this.puzzleComplete = false;
         this.haveKey = false;
