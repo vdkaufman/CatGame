@@ -65,7 +65,7 @@ class Livingroom extends Phaser.Scene {
         this.topBox3 = this.physics.add.sprite(game.config.width/2, game.config.height/2 + 200, 'box');
         this.topBox3.setImmovable(true);
 
-        this.pushBox = this.physics.add.sprite(game.config.width/2 - 350, game.config.height/2 - 50, 'boxWhite');
+        this.pushBox = this.physics.add.sprite(game.config.width/2 - 350, game.config.height/2 - 50, 'greyCircle');
         this.pushBox.setImmovable(true);
 
         this.blueLock = this.physics.add.sprite(game.config.width/2 - 350, game.config.height/2 + 350, 'blueCircle');
@@ -223,8 +223,10 @@ class Livingroom extends Phaser.Scene {
 }  
 
     touchingBlueLock(cat, obj) {
+        if(!this.puzzleCompleted){
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         console.log('blue lock');
+        }
         this.blueKey.alpha = 0;
         this.puzzleDone = this.add.text(game.config.width/4, game.config.height/2 + 100, this.puzzleText);
     }
