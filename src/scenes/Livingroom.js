@@ -128,8 +128,8 @@ class Livingroom extends Phaser.Scene {
         
         this.puzzleText = 'Hooray! You completed the puzzle! Press R to Reset';
 
-        this.controls = 'Interact-Meow: M  /  Move: WASD  /  Start Text: Space  /  Reset: R ';
-        this.controlUI = this.add.text(game.config.width/4, 50, this.controls);
+        this.controls = 'Interact-Meow: M  /  Move: WASD  /  Reset: R ';
+        this.controlUI = this.add.text(game.config.width/2, 50, this.controls).setOrigin(.5,.5);
 
         // Cat box overlap
        this.physics.add.overlap(this.playerCat, this.doorBoxA, this.touchingDoorBox, null, this);
@@ -181,10 +181,10 @@ class Livingroom extends Phaser.Scene {
 
     update(){
 
-    if (Phaser.Input.Keyboard.JustDown(keyR)) {
-        //this.scene.restart();
-        this.scene.start("menuScene");
-    }
+        if (Phaser.Input.Keyboard.JustDown(keyR)) {
+            //this.scene.restart();
+            this.scene.start("menuScene");
+        }
 
         if (this.haveKey == true) {
             if (this.playerCat.dir == 1) {
@@ -198,126 +198,132 @@ class Livingroom extends Phaser.Scene {
         }
         else {
             if (this.puzzleComplete) {
-                blueKey.destroy();
+                this.blueKey.destroy();
             }
-    }
+        }
 
-    this.playerCat.update();
+        this.playerCat.update();
 
-    if(this.roombaMovement == 0){
-        // go down
-        this.roomba.y += 8;
-    }
-    if(this.roombaMovement == 1){
-        // go up
-        this.roomba.y -= 8;
-    }
-    if(this.roombaMovement == 2){
-        // go left
-        this.roomba.x -= 8;
-    }
-    if(this.roombaMovement == 3){
-        // go right
-        this.roomba.x += 8;
-    }
+        if(this.roombaMovement == 0){
+            // go down
+            this.roomba.y += 8;
+        }
+        if(this.roombaMovement == 1){
+            // go up
+            this.roomba.y -= 8;
+        }
+        if(this.roombaMovement == 2){
+            // go left
+            this.roomba.x -= 8;
+        }
+        if(this.roombaMovement == 3){
+            // go right
+            this.roomba.x += 8;
+        }
 
-}  
+    }  
 
     touchingBlueLock(cat, obj) {
+
         if(!this.puzzleCompleted){
-        this.setIndicator(this, obj.x, obj.y, this.indicator);
-        console.log('blue lock');
+            this.setIndicator(this, obj.x, obj.y, this.indicator);
+            console.log('blue lock');
         }
-        this.blueKey.alpha = 0;
-        this.puzzleDone = this.add.text(game.config.width/4, game.config.height/2 + 100, this.puzzleText);
+
+        else{ 
+            this.blueKey.alpha = 0;
+            this.puzzleDone = this.add.text(game.config.width/4, game.config.height/2 + 100, this.puzzleText);
+        }
     }
 
-touchingMSwitch(cat, obj){
-    this.setIndicator(this, obj.x, obj.y, this.indicator);
-    if(Phaser.Input.Keyboard.JustDown(keyM)) {
-        if(this.mSwitch){
-            this.mSwitch = false;
-        }
-        else{
-            this.mSwitch = true;
+    touchingMSwitch(cat, obj){
+        this.setIndicator(this, obj.x, obj.y, this.indicator);
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            if(this.mSwitch){
+                this.mSwitch = false;
+            }
+            else{
+                this.mSwitch = true;
+            }
         }
     }
-}
 
     touchingDoorBox(cat, obj) {
-            this.setIndicator(this, obj.x, obj.y, this.indicator);
-            if (Phaser.Input.Keyboard.JustDown(keyM)) {
-                if (!this.puzzleCompleted) {
-                    obj.openTextBox();
-                }
-                if (this.puzzleCompleted) {
-                    this.scene.start('livingroom');
-                }
+        this.setIndicator(this, obj.x, obj.y, this.indicator);
+        if (Phaser.Input.Keyboard.JustDown(keyM)) {
+            if (!this.puzzleCompleted) {
+                obj.openTextBox();
             }
+            if (this.puzzleCompleted) {
+                this.scene.start('livingroom');
+            }
+        }
     }
 
-touchingKey(cat, obj){
-    if(!this.haveKey){
-    this.setIndicator(this, obj.x, obj.y, this.indicator);
+    touchingKey(cat, obj){
+        if(!this.haveKey){
+            this.setIndicator(this, obj.x, obj.y, this.indicator);
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            this.haveKey = true;
+        }
     }
-    if(Phaser.Input.Keyboard.JustDown(keyM)) {
-        this.haveKey = true;
+    touchingSwitch3(floorSwitchA, obj){
+        // go up
+        this.roombaMovement = 1;
+        this.roomba.angle = 180;
+        console.log('Switch 3');
     }
-}
-touchingSwitch3(floorSwitchA, obj){
-    // go up
-    this.roombaMovement = 1;
-    this.roomba.angle = 180;
-    console.log('Switch 3');
-}
-touchingSwitch4(floorSwitchA, obj){
-    // go left
-    this.roombaMovement = 2;
-    this.roomba.angle = 90;
-    console.log('Switch 4');
+    touchingSwitch4(floorSwitchA, obj){
+        // go left
+        this.roombaMovement = 2;
+        this.roomba.angle = 90;
+        console.log('Switch 4');
 
-}
-touchingSwitch1(floorSwitchA, obj){
-    // go right
-    if(this.mSwitch == true){
-    this.roombaMovement = 3;
-    this.roomba.angle = 280;
-    console.log('Switch 1');
-}
-else{
-    this.roombaMovement = 0;
-    this.roomba.angle= 0;
+    }
+    touchingSwitch1(floorSwitchA, obj){
+        // go right
+        if(this.mSwitch == true){
+            this.roombaMovement = 3;
+            this.roomba.angle = 280;
+            console.log('Switch 1');
+        }
+        else{
+            this.roombaMovement = 0;
+            this.roomba.angle= 0;
 
-}
+        }
 
-}
-touchingSwitch2(floorSwitchA, obj){
-    // go down
-    this.roombaMovement = 0;
-    this.roomba.angle= 0;
-    console.log('Switch 2');
+    }
+    touchingSwitch2(floorSwitchA, obj){
+        // go down
+        this.roombaMovement = 0;
+        this.roomba.angle= 0;
+        console.log('Switch 2');
 
-}
-touchingRoomba(){
-    this.scene.start("livingroom");
-}
+    }
+    touchingRoomba(){
+        this.scene.start("livingroom");
+    }
 
-puzzleCompleted(cat, obj){
-    this.puzzleComplete = true;
-}
+    puzzleCompleted(cat, obj){
+        if (this.haveKey){
+            this.puzzleComplete = true;
+        }
+    }
 
 
-setIndicator(scene, x, y, indicator){
-    this.delayClock;
-    indicator.x = x;
-    indicator.y = y - 80;
-    indicator.setVisible(true);
+    setIndicator(scene, x, y, indicator){
+        this.delayClock;
+        indicator.x = x;
+        indicator.y = y - 80;
+        indicator.setVisible(true);
 
-    this.delayClock = scene.time.addEvent({delay: 50, callback: () =>{
-        indicator.setVisible(false);
-        //this.delayClock.remove();
-        scene.time.removeEvent(this.delayClock);
+        this.delayClock = scene.time.addEvent({delay: 50, callback: () =>{
+            indicator.setVisible(false);
+            //this.delayClock.remove();
+            scene.time.removeEvent(this.delayClock);
 
-    }, callbackScope: scene, repeat: 0});
-}
+        }, callbackScope: scene, repeat: 0});
+    }
 }
