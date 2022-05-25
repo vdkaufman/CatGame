@@ -79,9 +79,8 @@ class Livingroom extends Phaser.Scene {
         this.doorBoxB = new ClueItem(this, game.config.width -25, game.config.height/2 + 80, 'boxWhite', 0,
             this.doorText, null).setOrigin(.5, .5);
 
-        this.roomba = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'roomba').setOrigin(.5,.5);
-        this.roomba.setScale(.5,.5);
-        this.roomba.body.setSize(.7,.7);
+        this.roomba = new Roomba(this, game.config.width - 300, game.config.height/3 + 50, 'roomba').setOrigin(.5,.5);
+        
 
         this.puzzleComplete = false;
         this.haveKey = false;
