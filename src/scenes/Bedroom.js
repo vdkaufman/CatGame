@@ -98,6 +98,10 @@ class Bedroom extends Phaser.Scene {
         this.indicator.setVisible(false);
                
         // define keys
+        key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+        key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        key3 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
+        key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -175,9 +179,14 @@ class Bedroom extends Phaser.Scene {
             this.scene.start("menuScene");
         }
 
-        if (Phaser.Input.Keyboard.JustDown(keyC)) {
-            // this.clue = 'clue test';
-            //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
+        if (Phaser.Input.Keyboard.JustDown(key1)) {
+            this.scene.start("bedroom");
+        }
+        if (Phaser.Input.Keyboard.JustDown(key2)) {
+            this.scene.start("livingroom");
+        }
+        if (Phaser.Input.Keyboard.JustDown(key3)) {
+            //this.scene.start("labroom");
         }
 
         if(this.countA == 1 && this.countB == 2 && this.countC == 3 && !this.puzzleComplete){

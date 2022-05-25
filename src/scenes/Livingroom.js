@@ -80,7 +80,7 @@ class Livingroom extends Phaser.Scene {
             this.doorText, null).setOrigin(.5, .5);
 
         this.roomba = new Roomba(this, game.config.width - 300, game.config.height/3 + 50, 'roomba').setOrigin(.5,.5);
-        
+
 
         this.puzzleComplete = false;
         this.haveKey = false;
@@ -98,6 +98,10 @@ class Livingroom extends Phaser.Scene {
         this.indicator.setVisible(false);
        
         // define keys
+        key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+        key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        key3 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
+        key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -183,6 +187,16 @@ class Livingroom extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             //this.scene.restart();
             this.scene.start("menuScene");
+        }
+        // debug options
+        if (Phaser.Input.Keyboard.JustDown(key1)) {
+            this.scene.start("bedroom");
+        }
+        if (Phaser.Input.Keyboard.JustDown(key2)) {
+            this.scene.start("livingroom");
+        }
+        if (Phaser.Input.Keyboard.JustDown(key3)) {
+            //this.scene.start("labroom");
         }
 
         if (this.haveKey == true) {
