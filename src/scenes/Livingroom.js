@@ -27,6 +27,7 @@ class Livingroom extends Phaser.Scene {
         this.load.image('backWall', './assets/livingRoom/livingRoom_backWall.png');
         this.load.image('leftWall', './assets/livingRoom/livingRoom_leftWall.png');
         this.load.image('rightWall', './assets/livingRoom/livingRoom_rightWall.png');
+        this.load.image('floor', './assets/livingRoom/carpetBG.png');
 
         // load furniture
         this.load.image('bookCase', './assets/livingRoom/livingRoom_bookCase.png');

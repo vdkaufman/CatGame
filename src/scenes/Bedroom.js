@@ -24,6 +24,23 @@ class Bedroom extends Phaser.Scene {
         // load collision walls
         this.load.image('wallCollisionHorizontal', './assets/blackHorizontal1100.png');
         this.load.image('wallCollisionVertical', './assets/blackVertical800.png');
+
+        this.load.image('backWall', './assets/bedRoom/bedRoom_backWall.png');
+        this.load.image('leftWall', './assets/bedRoom/bedRoom_leftWall.png');
+        this.load.image('rightWall', './assets/bedRoom/bedRoom_rightWall.png');
+        this.load.image('floor', './assets/bedRoom/bedRoom_background.png');
+
+        // load furniture
+        this.load.image('bed', './assets/bedRoom/bedRoom_bed.png');
+        this.load.image('book', './assets/bedRoom/bedRoom_book.png');
+        this.load.image('catBed', './assets/bedRoom/bedRoom_catBed.png');
+        this.load.image('clothes', './assets/bedRoom/bedRoom_clothes.png');
+        this.load.image('mechanism', './assets/bedRoom/bedRoom_mechanism.png');
+        this.load.image('mirror', './assets/bedRoom/bedRoom_mirror.png');
+        this.load.image('nightStand', './assets/bedRoom/bedRoom_nightStand.png');
+        this.load.image('photoStand', './assets/bedRoom/bedRoom_photoStand.png');
+        this.load.image('tools', './assets/bedRoom/bedRoom_tools.png');
+
         this.load.image('greyCircle', './assets/greyCircle25.png');
         this.load.image('redCircle', './assets/redCircle25.png');
         this.load.image('blueCircle', './assets/blueCircle25.png');
