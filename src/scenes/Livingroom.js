@@ -23,6 +23,20 @@ class Livingroom extends Phaser.Scene {
         // load collision walls
         this.load.image('wallCollisionHorizontal', './assets/blackHorizontal1100.png');
         this.load.image('wallCollisionVertical', './assets/blackVertical800.png');
+
+        this.load.image('backWall', './assets/livingRoom/livingRoom_backWall.png');
+        this.load.image('leftWall', './assets/livingRoom/livingRoom_leftWall.png');
+        this.load.image('rightWall', './assets/livingRoom/livingRoom_rightWall.png');
+
+        // load furniture
+        this.load.image('bookCase', './assets/livingRoom/livingRoom_bookCase.png');
+        this.load.image('catTree', './assets/livingRoom/livingRoom_catTree.png');
+        this.load.image('frame01', './assets/livingRoom/livingRoom_frame01.png');
+        this.load.image('frame02', './assets/livingRoom/livingRoom_frame02.png');
+        this.load.image('lampStand', './assets/livingRoom/livingRoom_lampStand.png');
+        this.load.image('sofa', './assets/livingRoom/livingRoom_sofa.png');
+        this.load.image('window', './assets/livingRoom/livingRoom_window.png');
+
         this.load.image('greyCircle', './assets/greyCircle25.png');
         this.load.image('blueCircle', './assets/blueCircle25.png');
         this.load.image('key', './assets/blueKey.png');
