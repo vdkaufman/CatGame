@@ -57,7 +57,17 @@ class TextBox extends Phaser.GameObjects.Sprite{
         this.delayClock;
     }
 
+    /*preload(){
+                // load textbox
+                this.load.spritesheet('textbox', './assets/sprites/textbox.png', 
+                {frameWidth: 1100, frameHeight: 180});
+    }*/
+
     update(){
+        // Play Textbox background animation
+        //this.textboxBG = this.add.sprite(550, 710, 'textbox');
+        //this.textboxBG.play('textbox');
+
         // reset text box when the correct conditions are met
         if (Phaser.Input.Keyboard.JustDown(keyM)) {
         }
