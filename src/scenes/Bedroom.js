@@ -143,6 +143,14 @@ class Bedroom extends Phaser.Scene {
             repeat: -1
         });
         this.playerCat.play('cat-down');
+
+        // Create textbox animation
+        this.anims.create({
+            key: 'textbox',
+            frames: this.anims.generateFrameNumbers('textbox', {frames: [0,1]}),
+            frameRate: 4,
+            repeat:-1
+        });
         
         // add text
         this.puzzleText = 'Hooray! You completed the puzzle! The door is unlocked!';
