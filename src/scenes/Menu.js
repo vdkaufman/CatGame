@@ -7,6 +7,7 @@ class Menu extends Phaser.Scene {
         this.load.audio('meow1','./assets/sfx/meow1_yfjesse.wav');
         this.load.audio('meow2','./assets/sfx/meow2_yfjesse.wav');
         this.load.audio('meow3','./assets/sfx/meow3_abir19.wav');
+
         this.load.spritesheet('TitleAnimation', './assets/TitleAnimation.png', 
         {frameWidth: 1100, frameHeight: 393});
     }
@@ -14,7 +15,7 @@ class Menu extends Phaser.Scene {
 
         // menu text configuration
         let menuConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'SingleDay',
             fontSize: '24px',
             backgroundColor: '#3b243e',
             color: '#ffffff',
