@@ -30,7 +30,7 @@ let config = {
     //         mapping: 'rexUI'
     //     }]
     // },
-    scene: [ Menu, Bedroom, Livingroom ]
+    scene: [ Menu, Bedroom, Livingroom, Kitchen ]
 }
 let game = new Phaser.Game(config);
 // ***** Reserve Keyboard Variables *****
