@@ -246,13 +246,15 @@ class Livingroom extends Phaser.Scene {
         console.log('Touching Broken Switch');
         this.setIndicator(this, obj.x, obj.y, this.indicator);
 
-        if (this.haveKey == true) {
-            this.mSwitch = true;
-            this.blueKey.destroy();
-            console.log('Switch On');
-        }
-        else{
-            console.log('Switch Off');
+        if (Phaser.Input.Keyboard.JustDown(keyM)){
+            if (this.haveKey == true) {
+                this.mSwitch = true;
+                this.blueKey.destroy();
+                console.log('Switch On');
+            }
+            else{
+                console.log('Switch Off');
+            }
         }
     } 
 
@@ -271,10 +273,10 @@ class Livingroom extends Phaser.Scene {
     touchingKey(cat, obj){
         if(!this.haveKey){
             this.setIndicator(this, obj.x, obj.y, this.indicator);
-        }
-        if(Phaser.Input.Keyboard.JustDown(keyM)) {
-            this.haveKey = true;
-            console.log('Have Key');
+            if(Phaser.Input.Keyboard.JustDown(keyM)) {
+                this.haveKey = true;
+                console.log('Have Key');
+            }
         }
     }
     touchingSwitch1(floorSwitchA, obj){
