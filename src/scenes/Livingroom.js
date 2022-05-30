@@ -41,7 +41,8 @@ class Livingroom extends Phaser.Scene {
         this.load.image('greyCircle', './assets/greyCircle25.png');
         this.load.image('blueCircle', './assets/blueCircle25.png');
         this.load.image('key', './assets/blueKey.png');
-        this.load.image('roomba', './assets/sprites/roomba.png');
+        this.load.spritesheet('roomba', './assets/sprites/roomba.png',
+            {frameWidth:283, frameHeight: 282});
 
     }
     create() {
@@ -85,7 +86,26 @@ class Livingroom extends Phaser.Scene {
             this.doorText, null).setOrigin(.5, .5);
 
         this.roomba = new Roomba(this, game.config.width - 300, game.config.height/3 + 50, 'roomba').setOrigin(.5,.5);
-
+        this.anims.create({
+            key: 'roomba-down',
+            frames: this.anims.generateFrameNumbers('roomba', {frames: [0]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'roomba-up',
+            frames: this.anims.generateFrameNumbers('roomba', {frames: [1]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'roomba-left',
+            frames: this.anims.generateFrameNumbers('roomba', {frames: [2]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'roomba-right',
+            frames: this.anims.generateFrameNumbers('roomba', {frames: [3]}),
+            repeat: -1
+        });
         this.puzzleComplete = false;
         this.haveKey = false;
         this.roombaMovement = 0;
@@ -212,18 +232,22 @@ class Livingroom extends Phaser.Scene {
 
         if(this.roombaMovement == 0){
             // go down
+            this.roomba.play('roomba-down');
             this.roomba.y += 8;
         }
         if(this.roombaMovement == 1){
             // go up
+            this.roomba.play('roomba-up');
             this.roomba.y -= 8;
         }
         if(this.roombaMovement == 2){
             // go left
+            this.roomba.play('roomba-left');
             this.roomba.x -= 8;
         }
         if(this.roombaMovement == 3){
             // go right
+            this.roomba.play('roomba-right');
             this.roomba.x += 8;
         }
 
@@ -283,30 +307,30 @@ class Livingroom extends Phaser.Scene {
         // go right
         if(this.mSwitch == true){
             this.roombaMovement = 0;
-            this.roomba.angle = 0;
+            //this.roomba.angle = 0;
         }
     }
     touchingSwitch2(floorSwitchA, obj){
         if(this.mSwitch == true){
             // go left
             this.roombaMovement = 2; 
-            this.roomba.angle = 90;
+            //this.roomba.angle = 90;
         }
         else{
-        // go down
-        this.roombaMovement = 0;
-        this.roomba.angle= 0;
+            // go down
+            this.roombaMovement = 0;
+            //this.roomba.angle= 0;
      }
     }
     touchingSwitch3(floorSwitchA, obj){
         // go up
         this.roombaMovement = 3;
-        this.roomba.angle = 280;
+        //this.roomba.angle = 280;
     }
     touchingSwitch4(floorSwitchA, obj){
         // go left
         this.roombaMovement = 1;
-        this.roomba.angle = 180;
+        //this.roomba.angle = 180;
     }
   
     touchingRoomba(){
