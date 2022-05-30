@@ -122,13 +122,13 @@ class TextBox extends Phaser.GameObjects.Sprite{
         return this.textBox.active;
     }
 
-    resetTextBox(){
+    resetTextBox(showPopUp){
         //console.log('isGoing:', this.isGoing);
         if (!this.textBox.active){
             console.log('reset textBox..');
             this.textBox.setActive(true).setVisible(true);
             this.textBox.start(this.text, 30);
-            if (this.popUp){
+            if (showPopUp){
                 this.popUp.setActive(true).setVisible(true);
             } 
         }

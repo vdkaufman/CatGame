@@ -256,7 +256,7 @@ class Livingroom extends Phaser.Scene {
                 console.log('Switch Off');
             }
         }
-    } 
+    }
 
     touchingDoorBox(cat, obj) {
         this.setIndicator(this, obj.x, obj.y, this.indicator);

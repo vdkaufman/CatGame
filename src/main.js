@@ -38,3 +38,8 @@ let keySPACE, keyUP, keyDOWN, keyLEFT, keyRIGHT, keyM, keyR, keyC, key1, key2, k
 // ***** Set UI Sizes *****
 let borderUISize = game.config.height / 20;
 let borderPadding = borderUISize / 3;
+// ***** Set Colors *****
+let white = 0x000000;
+let blue = 0x3e31ef;
+let pink = 0xe09cef;
+let red = 0xef3331;

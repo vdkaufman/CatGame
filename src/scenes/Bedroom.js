@@ -12,7 +12,7 @@ class Bedroom extends Phaser.Scene {
         this.load.image('nextPage', 
             'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
         this.load.spritesheet('cat', './assets/sprites/furlockSpriteSheet.png',
-            {frameWidth: 115, frameHeight: 183});
+            {frameWidth: 115, frameHeight: 185});
         this.load.image('simplebg', './assets/Simplebg.png');
         this.load.image('fam-portrait', './assets/sprites/Portrait03.png');
         this.load.image('mKey', './assets/sprites/mKey.png');
@@ -41,12 +41,22 @@ class Bedroom extends Phaser.Scene {
         this.load.image('photoStand', './assets/bedRoom/bedRoom_photoStand.png');
         this.load.image('tools', './assets/bedRoom/bedRoom_tools.png');
 
+
+        // load light puzzle assets
+        this.load.spritesheet('lightbulb', './assets/sprites/lightbulb.png',
+            {frameWidth: 22, frameHeight: 29});
+            // frame0 = white
+            // frame1 = blue
+            // frame2 = pink
+            // frame3 = red
+        this.load.image('lightMachine', './assets/sprites/lightMachine.png');
+        this.load.image('catButton', './assets/sprites/catButton.png')
         this.load.image('greyCircle', './assets/greyCircle25.png');
         this.load.image('redCircle', './assets/redCircle25.png');
         this.load.image('blueCircle', './assets/blueCircle25.png');
         this.load.image('greenCircle', './assets/greenCircle25.png');
         this.load.image('floorWire', './assets/floorWire.png');
-        this.load.image('key', './assets/blueKey.png');
+        //this.load.image('key', './assets/blueKey.png');
 
     }
     create() {
@@ -73,7 +83,7 @@ class Bedroom extends Phaser.Scene {
         this.floorWire = this.add.sprite(0, 0, 'floorWire').setOrigin(0, 0);
         
         // Add box object
-        this.familyPhotoText = '- family photo - The humans really like blue...';
+        this.familyPhotoText = '- family photo - \n*sigh* Maxine really likes pink...';
         this.photoBox = new ClueItem(this, game.config.width/2, game.config.height/2 - 50, 'box', 0, 
         this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
         
@@ -88,21 +98,58 @@ class Bedroom extends Phaser.Scene {
         this.doorBoxB = new ClueItem(this, game.config.width -25, game.config.height/2 + 80, 'boxWhite', 0,
             this.doorText, null).setOrigin(.5, .5);
         
-        this.lightBoxA = new Box(this, game.config.width - 300, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
-        this.lightBoxB = new Box(this, game.config.width - 200, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
-        this.lightBoxC = new Box(this, game.config.width - 100, game.config.height/3 + 50, 'box').setOrigin(.5, .5);
-        
+
+        // add light lock machine assets
+        this.lightMachine = new ClueItem(this, game.config.width - 200, game.config.height/2 - 100, 'lightMachine', 0,
+            'The sign reads: "Maxine\'s Pawsome Light Lock Machine!"', null).setOrigin(.5,.5);
+            // this.lightMachine.body.setOffset(this.width, this.height/2)
+             this.lightMachine.body.setSize(this.width, 100, false);
+        this.lightMachine.setScale(1.1,1.1);
+
+        this.lightButtonA = new Box(this, game.config.width - 305, game.config.height/3 + 123, 'catButton').setOrigin(.5, .5);
+            this.lightButtonA.setScale(1.1,1.1);
+        this.lightButtonB = new Box(this, game.config.width - 218, game.config.height/3 + 123, 'catButton').setOrigin(.5, .5);
+            this.lightButtonB.setScale(1.1,1.1);
+        this.lightButtonC = new Box(this, game.config.width - 135, game.config.height/3 + 123 , 'catButton').setOrigin(.5, .5);
+            this.lightButtonC.setScale(1.1,1.1);
+
         this.add.rectangle(game.config.width/2 - 10, game.config.height/2 - 60, 20, 10, 0x00000).setOrigin(0, 0);
         
+
         // add lights
-        this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'greyCircle');
-        this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'greyCircle');
-        this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'greyCircle');
+        this.anims.create({
+            key: 'light-white',
+            frames: this.anims.generateFrameNumbers('lightbulb', {frames: [0]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'light-blue',
+            frames: this.anims.generateFrameNumbers('lightbulb', {frames: [1]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'light-pink',
+            frames: this.anims.generateFrameNumbers('lightbulb', {frames: [2]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'light-red',
+            frames: this.anims.generateFrameNumbers('lightbulb', {frames: [3]}),
+            repeat: -1
+        });
+
+        this.lightA = this.add.sprite(game.config.width - 303, game.config.height/3 - 29, 'lightbulb').setTintFill(0xff00ff);
+            this.lightA.play('light-blue');
+            this.countA = 2;
+        // this.lightA.setTintFill(0xef3331);
+        this.lightB = this.add.sprite(game.config.width - 218, game.config.height/3 - 28, 'lightbulb');
+            this.lightB.play('light-red');
+            this.countB = 0;
+        this.lightC = this.add.sprite(game.config.width - 135, game.config.height/3 - 29, 'lightbulb');
+            this.lightC.play('light-red');
+            this.countC = 0;
         
         // add light counter
-        this.countA = 0;
-        this.countB = 0;
-        this.countC = 0;
         
         this.puzzleComplete = false;
         this.haveKey = false;
@@ -142,6 +189,16 @@ class Bedroom extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('cat', {frames: [1]}),
             repeat: -1
         });
+        this.anims.create({
+            key: 'cat-right',
+            frames: this.anims.generateFrameNumbers('cat', {frames: [2]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'cat-left',
+            frames: this.anims.generateFrameNumbers('cat', {frames: [3]}),
+            repeat: -1
+        });
         this.playerCat.play('cat-down');
 
         // Create textbox animation
@@ -164,11 +221,12 @@ class Bedroom extends Phaser.Scene {
        // this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.clue);
 
        // Cat box overlap
-       this.physics.add.overlap(this.playerCat, this.photoBox, this.touchingBox, null, this);
+       this.physics.add.overlap(this.playerCat, this.photoBox, this.touchingPicture, null, this);
        this.physics.add.overlap(this.playerCat, this.mirrorBox, this.touchingMirror, null, this);
-       this.physics.add.overlap(this.playerCat, this.lightA, this.touchingLightsA, null, this);
-       this.physics.add.overlap(this.playerCat, this.lightB, this.touchingLightsB, null, this);
-       this.physics.add.overlap(this.playerCat, this.lightC, this.touchingLightsC, null, this);
+       this.physics.add.overlap(this.playerCat, this.lightButtonA, this.touchingButtonA, null, this);
+       this.physics.add.overlap(this.playerCat, this.lightButtonB, this.touchingButtonB, null, this);
+       this.physics.add.overlap(this.playerCat, this.lightButtonC, this.touchingButtonC, null, this);
+       this.physics.add.overlap(this.playerCat, this.lightMachine, this.touchingLightMachine, null, this);
        this.physics.add.overlap(this.playerCat, this.doorBoxA, this.touchingDoorBox, null, this);
        this.physics.add.overlap(this.playerCat, this.doorBoxB, this.touchingDoorBox, null, this);
 
@@ -214,7 +272,7 @@ class Bedroom extends Phaser.Scene {
             //this.scene.start("labroom");
         }
 
-        if(this.countA == 1 && this.countB == 2 && this.countC == 3 && !this.puzzleComplete){
+        if(this.countA == 3 && this.countB == 3 && this.countC == 3 && !this.puzzleComplete){
             this.puzzleDone = this.add.text(game.config.width/4, game.config.height/2 + 100, this.puzzleText);
             this.puzzleComplete = true;
 
@@ -238,11 +296,11 @@ class Bedroom extends Phaser.Scene {
 
         this.playerCat.update();
     }  
-    touchingBox(cat, obj){
+    touchingPicture(cat, obj){
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
             //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.familyPhotoText);
-            obj.openTextBox();
+            obj.openTextBox(true);
         }
     }
 
@@ -250,78 +308,85 @@ class Bedroom extends Phaser.Scene {
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
             //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.mirrorText);
-            obj.openTextBox();
+            obj.openTextBox(false);
         }
     }
-
-    touchingLightsA(cat, obj){
+    
+    touchingButtonA(cat, obj){
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
-
+            
             if(this.countA == 0){
-                this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'blueCircle');
+                this.lightA.play('light-white');
                 this.countA = 1;
             }
             else if(this.countA == 1){
-                this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'redCircle');
+                this.lightA.play('light-blue');
                 this.countA = 2;
-
             }
             else if(this.countA == 2){
-                    this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'greenCircle');
-                    this.countA = 3;
+                this.lightA.play('light-pink');
+                this.countA = 3;
             }
             else if(this.countA == 3){
-                this.lightA = new Lights(this, game.config.width - 300, game.config.height/3 + 50, 'greyCircle');
+                this.lightA.play('light-red');
                 this.countA = 0;
             }
         }
     }
-
-    touchingLightsB(cat, obj){
+    
+    touchingButtonB(cat, obj){
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
             
             if(this.countB == 0){
-                this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'greenCircle');
+                this.lightB.play('light-white');
                 this.countB = 1;
             }
             else if(this.countB == 1){
-                this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'blueCircle');
+                this.lightB.play('light-blue');
                 this.countB = 2;
-
+                
             }
             else if(this.countB == 2){
-                    this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'redCircle');
-                    this.countB = 3;
+                this.lightB.play('light-pink');
+                this.countB = 3;
             }
             else if(this.countB == 3){
-                this.lightB = new Lights(this, game.config.width - 200, game.config.height/3 + 50, 'greyCircle');
+                this.lightB.play('light-red');
                 this.countB = 0;
             }
-
+            
         }
     }
-    touchingLightsC(cat, obj){
+    touchingButtonC(cat, obj){
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
-
+            
             if(this.countC == 0){
-                this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'redCircle');
+                this.lightC.play('light-white');
                 this.countC = 1;
             }
             else if(this.countC == 1){
-                this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'greenCircle');
+                this.lightC.play('light-blue');
                 this.countC = 2;
+                
             }
             else if(this.countC == 2){
-                    this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'blueCircle');
-                    this.countC = 3;
+                this.lightC.play('light-pink');
+                this.countC = 3;
             }
             else if(this.countC == 3){
-                this.lightC = new Lights(this, game.config.width - 100, game.config.height/3 + 50, 'greyCircle');
+                this.lightC.play('light-red');
                 this.countC = 0;
             }
+        }
+    }
+    touchingLightMachine(cat, obj){
+        this.setIndicator(this, obj.x + 105, obj.y-35, this.indicator);
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.mirrorText);
+            obj.openTextBox(false);
         }
     }
     touchingDoorBox(cat, obj){
@@ -331,8 +396,8 @@ class Bedroom extends Phaser.Scene {
                 this.scene.start('livingroom');
             }
             else{
-            obj.openTextBox();
-            //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.doorText);
+                obj.openTextBox(false);
+                //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.doorText);
             }
         }
     }

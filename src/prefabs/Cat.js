@@ -60,10 +60,12 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         // left/right movement
         //if(this.isGrounded) {
             if(keyLEFT.isDown){ 
+                this.play('cat-left');
                 this.body.setVelocityX(-this.VELOCITY);
                 //this.setScale(.7,.7);
             }
             else if (keyRIGHT.isDown) {
+                this.play('cat-right');
                 this.body.setVelocityX(this.VELOCITY);
                 //this.setScale(-.7,.7);
             } 
