@@ -269,7 +269,7 @@ class Bedroom extends Phaser.Scene {
             this.scene.start("livingroom");
         }
         if (Phaser.Input.Keyboard.JustDown(key3)) {
-            //this.scene.start("labroom");
+            this.scene.start("kitchen");
         }
 
         if(this.countA == 3 && this.countB == 3 && this.countC == 3 && !this.puzzleComplete){
