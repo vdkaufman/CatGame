@@ -85,7 +85,7 @@ class Bedroom extends Phaser.Scene {
         this.floorWire = this.add.sprite(0, 0, 'floorWire').setOrigin(0, 0);
         
         // Add box object
-        this.familyPhotoText = '- family photo - \n*sigh* Maxine really likes pink...';
+        this.familyPhotoText = '- family photo - \n*sigh* Maxine really likes pink... \n\nWait, what does that note say by the butterflies? \n\nGah, I need to find my trusty magnifying glass!';
         this.photoBox = new ClueItem(this, game.config.width/2, game.config.height/2 - 50, 'box', 0, 
         this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
         
