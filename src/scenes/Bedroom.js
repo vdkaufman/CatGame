@@ -89,7 +89,7 @@ class Bedroom extends Phaser.Scene {
         this.photoBox = new ClueItem(this, game.config.width/2, game.config.height/2 - 50, 'box', 0, 
         this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
         
-        this.mirrorText = 'Mirror: pretty cat';
+        this.mirrorText = 'Mirror: Oh hi, I didn\'t see you there. Would you like to hear a joke? \n\n\nWhich side of a cat has the most fur?\n\n\n...The outside! Hahaha!';
         this.mirrorBox = new ClueItem(this, game.config.width/5 - 200, game.config.height/1.5, 'boxWhite', 0,
         this.mirrorText, null).setOrigin(.5, .5);
         
