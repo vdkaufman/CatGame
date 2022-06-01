@@ -31,5 +31,4 @@ class ClueItem extends Phaser.Physics.Arcade.Sprite{
         //console.log(showPopup)
         this.myTextBox.resetTextBox(showPopUp);
     }
-   
 }
