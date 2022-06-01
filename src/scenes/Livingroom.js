@@ -253,13 +253,21 @@ class Livingroom extends Phaser.Scene {
         }
 
         if (this.haveKey == true) {
+            if (this.playerCat.dir == 3) {
+                this.pinkKey.x = this.playerCat.x - 15;
+                this.pinkKey.y = this.playerCat.y + 95;
+            }
+            if (this.playerCat.dir == 2) {
+                this.pinkKey.x = this.playerCat.x + 15;
+                this.pinkKey.y = this.playerCat.y + 95;
+            }
             if (this.playerCat.dir == 1) {
                 this.pinkKey.x = this.playerCat.x + 30;
-                this.pinkKey.y = this.playerCat.y + 30;
+                this.pinkKey.y = this.playerCat.y + 95;
             }
             if (this.playerCat.dir == 0) {
                 this.pinkKey.x = this.playerCat.x - 30;
-                this.pinkKey.y = this.playerCat.y + 30;
+                this.pinkKey.y = this.playerCat.y + 95;
             }
         }
         else {
