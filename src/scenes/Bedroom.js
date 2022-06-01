@@ -183,7 +183,6 @@ class Bedroom extends Phaser.Scene {
 
         this.mGlass = this.physics.add.sprite(-500, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 
-
         this.anims.create({
             key: 'cat-up',
             frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
@@ -255,6 +254,7 @@ class Bedroom extends Phaser.Scene {
             loop: false,
             delay: 0
         });
+
 
     }
 
