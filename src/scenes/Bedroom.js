@@ -56,6 +56,8 @@ class Bedroom extends Phaser.Scene {
         this.load.image('blueCircle', './assets/blueCircle25.png');
         this.load.image('greenCircle', './assets/greenCircle25.png');
         this.load.image('floorWire', './assets/floorWire.png');
+        this.load.image('glass', './assets/glass.png');
+
         //this.load.image('key', './assets/blueKey.png');
 
     }
@@ -179,6 +181,9 @@ class Bedroom extends Phaser.Scene {
 
         this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
 
+        this.mGlass = this.physics.add.sprite(-500, 400, 'glass');
+
+
         this.anims.create({
             key: 'cat-up',
             frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
@@ -295,6 +300,20 @@ class Bedroom extends Phaser.Scene {
         }
 
         this.playerCat.update();
+
+
+
+        if (Cat.haveGlass == true) {
+            if (this.playerCat.dir == 1) {
+
+                this.mGlass.x = this.playerCat.x + 25;
+                this.mGlass.y = this.playerCat.y + 50;
+            }
+            if (this.playerCat.dir == 0) {
+                this.mGlass.x = this.playerCat.x - 38;
+                this.mGlass .y = this.playerCat.y + 40;
+            }
+        }
     }  
     touchingPicture(cat, obj){
         this.setIndicator(this, obj.x, obj.y, this.indicator);
