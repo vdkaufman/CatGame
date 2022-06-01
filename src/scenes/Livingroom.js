@@ -44,6 +44,9 @@ class Livingroom extends Phaser.Scene {
         this.load.spritesheet('roomba', './assets/sprites/roomba.png',
             {frameWidth:283, frameHeight: 282});
 
+            this.load.image('glass', './assets/glass.png');
+
+
     }
     create() {
    
@@ -85,7 +88,11 @@ class Livingroom extends Phaser.Scene {
         this.doorBoxB = new ClueItem(this, game.config.width -25, game.config.height/2 + 80, 'boxWhite', 0,
             this.doorText, null).setOrigin(.5, .5);
 
+
+        this.bedroomDoor = this.physics.add.sprite(0, game.config.height/1.5, 'boxWhite');
+
         this.roomba = new Roomba(this, game.config.width - 300, game.config.height/3 + 50, 'roomba').setOrigin(.5,.5);
+        
         this.anims.create({
             key: 'roomba-down',
             frames: this.anims.generateFrameNumbers('roomba', {frames: [0]}),
@@ -137,6 +144,9 @@ class Livingroom extends Phaser.Scene {
         
         this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, .5);
         
+        this.mGlass = this.physics.add.sprite(-500, 400, 'glass');
+
+
         this.anims.create({
             key: 'cat-up',
             frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
@@ -173,6 +183,7 @@ class Livingroom extends Phaser.Scene {
 
        this.physics.add.overlap(this.playerCat, this.brokenRoombaSwitch, this.touchingMSwitch, null, this);
        this.physics.add.overlap(this.blueKey, this.blueLock, this.touchingBlueLock, null, this);
+       this.physics.add.overlap(this.playerCat, this.bedroomDoor, this.touchingDoor, null, this);
 
 
         // Add colliders for collision sprites
@@ -229,6 +240,17 @@ class Livingroom extends Phaser.Scene {
         }
 
         this.playerCat.update();
+
+        if (Cat.haveGlass == true) {
+            if (this.playerCat.dir == 1) {
+                this.mGlass.x = this.playerCat.x + 25;
+                this.mGlass.y = this.playerCat.y + 50;
+            }
+            if (this.playerCat.dir == 0) {
+                this.mGlass.x = this.playerCat.x - 38;
+                this.mGlass .y = this.playerCat.y + 40;
+            }
+        }
 
         if(this.roombaMovement == 0){
             // go down
@@ -292,6 +314,13 @@ class Livingroom extends Phaser.Scene {
                 this.scene.start('kitchen');
             }
         }
+    }
+
+    touchingDoor(cat, obj) {
+        this.setIndicator(this, obj.x, obj.y, this.indicator);
+            if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            this.scene.start('bedroom');
+            }
     }
 
     touchingKey(cat, obj){
