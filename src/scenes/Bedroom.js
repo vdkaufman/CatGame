@@ -138,7 +138,7 @@ class Bedroom extends Phaser.Scene {
             repeat: -1
         });
 
-        this.lightA = this.add.sprite(game.config.width - 303, game.config.height/3 - 29, 'lightbulb').setTintFill(0xff00ff);
+        this.lightA = this.add.sprite(game.config.width - 303, game.config.height/3 - 29, 'lightbulb');
             this.lightA.play('light-blue');
             this.countA = 2;
         // this.lightA.setTintFill(0xef3331);

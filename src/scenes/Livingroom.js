@@ -40,6 +40,10 @@ class Livingroom extends Phaser.Scene {
 
         this.load.image('greyCircle', './assets/greyCircle25.png');
         this.load.image('blueCircle', './assets/blueCircle25.png');
+        this.load.image('roombaKey', './assets/sprites/pinkKeyCard.png');
+        this.load.image('roombaSwitch', './assets/sprites/roombaSwitch.png');
+        this.load.spritesheet('lightbulb', './assets/sprites/lightbulb.png',
+            {frameWidth: 22, frameHeight: 29});// frame2 = pink
         this.load.image('key', './assets/blueKey.png');
         this.load.spritesheet('roomba', './assets/sprites/roomba.png',
             {frameWidth:283, frameHeight: 282});
@@ -48,7 +52,7 @@ class Livingroom extends Phaser.Scene {
     create() {
    
         // Add collision sprites
-        this.wallColliderUp = this.physics.add.sprite(game.config.width/2, 300, 'wallCollisionHorizontal');
+        this.wallColliderUp = this.physics.add.sprite(game.config.width/2, 290, 'wallCollisionHorizontal');
         this.wallColliderUp.setImmovable(true);
         this.wallColliderUp.body.allowGravity = false; 
         
@@ -72,8 +76,30 @@ class Livingroom extends Phaser.Scene {
         // simple background for playable prototype
         this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
 
-        this.brokenRoombaSwitch = this.physics.add.sprite(game.config.width/2 - 350, game.config.height/2 - 50, 'greyCircle');
-        this.brokenRoombaSwitch.setImmovable(true);
+        // Add roomba switch objects
+        //*****************************/
+        // add switch light settings
+        this.anims.create({
+            key: 'light-pink',
+            frames: this.anims.generateFrameNumbers('lightbulb', {frames: [2]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'light-blue',
+            frames: this.anims.generateFrameNumbers('lightbulb', {frames: [1]}),
+            repeat: -1
+        });
+        this.switchLight = this.add.sprite(game.config.width/2 - 348, game.config.height/2 - 224, 'lightbulb').setOrigin(.5,.5);
+        this.switchLight.play('light-blue');
+        this.switchLight.setScale(1.1,1.1);
+
+        // add switch
+        this.switchTxt = "Maxine made this to control the Roombot, but what did she do with the keycard?";
+        this.roombaSwitch = new ClueItem(this, game.config.width/2 - 350, game.config.height/2 - 150, 'roombaSwitch', 0, 
+            this.switchTxt, null).setOrigin(.5,.5);;
+        this.roombaSwitch.setImmovable(true);
+        this.roombaSwitch.setScale(1,1);
+        //****************************/
 
         //this.blueLock = this.physics.add.sprite(game.config.width/2 - 350, game.config.height/2 + 350, 'blueCircle');
         //this.blueLock.setImmovable(true);
@@ -116,7 +142,7 @@ class Livingroom extends Phaser.Scene {
         // add interact button indicator
         this.indicator = this.add.sprite(0, 0, 'mKey').setOrigin(.5,.5);
         this.indicator.setScale(.2,.2);
-        this.indicator.setDepth(500);
+        this.indicator.setDepth(500); // control render depth
         this.indicator.setAlpha(.85);
         this.indicator.setVisible(false);
        
@@ -150,7 +176,8 @@ class Livingroom extends Phaser.Scene {
         this.playerCat.play('cat-down');
 
         // render key after player character
-        this.blueKey = new Grab(this, game.config.width/2 - 350, game.config.height/2 + 350, 'key').setOrigin(.5, .5);
+        this.pinkKey = new Grab(this, game.config.width/2 - 350, game.config.height/2 + 350, 'roombaKey').setOrigin(.5, .5);
+        this.pinkKey.setScale(.8,.8);
         
         this.puzzleText = 'Hooray! You completed the puzzle! Press R to Reset';
 
@@ -160,7 +187,7 @@ class Livingroom extends Phaser.Scene {
         // Cat box overlap
        this.physics.add.overlap(this.playerCat, this.doorBoxA, this.touchingDoorBox, null, this);
        this.physics.add.overlap(this.playerCat, this.doorBoxB, this.touchingDoorBox, null, this);
-       this.physics.add.overlap(this.playerCat, this.blueKey, this.touchingKey, null, this);
+       this.physics.add.overlap(this.playerCat, this.pinkKey, this.touchingKey, null, this);
        this.physics.add.overlap(this.roomba, this.floorSwitch3, this.touchingSwitch3, null, this);
        this.physics.add.overlap(this.roomba, this.floorSwitch4, this.touchingSwitch4, null, this);
        this.physics.add.overlap(this.roomba, this.floorSwitch1, this.touchingSwitch1, null, this);
@@ -171,8 +198,8 @@ class Livingroom extends Phaser.Scene {
        this.physics.add.overlap(this.playerCat, this.doorBoxA, this.puzzleCompleted, null, this);
        this.physics.add.overlap(this.playerCat, this.doorBoxB, this.puzzleCompleted, null, this);
 
-       this.physics.add.overlap(this.playerCat, this.brokenRoombaSwitch, this.touchingMSwitch, null, this);
-       this.physics.add.overlap(this.blueKey, this.blueLock, this.touchingBlueLock, null, this);
+       this.physics.add.overlap(this.playerCat, this.roombaSwitch, this.touchingMSwitch, null, this);
+       this.physics.add.overlap(this.pinkKey, this.blueLock, this.touchingBlueLock, null, this);
 
 
         // Add colliders for collision sprites
@@ -214,17 +241,17 @@ class Livingroom extends Phaser.Scene {
 
         if (this.haveKey == true) {
             if (this.playerCat.dir == 1) {
-                this.blueKey.x = this.playerCat.x + 30;
-                this.blueKey.y = this.playerCat.y + 30;
+                this.pinkKey.x = this.playerCat.x + 30;
+                this.pinkKey.y = this.playerCat.y + 30;
             }
             if (this.playerCat.dir == 0) {
-                this.blueKey.x = this.playerCat.x - 30;
-                this.blueKey.y = this.playerCat.y + 30;
+                this.pinkKey.x = this.playerCat.x - 30;
+                this.pinkKey.y = this.playerCat.y + 30;
             }
         }
         else {
             if (this.puzzleComplete) {
-                this.blueKey.destroy();
+                this.pinkKey.destroy();
             }
         }
 
@@ -261,23 +288,25 @@ class Livingroom extends Phaser.Scene {
         }
 
         else{ 
-            this.blueKey.alpha = 0;
+            this.pinkKey.alpha = 0;
             this.puzzleDone = this.add.text(game.config.width/4, game.config.height/2 + 100, this.puzzleText);
         }
     }
 
     touchingMSwitch(cat, obj) {
-        console.log('Touching Broken Switch');
-        this.setIndicator(this, obj.x, obj.y, this.indicator);
+        // console.log('Touching Broken Switch');
+        this.setIndicator(this, this.switchLight.x, this.switchLight.y + 25, this.indicator);
 
         if (Phaser.Input.Keyboard.JustDown(keyM)){
             if (this.haveKey == true) {
                 this.mSwitch = true;
-                this.blueKey.destroy();
-                console.log('Switch On');
+                this.pinkKey.destroy();
+                this.switchLight.play('light-pink');
+                // console.log('Switch On');
             }
             else{
-                console.log('Switch Off');
+                obj.openTextBox(false);
+                // console.log('Switch Off');
             }
         }
     }
