@@ -7,9 +7,12 @@ class Menu extends Phaser.Scene {
         this.load.audio('meow1','./assets/sfx/meow1_yfjesse.wav');
         this.load.audio('meow2','./assets/sfx/meow2_yfjesse.wav');
         this.load.audio('meow3','./assets/sfx/meow3_abir19.wav');
+        this.load.audio('music','./assets/AfterRain.mp3');
 
         this.load.spritesheet('TitleAnimation', './assets/TitleAnimation.png', 
         {frameWidth: 1100, frameHeight: 393});
+
+        
     }
     create() {
 
@@ -53,6 +56,16 @@ class Menu extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // define sounds
+
+        this.music = this.sound.add('music', {
+            mute: false,
+            volume: .3,
+            rate: 1, 
+            loop: true,
+            delay: 0
+        });
+
+        this.music.play();
 
     }
 

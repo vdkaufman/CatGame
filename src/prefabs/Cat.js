@@ -44,6 +44,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
             loop: false,
             delay: 0
         });
+    
 
         this.randVal = 0;
         //this.meowSounds = [];
@@ -102,6 +103,9 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
                     this.meow3.play();
                 }
             }
+
+          
+
         
             //this.body.setDrag(this.DRAG, this.DRAG);
 
