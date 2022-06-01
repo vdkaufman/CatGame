@@ -70,7 +70,12 @@ class Livingroom extends Phaser.Scene {
         this.wallColliderRight = this.physics.add.sprite(game.config.width - 20, game.config.height/2, 'wallCollisionVertical');
         this.wallColliderRight.setImmovable(true);
         this.wallColliderRight.body.allowGravity = false; 
-        
+       
+
+        this.roombaWall = this.physics.add.sprite(game.config.width/2 + 200, game.config.height/2, 'wallCollisionVertical');
+        this.roombaWall.setImmovable(true);
+        this.roombaWall.body.allowGravity = false; 
+
         this.floorSwitch1 = this.physics.add.sprite(game.config.width/2 - 200, game.config.height/2, 'boxWhite');
         this.floorSwitch2 = this.physics.add.sprite(game.config.width/2 + 250, game.config.height/2, 'boxWhite');
         this.floorSwitch3 = this.physics.add.sprite(game.config.width/2 - 200, game.config.height/2 + 400, 'boxWhite');
@@ -172,7 +177,6 @@ class Livingroom extends Phaser.Scene {
         
         this.mGlass = this.physics.add.sprite(-500, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 
-
         this.anims.create({
             key: 'cat-up',
             frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
@@ -220,6 +224,8 @@ class Livingroom extends Phaser.Scene {
         this.physics.add.collider(this.playerCat, this.wallColliderDown);
         this.physics.add.collider(this.playerCat, this.wallColliderLeft);
         this.physics.add.collider(this.playerCat, this.wallColliderRight);
+        this.physics.add.collider(this.playerCat, this.roombaWall);
+
 
         this.physics.add.collider(this.playerCat, this.topBox);
         this.physics.add.collider(this.playerCat, this.topBox2);
@@ -273,6 +279,7 @@ class Livingroom extends Phaser.Scene {
         else {
             if (this.puzzleComplete) {
                 this.pinkKey.destroy();
+                this.roombaWall.destroy();
             }
         }
 
