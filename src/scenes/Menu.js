@@ -59,7 +59,7 @@ class Menu extends Phaser.Scene {
 
         this.music = this.sound.add('music', {
             mute: false,
-            volume: .3,
+            volume: .1,
             rate: 1, 
             loop: true,
             delay: 0
