@@ -19,7 +19,7 @@ class Menu extends Phaser.Scene {
         // menu text configuration
         let menuConfig = {
             fontFamily: 'SingleDay',
-            fontSize: '24px',
+            fontSize: '26px',
             backgroundColor: '#3b243e',
             color: '#ffffff',
             align: 'center',

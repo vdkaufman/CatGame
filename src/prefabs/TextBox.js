@@ -28,7 +28,7 @@ class TextBox extends Phaser.GameObjects.Sprite{
                 fixedWidth: this.fixedWidth,
                 fixedHeight: this.fixedHeight,
     
-                fontSize: '22px',
+                fontSize: '25px',
                 fontFamily: 'SingleDay',
                 wrap: {
                     mode: 'word',
