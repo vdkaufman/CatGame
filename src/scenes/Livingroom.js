@@ -356,6 +356,8 @@ class Livingroom extends Phaser.Scene {
             if (this.haveKey == true) {
                 this.mSwitch = true;
                 this.pinkKey.destroy();
+                this.roombaWall.destroy();
+
                 this.switchLight.play('light-pink');
                 // console.log('Switch On');
             }
