@@ -48,7 +48,7 @@ class Livingroom extends Phaser.Scene {
         this.load.spritesheet('roomba', './assets/sprites/roomba.png',
             {frameWidth:283, frameHeight: 282});
 
-            this.load.image('glass', './assets/glass.png');
+        this.load.image('magGlass', './assets/sprites/magnifyingGlass.png');
 
 
     }
@@ -168,9 +168,9 @@ class Livingroom extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
         
-        this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, .5);
+        this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
         
-        this.mGlass = this.physics.add.sprite(-500, 400, 'glass');
+        this.mGlass = this.physics.add.sprite(-500, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 
 
         this.anims.create({
@@ -271,13 +271,29 @@ class Livingroom extends Phaser.Scene {
         this.playerCat.update();
 
         if (Cat.haveGlass == true) {
+            if (this.playerCat.dir == 3){
+                // cat facing left
+                this.mGlass.flipX = true;
+                this.mGlass.x = this.playerCat.x - 15;
+                this.mGlass.y = this.playerCat.y + 95;
+            }
+            if (this.playerCat.dir == 2){
+                // cat facing right
+                this.mGlass.resetFlip();
+                this.mGlass.x = this.playerCat.x + 15;
+                this.mGlass.y = this.playerCat.y + 95;
+            }
             if (this.playerCat.dir == 1) {
-                this.mGlass.x = this.playerCat.x + 25;
-                this.mGlass.y = this.playerCat.y + 50;
+                // cat facing down
+                this.mGlass.resetFlip();
+                this.mGlass.x = this.playerCat.x - 10;
+                this.mGlass.y = this.playerCat.y + 95;
             }
             if (this.playerCat.dir == 0) {
-                this.mGlass.x = this.playerCat.x - 38;
-                this.mGlass .y = this.playerCat.y + 40;
+                // cat facing up
+                this.mGlass.resetFlip();
+                this.mGlass.x = this.playerCat.x + this.playerCat.width/2 - 20;
+                this.mGlass .y = this.playerCat.y + 95;
             }
         }
 
