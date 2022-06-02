@@ -124,9 +124,15 @@ class Bedroom extends Phaser.Scene {
         this.bookText = 'Book: \nA Notebook full of Maxine\'s invention ideas.';
         this.bookBox = new ClueItem(this, 1000, 500, 'book', 0,
         this.bookText, null).setOrigin(.5, .5);
+        this.bookBox.setScale(.8,.8);
+
        
-        this.clothes = this.physics.add.sprite(125, 675, 'clothes');
-        this.tools = this.physics.add.sprite(725, 400, 'tools');
+        this.clothes = this.physics.add.sprite(100, 700, 'clothes');
+        this.clothes.setScale(.5,.5);
+
+        this.tools = this.physics.add.sprite(700, 350, 'tools');
+        this.tools.setScale(.8,.8);
+
 
         this.catBedText = 'My bed:\nzzzZZZ';
         this.catBed = new ClueItem(this, 690, 560, 'catBed', 0,
@@ -215,7 +221,7 @@ class Bedroom extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
-        this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
+        this.playerCat = new Cat(this, 550, game.config.height/2 + 110, 'cat').setOrigin(.5, 0);
 
         this.mGlass = this.physics.add.sprite(-500, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 
