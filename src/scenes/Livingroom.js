@@ -340,22 +340,22 @@ class Livingroom extends Phaser.Scene {
         if(this.roombaMovement == 0){
             // go down
             this.roomba.play('roomba-down');
-            this.roomba.y += 8;
+            this.roomba.y += 5;
         }
         if(this.roombaMovement == 1){
             // go up
             this.roomba.play('roomba-up');
-            this.roomba.y -= 8;
+            this.roomba.y -= 5;
         }
         if(this.roombaMovement == 2){
             // go left
             this.roomba.play('roomba-left');
-            this.roomba.x -= 8;
+            this.roomba.x -= 5;
         }
         if(this.roombaMovement == 3){
             // go right
             this.roomba.play('roomba-right');
-            this.roomba.x += 8;
+            this.roomba.x += 5;
         }
 
     }  
