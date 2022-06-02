@@ -78,8 +78,8 @@ class Livingroom extends Phaser.Scene {
 
         this.floorSwitch1 = this.physics.add.sprite(game.config.width/2 - 350, game.config.height/2 - 50, 'boxWhite');
         this.floorSwitch2 = this.physics.add.sprite(game.config.width/2 + 350, game.config.height/2 - 50, 'boxWhite');
-        this.floorSwitch3 = this.physics.add.sprite(game.config.width/2 - 350, game.config.height/2 + 400, 'boxWhite');
-        this.floorSwitch4 = this.physics.add.sprite(game.config.width/2 + 350, game.config.height/2 + 400, 'boxWhite');
+        this.floorSwitch3 = this.physics.add.sprite(game.config.width/2 - 350, game.config.height/2 + 350, 'boxWhite');
+        this.floorSwitch4 = this.physics.add.sprite(game.config.width/2 + 350, game.config.height/2 + 350, 'boxWhite');
 
         this.bedroomDoor = this.physics.add.sprite(0, game.config.height - 80, 'boxWhite');
 
@@ -133,7 +133,11 @@ class Livingroom extends Phaser.Scene {
         
         this.roomba = new Roomba(this, game.config.width - 200, game.config.height/3 + 200, 'roomba').setOrigin(.5,.5);
         
-        this.sofa = this.add.sprite(375, 400, 'sofa').setOrigin(0, 0);
+        this.sofa = this.physics.add.sprite(390, 430, 'sofa').setOrigin(0, 0);
+        this.sofa.setImmovable(true);
+        this.sofa.body.allowGravity = false; 
+        this.sofa.setScale(.9,.8);
+        this.sofaSprite = this.add.sprite(375, 420, 'sofa').setOrigin(0, 0);
 
 
         this.anims.create({
@@ -183,7 +187,6 @@ class Livingroom extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        
         
         this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
         
@@ -244,6 +247,7 @@ class Livingroom extends Phaser.Scene {
         this.physics.add.collider(this.playerCat, this.topBox);
         this.physics.add.collider(this.playerCat, this.topBox2);
         this.physics.add.collider(this.playerCat, this.topBox3);
+        this.physics.add.collider(this.playerCat, this.sofa);
 
         this.meow = this.sound.add('meow', {
             mute: false,
