@@ -336,10 +336,10 @@ class Bedroom extends Phaser.Scene {
             this.scene.start("bedroom");
         }
         if (Phaser.Input.Keyboard.JustDown(key2)) {
-            this.scene.start("livingroom");
+            this.scene.start("kitchen");
         }
         if (Phaser.Input.Keyboard.JustDown(key3)) {
-            this.scene.start("kitchen");
+            this.scene.start("livingroom");
         }
 
         if(this.countA == 3 && this.countB == 3 && this.countC == 3 && !Cat.puzzleComplete){
@@ -504,7 +504,7 @@ class Bedroom extends Phaser.Scene {
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
             if(Cat.puzzleComplete){
-                this.scene.start('livingroom');
+                this.scene.start('kitchen');
             }
             else{
                 obj.openTextBox(false);
