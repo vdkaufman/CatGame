@@ -32,6 +32,9 @@ class Kitchen extends Phaser.Scene {
         this.load.image('leftWall', './assets/livingRoom/livingRoom_leftWall.png');
         this.load.image('rightWall', './assets/livingRoom/livingRoom_rightWall.png');
         this.load.image('floor', './assets/livingRoom/carpetBG.png');
+        this.load.spritesheet('door', './assets/door.png',
+            { frameWidth: 245, frameHeight: 264 });
+
         this.load.image('tableA', './assets/tableTop.png');
         this.load.image('tableB', './assets/tableLeft.png');
         this.load.image('tableC', './assets/tableRight.png');
@@ -152,6 +155,23 @@ class Kitchen extends Phaser.Scene {
             loop: false,
             delay: 0
         });
+
+        // Create door open/close animation
+        this.bedroomDoor = this.physics.add.sprite(game.config.width - 150, 150, 'door');
+        this.bedroomDoor.setImmovable(true);
+        this.bedroomDoor.body.allowGravity = false;
+
+        this.anims.create({
+            key: 'doorClosed',
+            frames: this.anims.generateFrameNumbers('door', {frames: [0]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'doorOpen',
+            frames: this.anims.generateFrameNumbers('door', {frames: [1]}),
+            repeat: -1
+        });
+        this.bedroomDoor.play('doorOpen');
 
         // Add colliders for collision sprites
         this.physics.add.collider(this.playerCat, this.wallColliderUp);

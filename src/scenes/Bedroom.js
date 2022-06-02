@@ -31,6 +31,8 @@ class Bedroom extends Phaser.Scene {
         this.load.image('leftWall', './assets/bedRoom/bedRoom_leftWall.png');
         this.load.image('rightWall', './assets/bedRoom/bedRoom_rightWall.png');
         this.load.image('floor', './assets/bedRoom/bedRoom_background.png');
+        this.load.spritesheet('door', './assets/door.png',
+            { frameWidth: 245, frameHeight: 264 });
 
         // load furniture
         this.load.image('bed', './assets/bedRoom/bedRoom_bed.png');
@@ -252,6 +254,23 @@ class Bedroom extends Phaser.Scene {
         });
         this.playerCat.play('cat-down');
 
+        // Create door open/close animation
+        this.kitchenDoor = this.physics.add.sprite(game.config.width - 165, 880, 'door');
+        this.kitchenDoor.setImmovable(true);
+        this.kitchenDoor.body.allowGravity = false;
+
+        this.anims.create({
+            key: 'doorClosed',
+            frames: this.anims.generateFrameNumbers('door', {frames: [0]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'doorOpen',
+            frames: this.anims.generateFrameNumbers('door', {frames: [1]}),
+            repeat: -1
+        });
+        this.kitchenDoor.play('doorClosed');
+
         // Create textbox animation
         this.anims.create({
             key: 'textbox',
@@ -326,6 +345,8 @@ class Bedroom extends Phaser.Scene {
         if(this.countA == 3 && this.countB == 3 && this.countC == 3 && !Cat.puzzleComplete){
             this.puzzleDone = this.add.text(game.config.width - 300, game.config.height - 50, this.puzzleText);
             Cat.puzzleComplete = true;
+
+            this.kitchenDoor.play('doorOpen');
         }
       
         this.playerCat.update();
