@@ -115,7 +115,7 @@ class Bedroom extends Phaser.Scene {
         this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
         }
         else{
-        this.familyPhotoText = 'Family photo: \n The note says Maxine went to an inventors contest today!\n\n(Knock Knock)\n\n Maxine\'s Home!\n You\'ve reached the end of our unfinished build.\n Thanks for playing!!';
+        this.familyPhotoText = 'Family photo: \n The note says Maxine went to an inventors contest today!\n\n(Knock Knock)\n\n Maxine is home!\n You\'ve reached the end of our unfinished build.\n Thanks for playing!';
         this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
         this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
         }
