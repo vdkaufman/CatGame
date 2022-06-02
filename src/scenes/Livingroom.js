@@ -287,11 +287,11 @@ class Livingroom extends Phaser.Scene {
             this.scene.start("bedroom");
         }
         if (Phaser.Input.Keyboard.JustDown(key2)) {
-            this.scene.start("livingroom");
+            this.scene.start("kitchen");
         }
-        if (Phaser.Input.Keyboard.JustDown(key3)) {
-            //this.scene.start("labroom");
-        }
+        //if (Phaser.Input.Keyboard.JustDown(key3)) {
+            //this.scene.start("living room");
+        //}
 
         if (this.haveKey == true) {
             if (this.playerCat.dir == 3) {

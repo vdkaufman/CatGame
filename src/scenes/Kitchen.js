@@ -210,11 +210,11 @@ class Kitchen extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(key1)) {
             this.scene.start("bedroom");
         }
-        if (Phaser.Input.Keyboard.JustDown(key2)) {
-            this.scene.start("livingroom");
-        }
+        //if (Phaser.Input.Keyboard.JustDown(key2)) {
+            //this.scene.start("kitchen");
+        //}
         if (Phaser.Input.Keyboard.JustDown(key3)) {
-            //this.scene.start("labroom");
+            this.scene.start("livingroom");
         }
 
         this.playerCat.update();
