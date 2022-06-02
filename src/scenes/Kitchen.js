@@ -20,7 +20,7 @@ class Kitchen extends Phaser.Scene {
         this.load.image('wallCollisionVertical', './assets/blackVertical800.png');
 
         this.load.image('kitchen_backWall', './assets/kitchen/kitchen_backwall.png');
-        this.load.image('kitchen_rightWall', './assets/kitchen/kitchen_backwall.png');
+        this.load.image('kitchen_rightWall', './assets/kitchen/kitchen_rightwall.png');
 
         // load furniture
         this.load.image('kitchen_floor', './assets/kitchen/floor.png');
