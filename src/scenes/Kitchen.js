@@ -71,8 +71,7 @@ class Kitchen extends Phaser.Scene {
 
         // background objects
         this.floor = this.add.sprite(0, 0, 'kitchen_floor').setOrigin(0, 0);
-        this.backWall = this.add.sprite(46, 0, 'kitchen_backWall').setOrigin(0, 0);
-        this.leftWall = this.add.sprite(0, 0, 'leftWall').setOrigin(0, 0);
+        this.backWall = this.add.sprite(0, 0, 'kitchen_backWall').setOrigin(0, 0);
         this.rightWall = this.add.sprite(1054, 0, 'kitchen_rightWall').setOrigin(0, 0);
 
         this.tableA = this.physics.add.sprite(600, 320, 'tableA');
@@ -156,7 +155,7 @@ class Kitchen extends Phaser.Scene {
         });
 
         // Create door open/close animation
-        this.bedroomDoor = this.physics.add.sprite(game.config.width - 150, 125, 'door');
+        this.bedroomDoor = this.physics.add.sprite(game.config.width - 165, 125, 'door');
         this.bedroomDoor.setImmovable(true);
         this.bedroomDoor.body.allowGravity = false;
 
