@@ -12,6 +12,7 @@ class Menu extends Phaser.Scene {
         this.load.spritesheet('TitleAnimation', './assets/TitleAnimation.png', 
         {frameWidth: 1100, frameHeight: 393});
 
+        this.load.script('SingleDay', './assets/fonts/SingleDay.tff');
         
     }
     create() {
