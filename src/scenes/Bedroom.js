@@ -19,13 +19,15 @@ class Bedroom extends Phaser.Scene {
 
         // load box pngs
         this.load.image('box', './assets/brownSquare100.png');
-        this.load.image('boxWhite', './assets/whiteBox100.png');
+        this.load.image('box1', './assets/whiteBox100.png');
+        this.load.image('box2', './assets/whiteBox200.png');
 
         // load collision walls
         this.load.image('wallCollisionHorizontal', './assets/blackHorizontal1100.png');
         this.load.image('wallCollisionVertical', './assets/blackVertical800.png');
 
         this.load.image('backWall', './assets/bedRoom/bedRoom_backWall.png');
+        this.load.image('bottomWall', './assets/bedRoom/bedRoom_bottomWall.png');
         this.load.image('leftWall', './assets/bedRoom/bedRoom_leftWall.png');
         this.load.image('rightWall', './assets/bedRoom/bedRoom_rightWall.png');
         this.load.image('floor', './assets/bedRoom/bedRoom_background.png');
@@ -40,7 +42,6 @@ class Bedroom extends Phaser.Scene {
         this.load.image('nightStand', './assets/bedRoom/bedRoom_nightStand.png');
         this.load.image('photoStand', './assets/bedRoom/bedRoom_photoStand.png');
         this.load.image('tools', './assets/bedRoom/bedRoom_tools.png');
-
 
         // load light puzzle assets
         this.load.spritesheet('lightbulb', './assets/sprites/lightbulb.png',
@@ -58,65 +59,92 @@ class Bedroom extends Phaser.Scene {
         this.load.image('floorWire', './assets/floorWire.png');
         this.load.image('magGlass', './assets/sprites/magnifyingGlass.png');
 
-        //this.load.image('key', './assets/blueKey.png');
-
     }
     create() {
    
-        // Add collision sprites
+        // collision objects
         this.wallColliderUp = this.physics.add.sprite(game.config.width/2, 300, 'wallCollisionHorizontal');
         this.wallColliderUp.setImmovable(true);
         this.wallColliderUp.body.allowGravity = false; 
         
-        this.wallColliderDown = this.physics.add.sprite(game.config.width/2, game.config.height - 5, 'wallCollisionHorizontal');
+        this.wallColliderDown = this.physics.add.sprite(game.config.width/2, game.config.height - 35, 'wallCollisionHorizontal');
         this.wallColliderDown.setImmovable(true);
         this.wallColliderDown.body.allowGravity = false; 
         
-        this.wallColliderLeft = this.physics.add.sprite(20, game.config.height/2, 'wallCollisionVertical');
+        this.wallColliderLeft = this.physics.add.sprite(40, game.config.height/2, 'wallCollisionVertical');
         this.wallColliderLeft.setImmovable(true);
         this.wallColliderLeft.body.allowGravity = false; 
         
-        this.wallColliderRight = this.physics.add.sprite(game.config.width - 20, game.config.height/2, 'wallCollisionVertical');
+        this.wallColliderRight = this.physics.add.sprite(game.config.width - 40, game.config.height/2, 'wallCollisionVertical');
         this.wallColliderRight.setImmovable(true);
         this.wallColliderRight.body.allowGravity = false; 
         
-        // simple background for playable prototype
-        this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
-        this.floorWire = this.add.sprite(0, 0, 'floorWire').setOrigin(0, 0);
+        this.bedCollider = this.physics.add.sprite(415, 440, 'box2');
+        this.bedCollider.setImmovable(true);
+        this.bedCollider.body.allowGravity = false; 
+             
+        this.bedText = 'Maxine\'s bed: \nNo one is here... I could take a short nap...\n\nzzzZZZ';
+        this.bedCollider2 = new ClueItem(this, 290, 520, 'box1', 0, 
+        this.bedText, null).setOrigin(.5, .5);
+        this.bedCollider2.setImmovable(true);
+        this.bedCollider2.body.allowGravity = false; 
+        this.bedCollider3 = new ClueItem(this, 480, 520, 'box1', 0, 
+        this.bedText, null).setOrigin(.5, .5);
+        this.bedCollider3.setImmovable(true);
+        this.bedCollider3.body.allowGravity = false; 
+
+        this.doorText = 'The door is locked';
+        this.doorBox = new ClueItem(this, game.config.width - 190, game.config.height, 'box2', 0,
+            this.doorText, null).setOrigin(.5, .5);
+
+        // background objects
+        this.floor = this.add.sprite(0, 0, 'floor').setOrigin(0, 0);
+        this.backWall = this.add.sprite(46, 0, 'backWall').setOrigin(0, 0);
+        this.bottomWall = this.add.sprite(0, game.config.height - 38, 'bottomWall').setOrigin(0, 0);
+        this.leftWall = this.add.sprite(0, 0, 'leftWall').setOrigin(0, 0);
+        this.rightWall = this.add.sprite(1054, 0, 'rightWall').setOrigin(0, 0);
         
         // Add box object
-        this.familyPhotoText = '- family photo - \n*sigh* Maxine really likes pink... \n\nWait, what does that note say by the butterflies? \n\nGah, I need to find my trusty magnifying glass!';
-        this.photoBox = new ClueItem(this, game.config.width/2, game.config.height/2 - 50, 'box', 0, 
-        this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
-        
-        this.mirrorText = 'Mirror: Oh hi, I didn\'t see you there. Would you like to hear a joke? \n\n\nWhich side of a cat has the most fur?\n\n\n...The outside! Hahaha!';
-        this.mirrorBox = new ClueItem(this, game.config.width/5 - 200, game.config.height/1.5, 'boxWhite', 0,
+        this.mirrorText = 'Mirror: \nOh hi, I didn\'t see you there. Would you like to hear a joke? \n\n\nWhich side of a cat has the most fur?\n\n\n...The outside! Hahaha!';
+        this.mirrorBox = new ClueItem(this, 125, 200, 'mirror', 0,
         this.mirrorText, null).setOrigin(.5, .5);
-        
-        this.doorText = 'The door is locked';
-        this.doorBoxA = new ClueItem(this, game.config.width -25, game.config.height/2 + 170, 'boxWhite', 0,
-            this.doorText, null).setOrigin(.5, .5);
-        
-        this.doorBoxB = new ClueItem(this, game.config.width -25, game.config.height/2 + 80, 'boxWhite', 0,
-            this.doorText, null).setOrigin(.5, .5);
-        
+       
+        this.familyPhotoText = 'Family photo: \n*sigh* Maxine really likes pink... \n\nWait, what does that note say by the butterflies? \n\nGah, I need to find my trusty magnifying glass!';
+        this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
+        this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
 
+        this.bedBox = this.physics.add.sprite(415, 400, 'bed');
+        this.bedBox.setImmovable(true);
+        this.bedBox.body.allowGravity = false; 
+        
+        this.nightStand = this.physics.add.sprite(580, 305, 'nightStand');
+        this.nightStand.setImmovable(true);
+        this.nightStand.body.allowGravity = false; 
+
+        this.bookText = 'Book: \nA Notebook full of Maxine\'s invention ideas.';
+        this.bookBox = new ClueItem(this, 1000, 500, 'book', 0,
+        this.bookText, null).setOrigin(.5, .5);
+       
+        this.clothes = this.physics.add.sprite(125, 675, 'clothes');
+        this.tools = this.physics.add.sprite(725, 400, 'tools');
+
+        this.catBedText = 'My bed:\nzzzZZZ';
+        this.catBed = new ClueItem(this, 690, 560, 'catBed', 0,
+        this.catBedText, null).setOrigin(.5, .5);
+               
         // add light lock machine assets
-        this.lightMachine = new ClueItem(this, game.config.width - 200, game.config.height/2 - 100, 'lightMachine', 0,
+        this.lightMachine = new ClueItem(this, game.config.width - 215, game.config.height/2 - 90, 'lightMachine', 0,
             'The sign reads: "Maxine\'s Pawsome Light Lock Machine!"', null).setOrigin(.5,.5);
             // this.lightMachine.body.setOffset(this.width, this.height/2)
              this.lightMachine.body.setSize(this.width, 100, false);
         this.lightMachine.setScale(1.1,1.1);
 
-        this.lightButtonA = new Box(this, game.config.width - 305, game.config.height/3 + 123, 'catButton').setOrigin(.5, .5);
+        this.lightButtonA = new Box(this, game.config.width - 325, game.config.height/3 + 123, 'catButton').setOrigin(.5, .5);
             this.lightButtonA.setScale(1.1,1.1);
-        this.lightButtonB = new Box(this, game.config.width - 218, game.config.height/3 + 123, 'catButton').setOrigin(.5, .5);
+        this.lightButtonB = new Box(this, game.config.width - 233, game.config.height/3 + 123, 'catButton').setOrigin(.5, .5);
             this.lightButtonB.setScale(1.1,1.1);
-        this.lightButtonC = new Box(this, game.config.width - 135, game.config.height/3 + 123 , 'catButton').setOrigin(.5, .5);
-            this.lightButtonC.setScale(1.1,1.1);
-
-        this.add.rectangle(game.config.width/2 - 10, game.config.height/2 - 60, 20, 10, 0x00000).setOrigin(0, 0);
-        
+        this.lightButtonC = new Box(this, game.config.width - 149, game.config.height/3 + 123 , 'catButton').setOrigin(.5, .5);
+            this.lightButtonC.setScale(1.1,1.1);        
 
         // add lights
         this.anims.create({
@@ -140,22 +168,32 @@ class Bedroom extends Phaser.Scene {
             repeat: -1
         });
 
-        this.lightA = this.add.sprite(game.config.width - 303, game.config.height/3 - 29, 'lightbulb');
+        if(Cat.puzzleComplete){
+            this.lightA = this.add.sprite(game.config.width - 318, game.config.height/3 - 20, 'lightbulb');
+            this.lightA.play('light-pink');
+            this.countA = 3;
+
+            this.lightB = this.add.sprite(game.config.width - 233, game.config.height/3 - 19, 'lightbulb');
+            this.lightB.play('light-pink');
+            this.countB = 3;
+
+            this.lightC = this.add.sprite(game.config.width - 150, game.config.height/3 - 20, 'lightbulb');
+            this.lightC.play('light-pink');
+            this.countC = 3;
+        }
+        else{
+        this.lightA = this.add.sprite(game.config.width - 318, game.config.height/3 - 20, 'lightbulb');
             this.lightA.play('light-blue');
             this.countA = 2;
         // this.lightA.setTintFill(0xef3331);
-        this.lightB = this.add.sprite(game.config.width - 218, game.config.height/3 - 28, 'lightbulb');
+        this.lightB = this.add.sprite(game.config.width - 233, game.config.height/3 - 19, 'lightbulb');
             this.lightB.play('light-red');
             this.countB = 0;
-        this.lightC = this.add.sprite(game.config.width - 135, game.config.height/3 - 29, 'lightbulb');
+        this.lightC = this.add.sprite(game.config.width - 150, game.config.height/3 - 20, 'lightbulb');
             this.lightC.play('light-red');
             this.countC = 0;
-        
-        // add light counter
-        
-        this.puzzleComplete = false;
-        this.haveKey = false;
-        
+        }
+
         // add interact button indicator
         this.indicator = this.add.sprite(0, 0, 'mKey').setOrigin(.5,.5);
         this.indicator.setScale(.2,.2);
@@ -177,8 +215,6 @@ class Bedroom extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
-
-
         this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
 
         this.mGlass = this.physics.add.sprite(-500, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
@@ -214,11 +250,13 @@ class Bedroom extends Phaser.Scene {
         });
         
         // add text
-        this.puzzleText = 'Hooray! You completed the puzzle! The door is unlocked!';
-        this.introText = 'I wonder where my owner went?\n\n\n- interact with various objects to make it to the next room and find out what happend to your human - ';
+        this.puzzleText = 'The door is unlocked!';
+
+        if(!Cat.puzzleComplete){
+        this.introText = 'I wonder where my owner went?\n\n\nInteract with objects to make it to the next room and find out what happened to your owner.';
         this.introTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.introText);
         this.introTextBox.startText(true);
-        
+        }
         this.controls = 'Interact-Meow: M  /  Move: WASD  /  Reset: R ';
         this.controlUI = this.add.text(game.config.width/2, 50, this.controls).setOrigin(.5,.5);
 
@@ -231,21 +269,20 @@ class Bedroom extends Phaser.Scene {
        this.physics.add.overlap(this.playerCat, this.lightButtonB, this.touchingButtonB, null, this);
        this.physics.add.overlap(this.playerCat, this.lightButtonC, this.touchingButtonC, null, this);
        this.physics.add.overlap(this.playerCat, this.lightMachine, this.touchingLightMachine, null, this);
-       this.physics.add.overlap(this.playerCat, this.doorBoxA, this.touchingDoorBox, null, this);
-       this.physics.add.overlap(this.playerCat, this.doorBoxB, this.touchingDoorBox, null, this);
+       this.physics.add.overlap(this.playerCat, this.doorBox, this.touchingDoorBox, null, this);
+       this.physics.add.overlap(this.playerCat, this.bedCollider2, this.touchingBed, null, this);
+       this.physics.add.overlap(this.playerCat, this.bedCollider3, this.touchingBed, null, this);
+       this.physics.add.overlap(this.playerCat, this.bookBox, this.touchingBook, null, this);
+       this.physics.add.overlap(this.playerCat, this.catBed, this.touchingCatBed, null, this);
+
 
         // Add colliders for collision sprites
         this.physics.add.collider(this.playerCat, this.wallColliderUp);
         this.physics.add.collider(this.playerCat, this.wallColliderDown);
         this.physics.add.collider(this.playerCat, this.wallColliderLeft);
         this.physics.add.collider(this.playerCat, this.wallColliderRight);
-        
-        // Add colliders for collision wall sprites
-       /* this.physics.add.collider(this.box, this.wallColliderUp);
-        this.physics.add.collider(this.box, this.wallColliderDown);
-        this.physics.add.collider(this.box, this.wallColliderLeft);
-        this.physics.add.collider(this.box, this.wallColliderRight);
-        */
+        this.physics.add.collider(this.playerCat, this.bedCollider);
+      
         // define meow sfx
         this.meow = this.sound.add('meow', {
             mute: false,
@@ -254,8 +291,6 @@ class Bedroom extends Phaser.Scene {
             loop: false,
             delay: 0
         });
-
-
     }
 
     update(){
@@ -277,31 +312,12 @@ class Bedroom extends Phaser.Scene {
             this.scene.start("kitchen");
         }
 
-        if(this.countA == 3 && this.countB == 3 && this.countC == 3 && !this.puzzleComplete){
-            this.puzzleDone = this.add.text(game.config.width/4, game.config.height/2 + 100, this.puzzleText);
-            this.puzzleComplete = true;
-
-
+        if(this.countA == 3 && this.countB == 3 && this.countC == 3 && !Cat.puzzleComplete){
+            this.puzzleDone = this.add.text(game.config.width - 300, game.config.height - 50, this.puzzleText);
+            Cat.puzzleComplete = true;
         }
-        if (this.haveKey == true) {
-            if (this.playerCat.dir == 1) {
-                this.grabTest.x = this.playerCat.x + 30;
-                this.grabTest.y = this.playerCat.y + 125;
-            }
-            if (this.playerCat.dir == 0) {
-                this.grabTest.x = this.playerCat.x - 30;
-                this.grabTest.y = this.playerCat.y + 125;
-            }
-        }
-        else {
-            if(this.puzzleComplete){
-       
-             }
-        }
-
+      
         this.playerCat.update();
-
-
 
         if (Cat.haveGlass == true) {
             if (this.playerCat.dir == 3){
@@ -339,9 +355,16 @@ class Bedroom extends Phaser.Scene {
     }
 
     touchingMirror(cat, obj){
-        this.setIndicator(this, obj.x, obj.y, this.indicator);
+        this.setIndicator(this, obj.x, obj.y + 100, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
             //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.mirrorText);
+            obj.openTextBox(false);
+        }
+    }
+
+    touchingBook(cat, obj){
+        this.setIndicator(this, obj.x, obj.y + 10, this.indicator);
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
             obj.openTextBox(false);
         }
     }
@@ -393,6 +416,7 @@ class Bedroom extends Phaser.Scene {
             
         }
     }
+
     touchingButtonC(cat, obj){
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
@@ -416,17 +440,32 @@ class Bedroom extends Phaser.Scene {
             }
         }
     }
+
     touchingLightMachine(cat, obj){
         this.setIndicator(this, obj.x + 105, obj.y-35, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
-            //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.mirrorText);
             obj.openTextBox(false);
         }
     }
+
+    touchingBed(cat, obj){
+        this.setIndicator(this, this.bedBox.x, obj.y + 35, this.indicator);
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            obj.openTextBox(false);
+        }
+    }
+
+    touchingCatBed(cat, obj){
+        this.setIndicator(this, obj.x, obj.y - 10, this.indicator);
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            obj.openTextBox(false);
+        }
+    }
+
     touchingDoorBox(cat, obj){
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
-            if(this.puzzleComplete){
+            if(Cat.puzzleComplete){
                 this.scene.start('livingroom');
             }
             else{
