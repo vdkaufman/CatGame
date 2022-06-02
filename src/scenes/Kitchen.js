@@ -19,19 +19,14 @@ class Kitchen extends Phaser.Scene {
         this.load.image('wallCollisionHorizontal', './assets/blackHorizontal1100.png');
         this.load.image('wallCollisionVertical', './assets/blackVertical800.png');
 
-        this.load.image('backWall', './assets/kitchen/kitchen_backwall.png');
-        this.load.image('rightWall', './assets/kitchen/kitchen_backwall.png');
+        this.load.image('kitchen_backWall', './assets/kitchen/kitchen_backwall.png');
+        this.load.image('kitchen_rightWall', './assets/kitchen/kitchen_backwall.png');
 
         // load furniture
-        this.load.image('floor', './assets/kitchen/floor.png');
+        this.load.image('kitchen_floor', './assets/kitchen/floor.png');
         this.load.image('cabinet', './assets/kitchen/kitchen_cabinet.png');
         this.load.image('fridge', './assets/kitchen/kitchen_fridge.png');
         this.load.image('table', './assets/kitchen/kitchen_table.png');
-
-        this.load.image('backWall', './assets/livingRoom/livingRoom_backWall.png');
-        this.load.image('leftWall', './assets/livingRoom/livingRoom_leftWall.png');
-        this.load.image('rightWall', './assets/livingRoom/livingRoom_rightWall.png');
-        this.load.image('floor', './assets/livingRoom/carpetBG.png');
         this.load.spritesheet('door', './assets/door.png',
             { frameWidth: 245, frameHeight: 264 });
 
@@ -74,7 +69,11 @@ class Kitchen extends Phaser.Scene {
         this.stairColliderB.setImmovable(true);
         this.stairColliderB.body.allowGravity = false;
 
-        this.background = this.add.tileSprite(0, 0, 1100, 800, 'simplebg').setOrigin(0, 0);
+        // background objects
+        this.floor = this.add.sprite(0, 0, 'kitchen_floor').setOrigin(0, 0);
+        this.backWall = this.add.sprite(46, 0, 'kitchen_backWall').setOrigin(0, 0);
+        this.leftWall = this.add.sprite(0, 0, 'leftWall').setOrigin(0, 0);
+        this.rightWall = this.add.sprite(1054, 0, 'kitchen_rightWall').setOrigin(0, 0);
 
         this.tableA = this.physics.add.sprite(600, 320, 'tableA');
         this.tableA.setImmovable(true);
@@ -157,7 +156,7 @@ class Kitchen extends Phaser.Scene {
         });
 
         // Create door open/close animation
-        this.bedroomDoor = this.physics.add.sprite(game.config.width - 150, 150, 'door');
+        this.bedroomDoor = this.physics.add.sprite(game.config.width - 150, 125, 'door');
         this.bedroomDoor.setImmovable(true);
         this.bedroomDoor.body.allowGravity = false;
 
