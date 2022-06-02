@@ -54,7 +54,7 @@ class Livingroom extends Phaser.Scene {
     }
     create() {
    
-        // Add collision sprites
+        // Add hidden collision sprites
         this.wallColliderUp = this.physics.add.sprite(game.config.width/2, 290, 'wallCollisionHorizontal');
         this.wallColliderUp.setImmovable(true);
         this.wallColliderUp.body.allowGravity = false; 
@@ -81,8 +81,6 @@ class Livingroom extends Phaser.Scene {
         this.floorSwitch3 = this.physics.add.sprite(game.config.width/2 - 350, game.config.height/2 + 350, 'boxWhite');
         this.floorSwitch4 = this.physics.add.sprite(game.config.width/2 + 350, game.config.height/2 + 350, 'boxWhite');
 
-        this.bedroomDoor = this.physics.add.sprite(0, game.config.height - 80, 'boxWhite');
-
         // simple background for playable prototype
         this.floor = this.add.sprite(0, 0, 'livingroomFloor').setOrigin(0, 0);
         this.backWall = this.add.sprite(46, 0, 'livingroomBackWall').setOrigin(0, 0);
@@ -90,14 +88,23 @@ class Livingroom extends Phaser.Scene {
         this.rightWall = this.add.sprite(1054, 0, 'livingroomRightWall').setOrigin(0, 0);
 
         this.bookcaseText = 'Bookcase: \nIt\'s full of books. \n\n You found a keycard!';
-        this.bookcase = new ClueItem(this, 550, 200, 'bookCase', 0,
+        this.bookcase = new ClueItem(this, 590, 200, 'bookCase', 0,
         this.bookcaseText, null).setOrigin(.5, .5);
         this.bookcase.setScale(.8,.8);
 
         this.catTreeText = 'Cat Tree: \nzzzZZZ';
-        this.catTree = new ClueItem(this, 250, 280, 'catTree', 0,
+        this.catTree = new ClueItem(this, 375, 280, 'catTree', 0,
         this.catTreeText, null).setOrigin(.5, .5);
         this.catTree.setScale(.8,.8);
+
+        this.frame1 = this.add.sprite(65, 10, 'frame01').setOrigin(0, 0);
+        this.frame3 = this.add.sprite(325, 10, 'frame02').setOrigin(0, 0);
+        this.frame4 = this.add.sprite(975, 10, 'frame01').setOrigin(0, 0);
+        this.window = this.add.sprite(750, 10, 'window').setOrigin(0, 0);
+        this.window.setScale(.9,.9);
+
+        this.lampStand = this.add.sprite(998, 500, 'lampStand').setOrigin(0, 0);
+
 
         // Add roomba switch objects
         //*****************************/
@@ -127,8 +134,11 @@ class Livingroom extends Phaser.Scene {
         //this.blueLock = this.physics.add.sprite(game.config.width/2 - 350, game.config.height/2 + 350, 'blueCircle');
         //this.blueLock.setImmovable(true);
 
+        this.bedroomDoor = this.physics.add.sprite(225, game.config.height/2 - 125, 'boxWhite');
+
+
         this.doorText = 'The door is locked';
-        this.doorBoxA = new ClueItem(this, game.config.width -25, game.config.height/2 + 170, 'boxWhite', 0,
+        this.doorBoxA = new ClueItem(this, game.config.width -25, game.config.height/2, 'boxWhite', 0,
             this.doorText, null).setOrigin(.5, .5);
         
         this.roomba = new Roomba(this, game.config.width - 200, game.config.height/3 + 200, 'roomba').setOrigin(.5,.5);
@@ -188,7 +198,7 @@ class Livingroom extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
-        this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
+        this.playerCat = new Cat(this, 200, game.config.height/2 - 100, 'cat').setOrigin(.5, 0);
         
         this.mGlass = this.physics.add.sprite(-500, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 

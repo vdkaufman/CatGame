@@ -109,10 +109,17 @@ class Bedroom extends Phaser.Scene {
         this.mirrorBox = new ClueItem(this, 125, 200, 'mirror', 0,
         this.mirrorText, null).setOrigin(.5, .5);
        
+        if(!Cat.haveGlass){
         this.familyPhotoText = 'Family photo: \n*sigh* Maxine really likes pink... \n\nWait, what does that note say by the butterflies? \n\nGah, I need to find my trusty magnifying glass!';
         this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
         this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
-
+        }
+        else{
+        this.familyPhotoText = 'Family photo: \n The note says Maxine went to an inventors contest today!\n\n(Knock Knock)\n\n Maxine is home!\n You\'ve reached the end of our unfinished build.\n Thanks for playing!';
+        this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
+        this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
+        }
+        
         this.bedBox = this.physics.add.sprite(415, 400, 'bed');
         this.bedBox.setImmovable(true);
         this.bedBox.body.allowGravity = false; 
@@ -125,14 +132,12 @@ class Bedroom extends Phaser.Scene {
         this.bookBox = new ClueItem(this, 1000, 500, 'book', 0,
         this.bookText, null).setOrigin(.5, .5);
         this.bookBox.setScale(.8,.8);
-
        
         this.clothes = this.physics.add.sprite(100, 700, 'clothes');
         this.clothes.setScale(.5,.5);
 
         this.tools = this.physics.add.sprite(700, 350, 'tools');
         this.tools.setScale(.8,.8);
-
 
         this.catBedText = 'My bed:\nzzzZZZ';
         this.catBed = new ClueItem(this, 690, 560, 'catBed', 0,
@@ -326,6 +331,9 @@ class Bedroom extends Phaser.Scene {
         this.playerCat.update();
 
         if (Cat.haveGlass == true) {
+
+
+
             if (this.playerCat.dir == 3){
                 // cat facing left
                 this.mGlass.flipX = true;
@@ -351,12 +359,15 @@ class Bedroom extends Phaser.Scene {
                 this.mGlass .y = this.playerCat.y + 95;
             }
         }
+
     }  
     touchingPicture(cat, obj){
         this.setIndicator(this, obj.x, obj.y, this.indicator);
         if(Phaser.Input.Keyboard.JustDown(keyM)) {
             //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.familyPhotoText);
+         
             obj.openTextBox(true);
+  
         }
     }
 
