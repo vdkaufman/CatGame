@@ -5,8 +5,8 @@ class Credits extends Phaser.Scene {
     preload(){
         this.load.audio('music','./assets/AfterRain.mp3');
 
-        this.load.spritesheet('TitleAnimation', './assets/TitleAnimation.png', 
-        {frameWidth: 1100, frameHeight: 393});
+        this.load.spritesheet('creditsBG', './assets/bg_spritesheet.png', 
+        {frameWidth: 1100, frameHeight: 800});
 
         //this.load.script('SingleDayA', './assets/fonts/SingleDay.ttf');
         
@@ -32,16 +32,15 @@ class Credits extends Phaser.Scene {
         this.add.rectangle(0, 0, game.config.width, game.config.height, 0x3b243e).setOrigin(0, 0);
 
         // Show Title image
-
         this.anims.create({
-            key: 'TitleAnimation',
-            frames: this.anims.generateFrameNumbers('TitleAnimation', {frames: [0,1]}),
+            key: 'creditsBG',
+            frames: this.anims.generateFrameNumbers('creditsBG', {frames: [0,1,2,3,4,5]}),
             frameRate: 4,
             repeat:-1
         });
 
-        this.startMenu = this.add.sprite(550, 300, 'TitleAnimation');
-        this.startMenu.play('TitleAnimation');
+        this.startMenu = this.add.sprite(550, 400, 'creditsBG');
+        this.startMenu.play('creditsBG');
 
         // Display Menu Text
         this.add.text(game.config.width/2, 550, ' Credits', 
