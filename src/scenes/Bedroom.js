@@ -112,14 +112,15 @@ class Bedroom extends Phaser.Scene {
         this.mirrorText, null).setOrigin(.5, .5);
        
         if(!Cat.haveGlass){
-        this.familyPhotoText = 'Family photo: \n*sigh* Maxine really likes pink... \n\nWait, what does that note say by the butterflies? \n\nGah, I need to find my trusty magnifying glass!';
-        this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
-        this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
+            this.familyPhotoText = 'Family photo: \n*sigh* Maxine really likes pink... \n\nWait, what does that note say by the butterflies? \n\nGah, I need to find my trusty magnifying glass!';
+            this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
+            this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
         }
-        else{
-        this.familyPhotoText = 'Family photo: \n The note says Maxine went to an inventors contest today!\n\n(Knock Knock)\n\n Maxine is home!\n You\'ve reached the end of our game!\n\n Thanks for playing!';
-        this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
-        this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
+        else {
+            this.familyPhotoText = 'Family photo: \n The note says Maxine went to an inventors contest today!\n\n(Knock Knock)\n\n Maxine is home!\n You\'ve reached the end of our game!\n\n Thanks for playing!';
+            this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
+            this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
+            //this.scene.start('credits');
         }
         
         this.bedBox = this.physics.add.sprite(415, 400, 'bed');
