@@ -244,25 +244,25 @@ class Bedroom extends Phaser.Scene {
         this.anims.create({
             key: 'cat-walk-up',
             frames: this.anims.generateFrameNumbers('cat', {frames: [0,1,2,3]}),
-            frameRate: 6,
+            frameRate: 4,
             repeat: -1
         });
         this.anims.create({
             key: 'cat-walk-down',
             frames: this.anims.generateFrameNumbers('cat', {frames: [4,5,6,7]}),
-            frameRate: 6,
+            frameRate: 4,
             repeat: -1
         });
         this.anims.create({
             key: 'cat-walk-left',
             frames: this.anims.generateFrameNumbers('cat', {frames: [8,9,10,11]}),
-            frameRate: 6,
+            frameRate: 4,
             repeat: -1
         });
         this.anims.create({
             key: 'cat-walk-right',
             frames: this.anims.generateFrameNumbers('cat', {frames: [12,13,14,15]}),
-            frameRate: 6,
+            frameRate: 4,
             repeat: -1
         });
         this.anims.create({
