@@ -100,6 +100,22 @@ class Kitchen extends Phaser.Scene {
         this.tableF.body.allowGravity = false;
         this.tableF.setScale(.6, 1);
 
+
+        this.tableColliderA = this.physics.add.sprite(390, 700, 'box2');
+        this.tableColliderA.setScale(.8, 1);
+        this.tableColliderA.setImmovable(true);
+        this.tableColliderA.body.allowGravity = false;
+        this.tableColliderB = this.physics.add.sprite(150, 800, 'box2');
+        this.tableColliderB.setImmovable(true);
+        this.tableColliderB.body.allowGravity = false;
+        this.tableColliderC = this.physics.add.sprite(0, 675, 'box2');
+        this.tableColliderC.setImmovable(true);
+        this.tableColliderC.body.allowGravity = false;
+        this.tableColliderD = this.physics.add.sprite(50, 725, 'box2');
+        this.tableColliderD.setImmovable(true);
+        this.tableColliderD.body.allowGravity = false;
+
+
         this.bedroomDoor = this.physics.add.sprite(game.config.width - 175, game.config.height/2 - 200, 'box1');
 
         this.livingroomDoor = this.physics.add.sprite(game.config.width, game.config.height - 75, 'box1');
@@ -122,6 +138,8 @@ class Kitchen extends Phaser.Scene {
         this.fridge = this.physics.add.sprite(100, 225, 'fridge');
 
         this.cabinet = this.physics.add.sprite(475, 325, 'cabinet');
+
+        this.table = this.physics.add.sprite(242, 680, 'table');
 
         // add interact button indicator
         this.indicator = this.add.sprite(0, 0, 'mKey').setOrigin(.5,.5);
@@ -194,6 +212,10 @@ class Kitchen extends Phaser.Scene {
         this.physics.add.collider(this.playerCat, this.tableD);
         this.physics.add.collider(this.playerCat, this.tableF);
         this.physics.add.collider(this.playerCat, this.wallColliderA);
+        this.physics.add.collider(this.playerCat, this.tableColliderA);
+        this.physics.add.collider(this.playerCat, this.tableColliderB);
+        this.physics.add.collider(this.playerCat, this.tableColliderC);
+        this.physics.add.collider(this.playerCat, this.tableColliderD);
 
 
         this.physics.add.overlap(this.stairColliderA, this.stairs, this.touchingStairColliderA, null, this);
