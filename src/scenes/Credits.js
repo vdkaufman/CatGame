@@ -1,6 +1,6 @@
-class Menu extends Phaser.Scene {
+class Credits extends Phaser.Scene {
     constructor(){
-        super("menuScene");
+        super("credits");
     }
     preload(){
         this.load.audio('music','./assets/AfterRain.mp3');
@@ -74,7 +74,7 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
-        this.scene.start('Menu');
+        this.scene.start('MenuScene');
         }
     }
 }
