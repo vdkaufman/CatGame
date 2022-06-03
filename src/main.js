@@ -23,21 +23,15 @@ let config = {
         target: 60,
         forceSetTimeOut: true 
     },
-    // plugins:{
-    //     scene:[{
-    //         key: 'rexUI',
-    //         plugin: UIPlugin,
-    //         mapping: 'rexUI'
-    //     }]
-    // },
-    scene: [ Menu, Bedroom, Livingroom, Kitchen, Credits ]
+    scene: [ Menu, Bedroom, Livingroom, Kitchen ]
 }
+
 let game = new Phaser.Game(config);
 // ***** Reserve Keyboard Variables *****
 let keySPACE, keyUP, keyDOWN, keyLEFT, keyRIGHT, keyM, keyR, keyC, key1, key2, key3, key4;
 // ***** Set UI Sizes *****
-let borderUISize = game.config.height / 20;
-let borderPadding = borderUISize / 3;
+// let borderUISize = game.config.height / 20;
+// let borderPadding = borderUISize / 3;
 // ***** Set Colors *****
 let white = 0x000000;
 let blue = 0x3e31ef;
