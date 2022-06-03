@@ -34,18 +34,20 @@ class Kitchen extends Phaser.Scene {
         this.load.image('tableB', './assets/tableLeft.png');
         this.load.image('tableC', './assets/tableRight.png');
         this.load.image('tableD', './assets/tableBottomA.png');
-        this.load.image('tableE', './assets/tableBottomB.png');
-        this.load.image('boxWhite', './assets/whiteBox100.png');
-        this.load.image('boxBrown', './assets/brownSquare100.png');
-        this.load.image('stairSwitch', './assets/blueCircle25.png');
+        this.load.image('tableE', './assets/tableBottomA.png');
+        this.load.image('box1', './assets/whiteBox100.png');
+        this.load.image('box2', './assets/whiteBox200.png');
+        this.load.image('stairSwitch', './assets/sprites/catButton.png');
         this.load.image('magGlass', './assets/sprites/magnifyingGlass.png');
+        this.load.image('stairs', './assets/sprites/catStairs2.png');
+
 
     }
     create() {
        
 
         // Add collision sprites
-        this.wallColliderUp = this.physics.add.sprite(game.config.width / 2, 300, 'wallCollisionHorizontal');
+        this.wallColliderUp = this.physics.add.sprite(game.config.width / 2, 250, 'wallCollisionHorizontal');
         this.wallColliderUp.setImmovable(true);
         this.wallColliderUp.body.allowGravity = false;
 
@@ -61,53 +63,63 @@ class Kitchen extends Phaser.Scene {
         this.wallColliderRight.setImmovable(true);
         this.wallColliderRight.body.allowGravity = false;
 
-        this.stairColliderA = this.physics.add.sprite(930, 400, 'boxWhite');
+        this.stairColliderA = this.physics.add.sprite(850, 240, 'box1');
         this.stairColliderA.setImmovable(true);
         this.stairColliderA.body.allowGravity = false;
 
-        this.stairColliderB = this.physics.add.sprite(930, 800, 'boxWhite');
+        this.stairColliderB = this.physics.add.sprite(850, 800, 'box1');
         this.stairColliderB.setImmovable(true);
         this.stairColliderB.body.allowGravity = false;
+       
+        this.wallColliderA = this.physics.add.sprite(150, 270, 'box2');
+        this.wallColliderA.setImmovable(true);
+        this.wallColliderA.body.allowGravity = false;
+
+        
+        this.tableA = this.physics.add.sprite(540, 200, 'tableA');
+        this.tableA.setImmovable(true);
+        this.tableA.body.allowGravity = false;
+        this.tableA.setScale(.55, 1);
+
+
+        this.tableB = this.physics.add.sprite(315, 300, 'tableB');
+        this.tableB.setImmovable(true);
+        this.tableB.body.allowGravity = false;
+
+        this.tableC = this.physics.add.sprite(765, 300, 'tableC');
+        this.tableC.setImmovable(true);
+        this.tableC.body.allowGravity = false;
+
+        this.tableD = this.physics.add.sprite(450, 370, 'tableD');
+        this.tableD.setImmovable(true);
+        this.tableD.body.allowGravity = false;
+        this.tableD.setScale(.4, 1);
+
+        this.tableF = this.physics.add.sprite(570, 370, 'tableE');
+        this.tableF.setImmovable(true);
+        this.tableF.body.allowGravity = false;
+        this.tableF.setScale(.6, 1);
+
+
+
+        this.livingroomDoor = this.physics.add.sprite(game.config.width, game.config.height - 75, 'box1');
 
         // background objects
         this.floor = this.add.sprite(0, 0, 'kitchen_floor').setOrigin(0, 0);
         this.backWall = this.add.sprite(0, 0, 'kitchen_backWall').setOrigin(0, 0);
         this.rightWall = this.add.sprite(1054, 0, 'kitchen_rightWall').setOrigin(0, 0);
 
-        this.tableA = this.physics.add.sprite(600, 320, 'tableA');
-        this.tableA.setImmovable(true);
-        this.tableA.body.allowGravity = false;
-
-        this.tableB = this.physics.add.sprite(190, 390, 'tableB');
-        this.tableB.setImmovable(true);
-        this.tableB.body.allowGravity = false;
-
-        this.tableC = this.physics.add.sprite(1010, 390, 'tableC');
-        this.tableC.setImmovable(true);
-        this.tableC.body.allowGravity = false;
-
-        this.tableD = this.physics.add.sprite(520, 460, 'tableD');
-        this.tableD.setImmovable(true);
-        this.tableD.body.allowGravity = false;
-
-        this.tableE = this.physics.add.sprite(860, 460, 'tableE');
-        this.tableE.setImmovable(true);
-        this.tableE.body.allowGravity = false;
-
-        this.tableF = this.physics.add.sprite(860, 460, 'tableE');
-        this.tableF.setImmovable(true);
-        this.tableF.body.allowGravity = false;
-
-        this.stairs = this.physics.add.sprite(930, 700, 'boxBrown');
+        this.stairs = this.physics.add.sprite(820, 700, 'stairs');
         this.stairs.setImmovable(true);
         this.stairs.body.allowGravity = false;
 
-        this.stairSwitch = this.physics.add.sprite(780, 750, 'stairSwitch');
+        this.stairSwitch = this.physics.add.sprite(650, 750, 'stairSwitch');
         this.stairSwitch.setImmovable(true);
         this.stairSwitch.body.allowGravity = false;
 
-        this.livingroomDoor = this.physics.add.sprite(0, game.config.height/1.5, 'boxWhite');
+        this.fridge = this.physics.add.sprite(100, 225, 'fridge');
 
+        this.cabinet = this.physics.add.sprite(475, 325, 'cabinet');
 
         // add interact button indicator
         this.indicator = this.add.sprite(0, 0, 'mKey').setOrigin(.5,.5);
@@ -132,7 +144,7 @@ class Kitchen extends Phaser.Scene {
 
         this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
 
-        this.mGlass = this.physics.add.sprite(250, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
+        this.mGlass = this.physics.add.sprite(375, 300, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 
         this.playerCat.play('cat-down');
 
@@ -172,6 +184,7 @@ class Kitchen extends Phaser.Scene {
         this.physics.add.collider(this.playerCat, this.tableC);
         this.physics.add.collider(this.playerCat, this.tableD);
         this.physics.add.collider(this.playerCat, this.tableF);
+        this.physics.add.collider(this.playerCat, this.wallColliderA);
 
 
         this.physics.add.overlap(this.stairColliderA, this.stairs, this.touchingStairColliderA, null, this);
@@ -218,7 +231,7 @@ class Kitchen extends Phaser.Scene {
         }
         
         if(this.switchOn == true){
-            this.tableF.destroy();
+            this.tableC.destroy();
         } 
     
         if (Cat.haveGlass == true) {
@@ -258,10 +271,11 @@ class Kitchen extends Phaser.Scene {
                 this.switchOn = false;
 
 
-                this.tableF = this.physics.add.sprite(860, 460, 'tableE');
-                this.tableF.setImmovable(true);
-                this.tableF.body.allowGravity = false;
-                this.physics.add.collider(this.playerCat, this.tableF);
+                this.tableC = this.physics.add.sprite(765, 300, 'tableE');
+                this.tableC.setVisible(false);
+                this.tableC.setImmovable(true);
+                this.tableC.body.allowGravity = false;
+                this.physics.add.collider(this.playerCat, this.tableC);
                 console.log('table collider Spawn');
 
                 this.table = false;
@@ -302,7 +316,7 @@ class Kitchen extends Phaser.Scene {
     }
 
     touchingDoor(cat, obj) {
-        this.setIndicator(this, obj.x, obj.y, this.indicator);
+        this.setIndicator(this, obj.x - 30, obj.y + 75, this.indicator);
             if(Phaser.Input.Keyboard.JustDown(keyM)) {
             this.scene.start('livingroom');
             }
