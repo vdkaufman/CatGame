@@ -134,16 +134,6 @@ class Kitchen extends Phaser.Scene {
 
         this.mGlass = this.physics.add.sprite(250, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 
-        this.anims.create({
-            key: 'cat-up',
-            frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'cat-down',
-            frames: this.anims.generateFrameNumbers('cat', {frames: [1]}),
-            repeat: -1
-        });
         this.playerCat.play('cat-down');
 
         this.meow = this.sound.add('meow', {

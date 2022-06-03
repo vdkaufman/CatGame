@@ -12,7 +12,7 @@ class Livingroom extends Phaser.Scene {
         this.load.image('nextPage', 
             'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
         this.load.spritesheet('cat', './assets/sprites/furlockSpriteSheet.png',
-            {frameWidth: 115, frameHeight: 183});
+            {frameWidth: 124, frameHeight: 187});
         this.load.image('simplebg', './assets/Simplebg.png');
         this.load.image('mKey', './assets/sprites/mKey.png');
 
@@ -206,16 +206,6 @@ class Livingroom extends Phaser.Scene {
         this.pinkKey = new Grab(this, game.config.width/2, game.config.height/2 - 800, 'roombaKey').setOrigin(.5, .5);
         this.pinkKey.setScale(.8,.8);
 
-        this.anims.create({
-            key: 'cat-up',
-            frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'cat-down',
-            frames: this.anims.generateFrameNumbers('cat', {frames: [1]}),
-            repeat: -1
-        });
         this.playerCat.play('cat-down');
        
         this.puzzleText = 'Hooray! You completed the puzzle! Press R to Reset';

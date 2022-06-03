@@ -65,26 +65,41 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         // left/right movement
         //if(this.isGrounded) {
             if(keyLEFT.isDown){ 
-                this.play('cat-left');
+                this.play('cat-walk-left', true);
                 this.dir = 3;
                 this.body.setVelocityX(-this.VELOCITY);
                 //this.setScale(.7,.7);
             }
             else if (keyRIGHT.isDown) {
-                this.play('cat-right');
+                this.play('cat-walk-right', true);
                 this.dir = 2;
                 this.body.setVelocityX(this.VELOCITY);
                 //this.setScale(-.7,.7);
             } 
             else if (keyUP.isDown) {
-                this.play('cat-up');
+                this.play('cat-walk-up', true);
                 this.dir = 0;
                 this.body.setVelocityY(-this.VELOCITY);
             } 
             else if (keyDOWN.isDown) {
-                this.play('cat-down');
+                this.play('cat-walk-down', true);
                 this.dir = 1;
                 this.body.setVelocityY(this.VELOCITY);
+            }
+            // play idle animations if player isn't moving
+            else{
+                if (this.anims.currentAnim.key === 'cat-walk-left'){
+                    this.play('cat-left');
+                }
+                else if (this.anims.currentAnim.key === 'cat-walk-right'){
+                    this.play('cat-right');
+                }
+                else if (this.anims.currentAnim.key === 'cat-walk-up'){
+                    this.play('cat-up');
+                }
+                else if (this.anims.currentAnim.key === 'cat-walk-down'){
+                    this.play('cat-down');
+                }
             }
 
             // play meow sfx

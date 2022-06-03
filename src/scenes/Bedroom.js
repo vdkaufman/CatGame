@@ -12,7 +12,7 @@ class Bedroom extends Phaser.Scene {
         this.load.image('nextPage', 
             'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
         this.load.spritesheet('cat', './assets/sprites/furlockSpriteSheet.png',
-            {frameWidth: 115, frameHeight: 185});
+            {frameWidth: 124, frameHeight: 187});
         this.load.image('simplebg', './assets/Simplebg.png');
         this.load.image('fam-portrait', './assets/sprites/Portrait03.png');
         this.load.image('mKey', './assets/sprites/mKey.png');
@@ -232,6 +232,31 @@ class Bedroom extends Phaser.Scene {
 
         this.mGlass = this.physics.add.sprite(-500, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 
+        //********cat animations****** */
+        this.anims.create({
+            key: 'cat-walk-up',
+            frames: this.anims.generateFrameNumbers('cat', {frames: [0,1,2,3]}),
+            frameRate: 6,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'cat-walk-down',
+            frames: this.anims.generateFrameNumbers('cat', {frames: [4,5,6,7]}),
+            frameRate: 6,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'cat-walk-left',
+            frames: this.anims.generateFrameNumbers('cat', {frames: [8,9,10,11]}),
+            frameRate: 6,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'cat-walk-right',
+            frames: this.anims.generateFrameNumbers('cat', {frames: [12,13,14,15]}),
+            frameRate: 6,
+            repeat: -1
+        });
         this.anims.create({
             key: 'cat-up',
             frames: this.anims.generateFrameNumbers('cat', {frames: [0]}),
@@ -239,20 +264,21 @@ class Bedroom extends Phaser.Scene {
         });
         this.anims.create({
             key: 'cat-down',
-            frames: this.anims.generateFrameNumbers('cat', {frames: [1]}),
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'cat-right',
-            frames: this.anims.generateFrameNumbers('cat', {frames: [2]}),
+            frames: this.anims.generateFrameNumbers('cat', {frames: [4]}),
             repeat: -1
         });
         this.anims.create({
             key: 'cat-left',
-            frames: this.anims.generateFrameNumbers('cat', {frames: [3]}),
+            frames: this.anims.generateFrameNumbers('cat', {frames: [11]}),
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'cat-right',
+            frames: this.anims.generateFrameNumbers('cat', {frames: [12]}),
             repeat: -1
         });
         this.playerCat.play('cat-down');
+        //************** */
 
         // Create door open/close animation
         this.kitchenDoor = this.physics.add.sprite(game.config.width - 165, 880, 'door');
