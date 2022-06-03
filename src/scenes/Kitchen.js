@@ -339,7 +339,7 @@ class Kitchen extends Phaser.Scene {
                 }
             }
             else {
-                obj.openTextBox(true);
+                obj.openTextBox(false);
 
             }
         }
