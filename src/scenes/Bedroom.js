@@ -358,9 +358,9 @@ class Bedroom extends Phaser.Scene {
             this.scene.start("menuScene");
         }
 
-        if (Phaser.Input.Keyboard.JustDown(key1)) {
-            this.scene.start("bedroom");
-        }
+        //if (Phaser.Input.Keyboard.JustDown(key1)) {
+        //    this.scene.start("bedroom");
+        //}
         if (Phaser.Input.Keyboard.JustDown(key2)) {
             this.scene.start("kitchen");
         }

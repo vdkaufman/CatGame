@@ -20,7 +20,7 @@ class Kitchen extends Phaser.Scene {
         this.load.image('wallCollisionVertical', './assets/blackVertical800.png');
 
         this.load.image('kitchen_backWall', './assets/kitchen/kitchen_backwall.png');
-        this.load.image('kitchen_rightWall', './assets/kitchen/kitchen_backwall.png');
+        this.load.image('kitchen_rightWall', './assets/kitchen/kitchen_rightwall.png');
 
         // load furniture
         this.load.image('kitchen_floor', './assets/kitchen/floor.png');
@@ -200,11 +200,11 @@ class Kitchen extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(key1)) {
             this.scene.start("bedroom");
         }
-        if (Phaser.Input.Keyboard.JustDown(key2)) {
-            this.scene.start("livingroom");
-        }
+        //if (Phaser.Input.Keyboard.JustDown(key2)) {
+            //this.scene.start("kitchen");
+        //}
         if (Phaser.Input.Keyboard.JustDown(key3)) {
-            //this.scene.start("labroom");
+            this.scene.start("livingroom");
         }
 
         this.playerCat.update();
