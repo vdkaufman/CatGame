@@ -90,17 +90,17 @@ class Kitchen extends Phaser.Scene {
         this.tableC.setImmovable(true);
         this.tableC.body.allowGravity = false;
 
-        this.tableD = this.physics.add.sprite(450, 370, 'tableD');
+        this.tableD = this.physics.add.sprite(450, 385, 'tableD');
         this.tableD.setImmovable(true);
         this.tableD.body.allowGravity = false;
         this.tableD.setScale(.4, 1);
 
-        this.tableF = this.physics.add.sprite(570, 370, 'tableE');
+        this.tableF = this.physics.add.sprite(570, 385, 'tableE');
         this.tableF.setImmovable(true);
         this.tableF.body.allowGravity = false;
         this.tableF.setScale(.6, 1);
 
-
+        this.bedroomDoor = this.physics.add.sprite(game.config.width - 175, game.config.height/2 - 200, 'box1');
 
         this.livingroomDoor = this.physics.add.sprite(game.config.width, game.config.height - 75, 'box1');
 
@@ -109,13 +109,15 @@ class Kitchen extends Phaser.Scene {
         this.backWall = this.add.sprite(0, 0, 'kitchen_backWall').setOrigin(0, 0);
         this.rightWall = this.add.sprite(1054, 0, 'kitchen_rightWall').setOrigin(0, 0);
 
+        if(Cat.stairButton){
         this.stairs = this.physics.add.sprite(820, 700, 'stairs');
         this.stairs.setImmovable(true);
         this.stairs.body.allowGravity = false;
+        }
 
-        this.stairSwitch = this.physics.add.sprite(650, 750, 'stairSwitch');
-        this.stairSwitch.setImmovable(true);
-        this.stairSwitch.body.allowGravity = false;
+        this.stairSwitchText = 'Switch:\nThere is a switch on the floor... but it doesn\'t seem to do anything.';
+        this.stairSwitch = new ClueItem(this, 650, 750, 'stairSwitch', 0,
+        this.stairSwitchText, null).setOrigin(.5, .5);
 
         this.fridge = this.physics.add.sprite(100, 225, 'fridge');
 
@@ -142,10 +144,17 @@ class Kitchen extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        this.playerCat = new Cat(this, 150, game.config.height/2 + 100, 'cat').setOrigin(.5, 0);
+        if(!Cat.lScene){
+            this.playerCat = new Cat(this, 925, 200, 'cat').setOrigin(.5, 0);
+            }
+            else{
+                this.playerCat = new Cat(this, 1000, game.config.height - 150, 'cat').setOrigin(.5, 0);
+            }
 
         this.mGlass = this.physics.add.sprite(375, 300, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 
+
+        
         this.playerCat.play('cat-down');
 
         this.meow = this.sound.add('meow', {
@@ -194,12 +203,28 @@ class Kitchen extends Phaser.Scene {
 
         this.physics.add.overlap(this.playerCat, this.stairSwitch, this.touchingStairSwitch, null, this);
 
-        this.physics.add.overlap(this.playerCat, this.livingroomDoor, this.touchingDoor, null, this);
+        this.physics.add.overlap(this.playerCat, this.livingroomDoor, this.touchingLivingroomDoor, null, this);
+        this.physics.add.overlap(this.playerCat, this.bedroomDoor, this.touchingBedroomDoor, null, this);
+
+
+        if(!Cat.lScene){
+            this.playerCat.play('cat-down');
+    
+            }
+            else{
+                this.playerCat.play('cat-left');
+    
+            }
 
         //this.switchOn = false;
         this.touchingStairsA = false; 
         this.touchingStairsB = false; 
         this.table = false;
+        Cat.bScene = false;
+        Cat.lScene = false;
+        Cat.kScene = true;
+
+
 
     }
 
@@ -266,27 +291,34 @@ class Kitchen extends Phaser.Scene {
     touchingStairSwitch(cat, obj) {
         this.setIndicator(this, obj.x, obj.y, this.indicator);
 
-        if (Phaser.Input.Keyboard.JustDown(keyM)){
-            if (this.switchOn == true) {
-                this.switchOn = false;
+        if (Phaser.Input.Keyboard.JustDown(keyM)) {
+
+            if (Cat.stairButton) {
+                if (this.switchOn == true) {
+                    this.switchOn = false;
 
 
-                this.tableC = this.physics.add.sprite(765, 300, 'tableE');
-                this.tableC.setVisible(false);
-                this.tableC.setImmovable(true);
-                this.tableC.body.allowGravity = false;
-                this.physics.add.collider(this.playerCat, this.tableC);
-                console.log('table collider Spawn');
+                    this.tableC = this.physics.add.sprite(765, 300, 'tableE');
+                    this.tableC.setVisible(false);
+                    this.tableC.setImmovable(true);
+                    this.tableC.body.allowGravity = false;
+                    this.physics.add.collider(this.playerCat, this.tableC);
+                    console.log('table collider Spawn');
 
-                this.table = false;
+                    this.table = false;
 
-                console.log('Switch Off');
+                    console.log('Switch Off');
+                }
+                else {
+                    this.switchOn = true;
+                    this.table = true;
+
+                    console.log('Switch On');
+                }
             }
-            else{
-                this.switchOn = true;
-                this.table = true;
+            else {
+                obj.openTextBox(true);
 
-                console.log('Switch On');
             }
         }
     }
@@ -315,10 +347,18 @@ class Kitchen extends Phaser.Scene {
         
     }
 
-    touchingDoor(cat, obj) {
+    touchingLivingroomDoor(cat, obj) {
         this.setIndicator(this, obj.x - 30, obj.y + 75, this.indicator);
             if(Phaser.Input.Keyboard.JustDown(keyM)) {
             this.scene.start('livingroom');
+            }
+    }
+
+    
+    touchingBedroomDoor(cat, obj) {
+        this.setIndicator(this, obj.x, obj.y + 100, this.indicator);
+            if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            this.scene.start('bedroom');
             }
     }
 

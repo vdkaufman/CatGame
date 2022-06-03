@@ -117,7 +117,7 @@ class Bedroom extends Phaser.Scene {
         this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
         }
         else{
-        this.familyPhotoText = 'Family photo: \n The note says Maxine went to an inventors contest today!\n\n(Knock Knock)\n\n Maxine is home!\n You\'ve reached the end of our unfinished build.\n Thanks for playing!';
+        this.familyPhotoText = 'Family photo: \n The note says Maxine went to an inventors contest today!\n\n(Knock Knock)\n\n Maxine is home!\n You\'ve reached the end our game!\n\n Thanks for playing!';
         this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
         this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
         }
@@ -228,7 +228,15 @@ class Bedroom extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
+        if(!Cat.kScene){
         this.playerCat = new Cat(this, 550, game.config.height/2 + 110, 'cat').setOrigin(.5, 0);
+
+        }
+        else{
+            this.playerCat = new Cat(this, 900, game.config.height - 200, 'cat').setOrigin(.5, 0);
+
+        }
+       
 
         this.mGlass = this.physics.add.sprite(-500, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 
@@ -306,7 +314,6 @@ class Bedroom extends Phaser.Scene {
         });
         
         // add text
-        this.puzzleText = 'The door is unlocked!';
 
         if(!Cat.puzzleComplete){
         this.introText = 'I wonder where my owner went?\n\n\nInteract with objects to make it to the next room and find out what happened to your owner.';
@@ -347,6 +354,16 @@ class Bedroom extends Phaser.Scene {
             loop: false,
             delay: 0
         });
+    
+        if(!Cat.kScene){
+            this.playerCat.play('cat-down');
+    
+            }
+            else{
+                this.playerCat.play('cat-up');
+    
+            }
+    
     }
 
     update(){
@@ -369,7 +386,6 @@ class Bedroom extends Phaser.Scene {
         }
 
         if(this.countA == 3 && this.countB == 3 && this.countC == 3 && !Cat.puzzleComplete){
-            this.puzzleDone = this.add.text(game.config.width - 300, game.config.height - 50, this.puzzleText);
             Cat.puzzleComplete = true;
 
             this.kitchenDoor.play('doorOpen');
