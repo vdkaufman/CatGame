@@ -88,7 +88,7 @@ class Credits extends Phaser.Scene {
             credConfig).setOrigin(0.5,0);
             
         // text scroll speed
-        this.scrollSpd = 1.5;
+        this.scrollSpd = .8;
         // this.add.text(game.config.width/2, game.config.height/3,  ' Credits', 
         // menuConfig).setOrigin(0.5,.5);
         // this.add.text(game.config.width/2, game.config.height/3 + 150, 'Vincent Kaufman ', 
