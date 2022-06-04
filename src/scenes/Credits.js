@@ -84,7 +84,7 @@ class Credits extends Phaser.Scene {
         this.musicCred = this.add.text(game.config.width/2, game.config.height+525, 'Background music: After Rain — \nZackross [Audio Library Release]\n\nMusic provided by Audio Library Plus\n\nWatch: https://youtu.be/RW83XjwJKVA\n\nFree Download/Stream: https://alplus.io/after-rain', 
             credConfig).setOrigin(0.5,0);
 
-        this.finalTxt = this.add.text(game.config.width/2, game.config.height+525, 'Press [SPACE] to return to the main menu', 
+        this.finalTxt = this.add.text(game.config.width/2, game.config.height+825, 'Press [SPACE] to return to the main menu', 
             credConfig).setOrigin(0.5,0);
             
         // text scroll speed
@@ -134,8 +134,9 @@ class Credits extends Phaser.Scene {
         this.jeff.y -= this.scrollSpd;
         this.keli.y -= this.scrollSpd;
         this.musicCred.y -= this.scrollSpd;
-        if (!this.finalTxt.y == game.config.height/2){
-            this.finalTxt -= this.scrollSpd;
+        if (this.finalTxt.y >= 400){
+            console.log('in if statement');
+            this.finalTxt.y -= this.scrollSpd;
         }
     }
 }
