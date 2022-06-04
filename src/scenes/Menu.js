@@ -50,11 +50,14 @@ class Menu extends Phaser.Scene {
         // Display Menu Text
         this.add.text(game.config.width/2, 550, ' Press [SPACE] to start ', 
         menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, 650, '[M] - interact/next text\n\n[WASD] - walk ', 
+        this.add.text(game.config.width/2, 650, ' [M] - interact/next text\n\n[WASD] - walk ', 
+        menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, 750, ' Press [C] to see credits ', 
         menuConfig).setOrigin(0.5);
 
         // define keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
 
         // define sounds
 
@@ -72,9 +75,14 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-        // pass to the next scene
-        //this.meow.play();
-        this.scene.start('bedroom');
+            // pass to the next scene
+            //this.meow.play();
+            this.scene.start('bedroom');
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyC)) {
+            // pass to the next scene
+            //this.meow.play();
+            this.scene.start('credits');
         }
     }
 }

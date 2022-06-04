@@ -13,11 +13,34 @@ class Credits extends Phaser.Scene {
     }
     create() {
 
-        // menu text configuration
-        let menuConfig = {
+        let titleConfig = {
+            fontFamily: 'SingleDay',
+            fontSize: '34px',
+            //backgroundColor: '#3b243e',
+            color: '#ffffff',
+            align: 'center',
+            padding: {
+                top: 0,
+                bottom: 0,
+            },
+            fixedWidth: 0
+        }
+        let subTitleConfig = {
+            fontFamily: 'SingleDay',
+            fontSize: '28px',
+            //backgroundColor: '#3b243e',
+            color: '#ffffff',
+            align: 'center',
+            padding: {
+                top: 3,
+                bottom: 3,
+            },
+            fixedWidth: 0
+        }
+        let credConfig = {
             fontFamily: 'SingleDay',
             fontSize: '26px',
-            backgroundColor: '#3b243e',
+            //backgroundColor: '#3b243e',
             color: '#ffffff',
             align: 'center',
             padding: {
@@ -26,9 +49,7 @@ class Credits extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-
         // Set Menu background color
-
         this.add.rectangle(0, 0, game.config.width, game.config.height, 0x3b243e).setOrigin(0, 0);
 
         // Show Title image
@@ -42,20 +63,49 @@ class Credits extends Phaser.Scene {
         this.startMenu = this.add.sprite(550, 400, 'creditsBG');
         this.startMenu.play('creditsBG');
 
-        // Display Menu Text
-        this.add.text(game.config.width/2, 550, ' Credits', 
-        menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, 650, 'Vincent Kaufman ', 
-        menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, 700, 'Jeff Row ', 
-        menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, 750, 'Keli Lindsey ', 
-        menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, 850, 'Thanks for playing! ', 
-        menuConfig).setOrigin(0.5);
+        // init text
+        this.title = this.add.text(game.config.width/2, game.config.height, 'CREDITS', 
+            titleConfig).setOrigin(0.5,0);
+
+        this.vTitles = this.credits = this.add.text(game.config.width/2, game.config.height+105, 'Lead Level Designer', 
+            subTitleConfig).setOrigin(0.5,0);
+        this.jTitles = this.credits = this.add.text(game.config.width/2, game.config.height+205, 'Lead Character Artist', 
+            subTitleConfig).setOrigin(0.5,0);
+        this.kTitles = this.credits = this.add.text(game.config.width/2, game.config.height+305, 'Lead Environment & UI Artist', 
+            subTitleConfig).setOrigin(0.5,0);
+
+        this.vincent = this.add.text(game.config.width/2, game.config.height+135, 'Vincent Kaufman', 
+            credConfig).setOrigin(0.5,0);
+        this.jeff = this.add.text(game.config.width/2, game.config.height+235, 'Jeff Row', 
+            credConfig).setOrigin(0.5,0);
+        this.keli = this.add.text(game.config.width/2, game.config.height+335, 'Keli Lindsey', 
+            credConfig).setOrigin(0.5,0);
+
+        this.musicCred = this.add.text(game.config.width/2, game.config.height+525, 'Background music: After Rain — \nZackross [Audio Library Release]\n\nMusic provided by Audio Library Plus\n\nWatch: https://youtu.be/RW83XjwJKVA\n\nFree Download/Stream: https://alplus.io/after-rain', 
+            credConfig).setOrigin(0.5,0);
+
+        this.finalTxt = this.add.text(game.config.width/2, game.config.height+525, 'Press [SPACE] to return to the main menu', 
+            credConfig).setOrigin(0.5,0);
+            
+        // text scroll speed
+        this.scrollSpd = 1.5;
+        // this.add.text(game.config.width/2, game.config.height/3,  ' Credits', 
+        // menuConfig).setOrigin(0.5,.5);
+        // this.add.text(game.config.width/2, game.config.height/3 + 150, 'Vincent Kaufman ', 
+        // menuConfig).setOrigin(0.5,.5);
+        // this.add.text(game.config.width/2, game.config.height/3 + 200, 'Jeff Row ', 
+        // menuConfig).setOrigin(0.5,.5);
+        // this.add.text(game.config.width/2, game.config.height/3 + 300, 'Keli Lindsey ', 
+        // menuConfig).setOrigin(0.5,.5);
+        // this.add.text(game.config.width/2, game.config.height/3 + 400, 'Thanks for playing! ', 
+        // menuConfig).setOrigin(0.5,.5);
+        // Track: After Rain — Zackross [Audio Library Release]
+        // Music provided by Audio Library Plus
+        // Watch: https://youtu.be/RW83XjwJkVA
+        // Free Download / Stream: https://alplus.io/after-rain
 
         // define keys
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // define sounds
 
@@ -67,13 +117,25 @@ class Credits extends Phaser.Scene {
             delay: 0
         });
 
-        this.music.play();
+        // this.music.play();
 
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyR)) {
-        this.scene.start('MenuScene');
+        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            this.scene.start('menuScene');
+        }
+
+        this.title.y -= this.scrollSpd;
+        this.vTitles.y -= this.scrollSpd;
+        this.jTitles.y -= this.scrollSpd;
+        this.kTitles.y -= this.scrollSpd;
+        this.vincent.y -= this.scrollSpd;
+        this.jeff.y -= this.scrollSpd;
+        this.keli.y -= this.scrollSpd;
+        this.musicCred.y -= this.scrollSpd;
+        if (!this.finalTxt.y == game.config.height/2){
+            this.finalTxt -= this.scrollSpd;
         }
     }
 }

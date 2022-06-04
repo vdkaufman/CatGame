@@ -23,7 +23,7 @@ let config = {
         target: 60,
         forceSetTimeOut: true 
     },
-    scene: [ Menu, Bedroom, Livingroom, Kitchen ]
+    scene: [ Menu, Bedroom, Livingroom, Kitchen, Credits ]
 }
 
 let game = new Phaser.Game(config);
