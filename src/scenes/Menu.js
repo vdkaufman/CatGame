@@ -69,8 +69,9 @@ class Menu extends Phaser.Scene {
             delay: 0
         });
         
-        if (!this.music.isPlaying){
+        if (!Cat.musicOn){
             this.music.play();
+            Cat.musicOn = true;
         }
 
     }

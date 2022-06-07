@@ -239,7 +239,6 @@ class Bedroom extends Phaser.Scene {
 
         }
        
-
         this.mGlass = this.physics.add.sprite(-500, 400, 'magGlass').setOrigin(.5,.5).setScale(.7,.7);
 
         //********cat animations****** */
@@ -341,7 +340,6 @@ class Bedroom extends Phaser.Scene {
        this.physics.add.overlap(this.playerCat, this.bookBox, this.touchingBook, null, this);
        this.physics.add.overlap(this.playerCat, this.catBed, this.touchingCatBed, null, this);
 
-
         // Add colliders for collision sprites
         this.physics.add.collider(this.playerCat, this.wallColliderUp);
         this.physics.add.collider(this.playerCat, this.wallColliderDown);
@@ -366,17 +364,24 @@ class Bedroom extends Phaser.Scene {
                 this.playerCat.play('cat-up');
     
             }
+
+            this.creditTrigger = false;
+            this.creditStart = 0;
     
     }
 
     update(){
+        if(!this.creditTrigger){
+        this.playerCat.update();
+        }
+
         //this.myTestTextBox.update();
         this.photoBox.update();
         // check key input for restart
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             //this.scene.restart();
             this.scene.start("menuScene");
-        }
+        }   
 
         //if (Phaser.Input.Keyboard.JustDown(key1)) {
         //    this.scene.start("bedroom");
@@ -394,11 +399,7 @@ class Bedroom extends Phaser.Scene {
             this.kitchenDoor.play('doorOpen');
         }
       
-        this.playerCat.update();
-
         if (Cat.haveGlass == true) {
-
-
 
             if (this.playerCat.dir == 3){
                 // cat facing left
@@ -426,14 +427,25 @@ class Bedroom extends Phaser.Scene {
             }
         }
 
+        if(this.creditStart > 3){
+            this.scene.start("credits");
+        }
+
     }  
-    touchingPicture(cat, obj){
+    touchingPicture(cat, obj) {
         this.setIndicator(this, obj.x, obj.y, this.indicator);
-        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+        if (Phaser.Input.Keyboard.JustDown(keyM)) {
             //this.myTestClueBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.familyPhotoText);
-         
+
             obj.openTextBox(true);
-  
+
+            if (Cat.haveGlass) {
+                this.creditTrigger = true;
+                this.playerCat.play('cat-up');
+                if (this.creditTrigger) {
+                    this.creditStart += 1;
+                }
+            }
         }
     }
 

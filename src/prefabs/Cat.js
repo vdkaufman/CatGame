@@ -20,7 +20,8 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
         this.bScene = true;
         this.kScene = false;
         this.lScene = false;
-
+        this.musicOn = false;
+     
         // define sounds
         this.meow = scene.sound.add('meow', {
             mute: false,
@@ -107,6 +108,7 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
 
             // play meow sfx
             if (Phaser.Input.Keyboard.JustDown(keyM)) {
+      
                 this.randVal = Phaser.Math.Between(0, 2);
                 // group.getChildren() returns an array
                 //this.meowSounds[0].play();
@@ -123,13 +125,9 @@ class Cat extends Phaser.Physics.Arcade.Sprite {
                 else if (this.randVal == 2){
                     this.meow3.play();
                 }
-            }
-
-          
-
-        
+            }       
+       
             //this.body.setDrag(this.DRAG, this.DRAG);
-
 
     }
 }
