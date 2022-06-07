@@ -13,6 +13,7 @@ class Kitchen extends Phaser.Scene {
             'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
         this.load.spritesheet('cat', './assets/sprites/furlockSpriteSheet.png',
             { frameWidth: 115, frameHeight: 183 });
+        this.load.image('furlockPortrait', './assets/sprites/furlockFace.png');
         this.load.image('simplebg', './assets/Simplebg.png');
 
         // load collision walls
@@ -126,14 +127,14 @@ class Kitchen extends Phaser.Scene {
         this.rightWall = this.add.sprite(1054, 0, 'kitchen_rightWall').setOrigin(0, 0);
 
         if(Cat.stairButton){
-        this.stairs = this.physics.add.sprite(820, 700, 'stairs');
-        this.stairs.setImmovable(true);
-        this.stairs.body.allowGravity = false;
+            this.stairs = this.physics.add.sprite(820, 700, 'stairs');
+            this.stairs.setImmovable(true);
+            this.stairs.body.allowGravity = false;
         }
 
         this.stairSwitchText = 'Switch:\nThere is a switch on the floor... but it doesn\'t seem to do anything.';
         this.stairSwitch = new ClueItem(this, 650, 750, 'stairSwitch', 0,
-        this.stairSwitchText, null).setOrigin(.5, .5);
+        this.stairSwitchText, null, 'furlockPortrait').setOrigin(.5, .5);
 
         this.fridge = this.physics.add.sprite(100, 225, 'fridge');
 

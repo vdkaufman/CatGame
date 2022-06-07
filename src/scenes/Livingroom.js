@@ -13,6 +13,7 @@ class Livingroom extends Phaser.Scene {
             'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
         this.load.spritesheet('cat', './assets/sprites/furlockSpriteSheet.png',
             {frameWidth: 124, frameHeight: 187});
+        this.load.image('furlockPortrait', './assets/sprites/furlockFace.png');
         this.load.image('simplebg', './assets/Simplebg.png');
         this.load.image('mKey', './assets/sprites/mKey.png');
 
@@ -95,14 +96,15 @@ class Livingroom extends Phaser.Scene {
         this.leftWall = this.add.sprite(0, 0, 'livingroomLeftWall').setOrigin(0, 0);
         this.rightWall = this.add.sprite(1054, 0, 'livingroomRightWall').setOrigin(0, 0);
 
-        this.bookcaseText = 'Bookcase: \nIt\'s full of books. \n\n You found a keycard!';
+        this.bookcaseText = 'Bookcase: \nIt\'s full of books. \n\nYou found a keycard!';
+        this.bookcaseText2 = 'Bookcase: \nMaxine sure does love books...\n\nThis one\s called "Adventures of Sherlock Holmes..." \nit must be named after me!';
         this.bookcase = new ClueItem(this, 550, 200, 'bookCase', 0,
-        this.bookcaseText, null).setOrigin(.5, .5);
+        this.bookcaseText, null, 'furlockPortrait').setOrigin(.5, .5);
         this.bookcase.setScale(.8,.8);
 
         this.catTreeText = 'Cat Tree: \nzzzZZZ';
         this.catTree = new ClueItem(this, 290, 280, 'catTree', 0,
-        this.catTreeText, null).setOrigin(.5, .5);
+        this.catTreeText, null,'furlockPortrait').setOrigin(.5, .5);
         this.catTree.setScale(.8,.8);
 
         this.frame1 = this.add.sprite(100, 10, 'frame01').setOrigin(0, 0);
@@ -135,7 +137,7 @@ class Livingroom extends Phaser.Scene {
         // add switch
         this.switchTxt = "Maxine made this to control the Roombot, but what did she do with the keycard?";
         this.roombaSwitch = new ClueItem(this, game.config.width/2 - 420, game.config.height/2 - 150, 'roombaSwitch', 0, 
-            this.switchTxt, null).setOrigin(.5,.5);;
+            this.switchTxt, null, 'furlockPortrait').setOrigin(.5,.5);;
         this.roombaSwitch.setImmovable(true);
         this.roombaSwitch.setScale(1,1);
         //****************************/
@@ -420,14 +422,18 @@ class Livingroom extends Phaser.Scene {
         }
 
     touchingBookcase(cat, obj){
-        if(!this.haveKey){
-            this.setIndicator(this, obj.x, obj.y, this.indicator);
-            if(Phaser.Input.Keyboard.JustDown(keyM)) {
+        this.setIndicator(this, obj.x, obj.y, this.indicator);
+        if(Phaser.Input.Keyboard.JustDown(keyM)) {
+            if(!this.haveKey){
                 this.haveKey = true;
-                obj.openTextBox();
+                obj.openTextBox(null, this.bookcaseText);
                 console.log('Have Key');
             }
+            else{
+                obj.openTextBox(null, this.bookcaseText2);
+            }
         }
+
     }
 
     touchingButton(floorSwitchA, obj){

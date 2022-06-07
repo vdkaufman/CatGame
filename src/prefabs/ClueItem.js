@@ -1,5 +1,5 @@
 class ClueItem extends Phaser.Physics.Arcade.Sprite{
-    constructor(scene, x, y, texture, frame, text, popUpImage) {
+    constructor(scene, x, y, texture, frame, text, popUpImage, portrait) {
         super(scene, x, y, texture, frame,);
         scene.add.existing(this); // add object to existing scene, displayList, updateList
         scene.physics.add.existing(this);
@@ -11,9 +11,12 @@ class ClueItem extends Phaser.Physics.Arcade.Sprite{
         this.popUp.setScale(.2,.2);
         this.popUp.setDepth(1000);
 
+        // set portrait
+
+
         // text box object
         this.text = text;
-        this.myTextBox = new TextBox(scene, x, y, texture, frame, text, this.popUp);
+        this.myTextBox = new TextBox(scene, x, y, texture, frame, text, this.popUp, portrait);
         this.myTextBox.setActive(false).setVisible(false);
 
     }
@@ -27,8 +30,13 @@ class ClueItem extends Phaser.Physics.Arcade.Sprite{
         
     }
 
-    openTextBox(showPopUp){
+    openTextBox(showPopUp, text){
         //console.log(showPopup)
-        this.myTextBox.resetTextBox(showPopUp);
+        if (text == null){
+            this.myTextBox.resetTextBox(showPopUp, this.text);
+        }
+        else{
+            this.myTextBox.resetTextBox(showPopUp, text);
+        }
     }
 }

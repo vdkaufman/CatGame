@@ -13,6 +13,7 @@ class Bedroom extends Phaser.Scene {
             'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
         this.load.spritesheet('cat', './assets/sprites/furlockSpriteSheet.png',
             {frameWidth: 124, frameHeight: 187});
+        this.load.image('furlockPortrait', './assets/sprites/furlockFace.png');
         this.load.image('simplebg', './assets/Simplebg.png');
         this.load.image('fam-portrait', './assets/sprites/Portrait03.png');
         this.load.image('mKey', './assets/sprites/mKey.png');
@@ -87,17 +88,17 @@ class Bedroom extends Phaser.Scene {
              
         this.bedText = 'Maxine\'s bed: \nNo one is here... I could take a short nap...\n\nzzzZZZ';
         this.bedCollider2 = new ClueItem(this, 290, 520, 'box1', 0, 
-        this.bedText, null).setOrigin(.5, .5);
+        this.bedText, null, 'furlockPortrait').setOrigin(.5, .5);
         this.bedCollider2.setImmovable(true);
         this.bedCollider2.body.allowGravity = false; 
         this.bedCollider3 = new ClueItem(this, 480, 520, 'box1', 0, 
-        this.bedText, null).setOrigin(.5, .5);
+        this.bedText, null,'furlockPortrait').setOrigin(.5, .5);
         this.bedCollider3.setImmovable(true);
         this.bedCollider3.body.allowGravity = false; 
 
         this.doorText = 'The door is locked';
         this.doorBox = new ClueItem(this, game.config.width - 190, game.config.height, 'box2', 0,
-            this.doorText, null).setOrigin(.5, .5);
+            this.doorText, null,'furlockPortrait').setOrigin(.5, .5);
 
         // background objects
         this.floor = this.add.sprite(0, 0, 'floor').setOrigin(0, 0);
@@ -109,17 +110,17 @@ class Bedroom extends Phaser.Scene {
         // Add box object
         this.mirrorText = 'Mirror: \nOh hi, I didn\'t see you there. Would you like to hear a joke? \n\n\nWhich side of a cat has the most fur?\n\n\n...The outside! Hahaha!';
         this.mirrorBox = new ClueItem(this, 125, 200, 'mirror', 0,
-        this.mirrorText, null).setOrigin(.5, .5);
+            this.mirrorText, null,'furlockPortrait').setOrigin(.5, .5);
        
         if(!Cat.haveGlass){
             this.familyPhotoText = 'Family photo: \n*sigh* Maxine really likes pink... \n\nWait, what does that note say by the butterflies? \n\nGah, I need to find my trusty magnifying glass!';
             this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
-            this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
+                this.familyPhotoText, 'fam-portrait', 'furlockPortrait').setOrigin(.5, .5);
         }
         else {
             this.familyPhotoText = 'Family photo: \n The note says Maxine went to an inventors contest today!\n\n(Knock Knock)\n\n Maxine is home!\n You\'ve reached the end of our game!\n\n Thanks for playing!';
             this.photoBox = new ClueItem(this, 250, 300, 'photoStand', 0, 
-            this.familyPhotoText, 'fam-portrait').setOrigin(.5, .5);
+                this.familyPhotoText, 'fam-portrait','furlockPortrait').setOrigin(.5, .5);
             //this.scene.start('credits');
         }
         
@@ -133,7 +134,7 @@ class Bedroom extends Phaser.Scene {
 
         this.bookText = 'Book: \nA Notebook full of Maxine\'s invention ideas.';
         this.bookBox = new ClueItem(this, 1000, 500, 'book', 0,
-        this.bookText, null).setOrigin(.5, .5);
+        this.bookText, null,'furlockPortrait').setOrigin(.5, .5);
         this.bookBox.setScale(.8,.8);
        
         this.clothes = this.physics.add.sprite(100, 700, 'clothes');
@@ -144,11 +145,11 @@ class Bedroom extends Phaser.Scene {
 
         this.catBedText = 'My bed:\nzzzZZZ';
         this.catBed = new ClueItem(this, 690, 560, 'catBed', 0,
-        this.catBedText, null).setOrigin(.5, .5);
+        this.catBedText, null, 'furlockPortrait').setOrigin(.5, .5);
                
         // add light lock machine assets
         this.lightMachine = new ClueItem(this, game.config.width - 215, game.config.height/2 - 90, 'lightMachine', 0,
-            'The sign reads: "Maxine\'s Pawsome Light Lock Machine!"', null).setOrigin(.5,.5);
+            'The sign reads: "Maxine\'s Pawsome Light Lock Machine!"', null, 'furlockPortrait').setOrigin(.5,.5);
             // this.lightMachine.body.setOffset(this.width, this.height/2)
              this.lightMachine.body.setSize(this.width, 100, false);
         this.lightMachine.setScale(1.1,1.1);
@@ -317,10 +318,11 @@ class Bedroom extends Phaser.Scene {
         // add text
 
         if(!Cat.puzzleComplete){
-        this.introText = 'I wonder where my owner went?\n\n\nInteract with objects to make it to the next room and find out what happened to your owner.';
-        this.introTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.introText);
-        this.introTextBox.startText(true);
+            this.introText = 'I wonder where my owner went?\n\n\nInteract with objects to make it to the next room and find out what happened to your owner.';
+            this.introTextBox = new TextBox(this, 1, game.config.height - 1, 'cat', 0, this.introText);
+            this.introTextBox.startText(true);
         }
+        
         this.controls = 'Interact-Meow: M  /  Move: WASD  /  Reset: R ';
         this.controlUI = this.add.text(game.config.width/2, 50, this.controls).setOrigin(.5,.5);
 
