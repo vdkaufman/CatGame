@@ -96,8 +96,8 @@ class Livingroom extends Phaser.Scene {
         this.leftWall = this.add.sprite(0, 0, 'livingroomLeftWall').setOrigin(0, 0);
         this.rightWall = this.add.sprite(1054, 0, 'livingroomRightWall').setOrigin(0, 0);
 
-        this.bookcaseText = 'Bookcase: \nIt\'s full of books. \n\nYou found a keycard!';
-        this.bookcaseText2 = 'Bookcase: \nMaxine sure does love books...\n\nThis one\s called "Adventures of Sherlock Holmes..." \nit must be named after me!';
+        this.bookcaseText = 'Bookcase: \nIt\'s full of books. \n\nI found the keycard!';
+        this.bookcaseText2 = 'Bookcase: \nAhh books, the boring cat\'s past time...\n\nThis one\s called "Adventures of Sherlock Holmes..." \nit must be named after me!';
         this.bookcase = new ClueItem(this, 550, 200, 'bookCase', 0,
         this.bookcaseText, null, 'furlockPortrait').setOrigin(.5, .5);
         this.bookcase.setScale(.8,.8);
